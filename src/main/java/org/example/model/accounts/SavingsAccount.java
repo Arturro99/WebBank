@@ -1,9 +1,9 @@
-package model.accounts;
+package org.example.model.accounts;
 
 public class SavingsAccount extends Account{
     private SavingsType savingsType;
 
-    public SavingsAccount(long accountNumber, double stateOfAccount, SavingsType type) {
+    public SavingsAccount(String accountNumber, double stateOfAccount, SavingsType type) {
         super(accountNumber, stateOfAccount);
         this.savingsType = type;
     }
@@ -15,5 +15,10 @@ public class SavingsAccount extends Account{
         return "Konto oszczednosciowe o numerze " + getAccountNumber() +
              " posiada na koncie " + getStateOfAccount() + "PLN" +
                 ", typ " + getSavingsType().toString();
+    }
+
+    @Override
+    public Object clone() {
+        return new SavingsAccount(accountNumber,stateOfAccount,savingsType);
     }
 }
