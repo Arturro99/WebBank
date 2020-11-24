@@ -11,15 +11,18 @@ import pl.mrs.webappbank.repositories.ClientRepository;
 import pl.mrs.webappbank.repositories.IRepository;
 import pl.mrs.webappbank.repositories.TransferRepository;
 
+import javax.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.UUID;
 
+
+@ApplicationScoped
 public class AccountManager implements IAccountManager{
 
-    private AccountRepository accountRepository;
-    private ClientRepository clientRepository;
-    private TransferRepository transferRepository;
+    private final AccountRepository accountRepository;
+    private final ClientRepository clientRepository;
+    private final TransferRepository transferRepository;
 
     public AccountManager() {
         accountRepository = new AccountRepository();
@@ -86,6 +89,9 @@ public class AccountManager implements IAccountManager{
         }
     }
 
+    public String getInfo(){
+        return getInfo(DataType.CLIENTS);
+    }
     @Override
     public String getInfo(DataType dataType) {
         switch (dataType){
@@ -134,5 +140,12 @@ public class AccountManager implements IAccountManager{
             i++;
         }
         return -1;
+    }
+
+    public ArrayList<Account> getAllAccounts(){
+        return accountRepository.getList();
+    }
+    public ArrayList<Client> getAllClients(){
+        return clientRepository.getList();
     }
 }

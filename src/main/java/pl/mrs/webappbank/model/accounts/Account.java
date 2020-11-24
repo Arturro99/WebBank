@@ -23,4 +23,8 @@ public abstract class Account {
 
     @Override
     public abstract Object clone();
+
+    public Currency getCurrency(){
+        return Currency.PLN;
+    }
 }

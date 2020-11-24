@@ -1,38 +1,52 @@
 package pl.mrs.webappbank.web;
 
 import java.io.Serializable;
+import javax.annotation.ManagedBean;
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
+
+import pl.mrs.webappbank.managers.AccountManager;
+import pl.mrs.webappbank.managers.DataType;
+import pl.mrs.webappbank.managers.IAccountManager;
 import pl.mrs.webappbank.model.Client;
+import pl.mrs.webappbank.model.Currency;
+import pl.mrs.webappbank.model.accounts.SavingsType;
 import pl.mrs.webappbank.repositories.ClientRepository;
 
-@RequestScoped
+@SessionScoped
 @Named
 public class Controller implements Serializable{
     
-   
-    private ClientRepository clientRepo;
+    @Inject
+    private AccountManager accountManager;
     
     private String pid,name,surname;
     private int age;
 
+
     public Controller() {
-        clientRepo = new ClientRepository();
-        clientRepo.add(new Client("002020202020","dupa","blada",18));
-        clientRepo.add(new Client("481828218181","Ziomson","PL",12));
+    }
+    @PostConstruct
+    public void controllerInit(){
+            accountManager.registerCurrencyAccount("002020202020","dupa","blada",18, Currency.PLN);
+            accountManager.registerCurrencyAccount("481828218181","Ziomson","PL",12, Currency.EUR);
+            accountManager.registerCommonAccount("481828218181","Ziomson","PL",12);
+            accountManager.payInto(accountManager.getAllAccounts().get(0).getAccountNumber(),242);
+            accountManager.payInto(accountManager.getAllAccounts().get(1).getAccountNumber(),21522.21);
+            accountManager.payInto(accountManager.getAllAccounts().get(2).getAccountNumber(),12.99);
     }
 
-    public ClientRepository getClientRepo() {
-        return clientRepo;
+    public AccountManager getAccountManager() {
+        return accountManager;
     }
 
-    
-    public String processClientRepo() {
-        System.out.println("UDALO SIE");
-        clientRepo.add(new Client(pid,name,surname,age));
-        
-        System.out.println(clientRepo);
-        return "NewClientConfirm";
+    public String processAccountManager() {
+        accountManager.registerCommonAccount(pid,name,surname,age);
+        System.out.println(accountManager.getInfo(DataType.ACCOUNTS));
+        return "AccountList";
     }
     public String getPid() {
         return pid;

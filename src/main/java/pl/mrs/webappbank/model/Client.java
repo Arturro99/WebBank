@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
-@RequestScoped
-@Named
+
 public class Client {
     private final String personalId;
     private final String name;
@@ -52,9 +51,16 @@ public class Client {
         listOfAccounts.add(account);
     }
 
+    public ArrayList<Account> getListOfAccounts() {
+        return listOfAccounts;
+    }
+
     @Override
     public Object clone() {
-        return new Client(personalId, name,surname,age);
+        Client clone = new Client(personalId, name,surname,age);
+        clone.listOfAccounts = new ArrayList<>(listOfAccounts.size());
+        clone.listOfAccounts.addAll(listOfAccounts);
+        return clone;
     }
 //    void addMoney(double amount, Account account) throws NonexistentAccountException {
 //        boolean accountExists = false;

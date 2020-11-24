@@ -3,6 +3,7 @@ package pl.mrs.webappbank.repositories;
 import pl.mrs.webappbank.model.Client;
 import pl.mrs.webappbank.model.accounts.Account;
 
+import javax.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
 
 public class ClientRepository implements IRepository<Client,String> {
