@@ -6,9 +6,9 @@ import pl.mrs.webappbank.model.Currency;
 import pl.mrs.webappbank.model.accounts.SavingsType;
 
 public interface IAccountManager {
-    void registerCommonAccount(String personalID, String name, String surname, int age);
-    void registerCurrencyAccount(String personalID, String name, String surname, int age, Currency currency);
-    void registerSavingsAccount(String personalID, String name, String surname, int age, SavingsType savingsType);
+    void registerCommonAccount(String personalID, String login, String password, String name, String surname, int age);
+    void registerCurrencyAccount(String personalID, String login, String password, String name, String surname, int age, Currency currency);
+    void registerSavingsAccount(String personalID, String login, String password, String name, String surname, int age, SavingsType savingsType);
     void removeAccount(String accountNumber) throws NonexistentAccountException;
     void transferMoney(String  senderAccountNumber, String recipientAccountnumber, double amount) throws NonexistentAccountException, NotEnoughMoneyException;
     String getInfo(DataType dataType);

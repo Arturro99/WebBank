@@ -2,7 +2,7 @@ package pl.mrs.webappbank.managers;
 
 import pl.mrs.webappbank.exceptions.NonexistentAccountException;
 import pl.mrs.webappbank.exceptions.NotEnoughMoneyException;
-import pl.mrs.webappbank.model.Client;
+import pl.mrs.webappbank.modelv2.Client;
 import pl.mrs.webappbank.model.Currency;
 import pl.mrs.webappbank.model.Transfer;
 import pl.mrs.webappbank.model.accounts.*;
@@ -36,30 +36,30 @@ public class AccountManager implements IAccountManager{
         this.transferRepository = transferRepository;
     }
 
-    private String accountInit(String personalID, String name, String surname, int age) {
+    private String accountInit(String personalID, String login, String password, String name, String surname, int age) {
         if(clientRepository.find(personalID) == -1)
-            clientRepository.add(new Client(personalID,name,surname,age));
+            clientRepository.add(new Client(personalID, login, password, name,surname,age));
         return generateNewAccountNumber();
     }
 
-    public void registerCommonAccount(String personalID, String name, String surname, int age){
-        String newAccountNumber = accountInit(personalID, name, surname, age);
+    public void registerCommonAccount(String personalID, String login, String password, String name, String surname, int age){
+        String newAccountNumber = accountInit(personalID,login, password, name, surname, age);
         Account newAccount = new CommonAccount(newAccountNumber,0.0);
         accountRepository.add(newAccount);
         connectClientAccount(personalID,newAccount);
     }
 
     @Override
-    public void registerCurrencyAccount(String personalID, String name, String surname, int age, Currency currency) {
-        String newAccountNumber = accountInit(personalID, name, surname, age);
+    public void registerCurrencyAccount(String personalID, String login, String password, String name, String surname, int age, Currency currency) {
+        String newAccountNumber = accountInit(personalID, name, login, password, surname, age);
         Account newAccount = new CurrencyAccount(newAccountNumber,0.0, currency);
         accountRepository.add(newAccount);
         connectClientAccount(personalID,newAccount);
     }
 
     @Override
-    public void registerSavingsAccount(String personalID, String name, String surname, int age, SavingsType savingsType) {
-        String newAccountNumber = accountInit(personalID, name, surname, age);
+    public void registerSavingsAccount(String personalID, String name, String login, String password, String surname, int age, SavingsType savingsType) {
+        String newAccountNumber = accountInit(personalID, login, password, name, surname, age);
         Account newAccount = new SavingsAccount(newAccountNumber,0.0, savingsType);
         accountRepository.add(newAccount);
         connectClientAccount(personalID,newAccount);

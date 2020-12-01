@@ -1,6 +1,6 @@
 package pl.mrs.webappbank.repositories;
 
-import pl.mrs.webappbank.model.Client;
+import pl.mrs.webappbank.modelv2.Client;
 import pl.mrs.webappbank.model.accounts.Account;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -45,7 +45,7 @@ public class ClientRepository implements IRepository<Client,String> {
     public int find(String identifier) {
         int i = 0;
         for(Client item : listOfClients){
-            if(item.getPersonalId().equals(identifier))
+            if(item.getPid().equals(identifier))
                 return i;
             i++;
         }

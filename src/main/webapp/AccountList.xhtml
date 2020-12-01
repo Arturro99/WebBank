@@ -11,7 +11,11 @@
         <h:dataTable border="2" value="#{controller.accountManager.allClients}" var="klient">
             <h:column>
                 <f:facet name="header">PID</f:facet>
-                <h:outputText value="#{klient.personalId}"/>
+                <h:outputText value="#{klient.pid}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Login</f:facet>
+                <h:outputText value="#{klient.login}"/>
             </h:column>
             <h:column>
                 <f:facet name="header">Name</f:facet>
@@ -27,7 +31,7 @@
             </h:column>
             <h:column>
                 <f:facet name="header">Accounts</f:facet>
-                <h:dataTable border="1" value="#{klient.listOfAccounts}" var="konto">
+                <h:dataTable border="2" value="#{klient.listOfAccounts}" var="konto">
                     <h:column>
                         <f:facet name="header">Account Number</f:facet>
                         <h:outputText value="#{konto.accountNumber}"/>
