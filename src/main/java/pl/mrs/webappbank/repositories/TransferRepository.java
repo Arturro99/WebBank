@@ -21,8 +21,8 @@ public class TransferRepository implements IRepository<Transfer, UUID>{
     }
 
     @Override
-    public void remove(int index) {
-        transferHistory.remove(index);
+    public void remove(Transfer transfer) {
+        transferHistory.remove(transfer);
     }
 
     @Override
@@ -47,9 +47,9 @@ public class TransferRepository implements IRepository<Transfer, UUID>{
 
     @Override
     public String toString() {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         for(Transfer t : transferHistory)
-            output += t.toString() + "\n";
-        return  output;
+            output.append(t.toString()).append("\n");
+        return output.toString();
     }
 }

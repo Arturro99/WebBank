@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface IRepository<T, U> {
     void add(T element);
-    void remove(int index);
+    void remove(T element);
     List<T> findAll();
     int find(U identifier);
 }

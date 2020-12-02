@@ -43,11 +43,15 @@ public class AccountManager implements IAccountManager{
         return generateNewAccountNumber();
     }
 
+    public void removeClient(Client client) {
+        clientRepository.remove(client);
+    }
+
     public void registerCommonAccount(Client client){
         String newAccountNumber = accountInit(client);
         Account newAccount = new CommonAccount(newAccountNumber,0.0);
         accountRepository.add(newAccount);
-        connectClientAccount(client.getPid(),newAccount);
+        connectClientAccount(client,newAccount);
     }
 
     @Override
@@ -55,7 +59,7 @@ public class AccountManager implements IAccountManager{
         String newAccountNumber = accountInit(client);
         Account newAccount = new CurrencyAccount(newAccountNumber,0.0, currency);
         accountRepository.add(newAccount);
-        connectClientAccount(client.getPid(),newAccount);
+        connectClientAccount(client,newAccount);
     }
 
     @Override
@@ -63,14 +67,14 @@ public class AccountManager implements IAccountManager{
         String newAccountNumber = accountInit(client);
         Account newAccount = new SavingsAccount(newAccountNumber,0.0, savingsType);
         accountRepository.add(newAccount);
-        connectClientAccount(client.getPid(),newAccount);
+        connectClientAccount(client,newAccount);
     }
 
     @Override
-    public void removeAccount(String accountNumber) throws NonexistentAccountException {
-        if(accountRepository.find(accountNumber) == -1)
-            throw new NonexistentAccountException(accountNumber + "Do not exist");
-        accountRepository.remove(accountRepository.find(accountNumber));
+    public void removeAccount(Account account) throws NonexistentAccountException {
+        if(accountRepository.find(account.getAccountNumber()) == -1)
+            throw new NonexistentAccountException(account.getAccountNumber() + "Do not exist");
+        accountRepository.remove(account);
     }
 
     @Override
@@ -120,8 +124,8 @@ public class AccountManager implements IAccountManager{
         accountRepository.changeState(accountNumber,amount);
     }
 
-    private void connectClientAccount(String personalID, Account newAccount) {
-        clientRepository.assignAccount(personalID,newAccount);
+    private void connectClientAccount(Client client, Account newAccount) {
+        clientRepository.assignAccount(client,newAccount);
     }
 
     String generateNewAccountNumber(){

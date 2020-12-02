@@ -21,11 +21,11 @@ public class ClientRepository implements IRepository<Client,String> {
     }
 
     @Override
-    public void remove(int index) {
-        clients.remove(index);
+    public void remove(Client client) {
+        clients.remove(client);
     }
-    public void assignAccount(String personalID, Account newAccount){
-        clients.get(find(personalID)).addAccount(newAccount);
+    public void assignAccount(Client client, Account newAccount){
+        clients.get(find(client.getPid())).addAccount(newAccount);
     }
 
     @Override
@@ -35,20 +35,17 @@ public class ClientRepository implements IRepository<Client,String> {
 
     @Override
     public int find(String identifier) {
-        int i = 0;
-        for(Client item : clients){
-            if(item.getPid().equals(identifier))
-                return i;
-            i++;
-        }
-        return -1;
+        return clients.indexOf(clients.stream()
+                .filter(c -> c.getPid().equals(identifier))
+                .findAny()
+                .orElse(new Client()));
     }
 
     @Override
     public String toString() {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         for(Client c : clients)
-            output += c.toString() + "\n";
-        return  output;
+            output.append(c.toString()).append("\n");
+        return output.toString();
     }
 }

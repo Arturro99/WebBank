@@ -19,8 +19,8 @@ public class AccountRepository implements IRepository<Account, String>{
     }
 
     @Override
-    public void remove(int index) {
-        listOfAccounts.remove(index);
+    public void remove(Account account) {
+        listOfAccounts.remove(account);
     }
 
     @Override
