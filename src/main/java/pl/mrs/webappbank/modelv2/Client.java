@@ -7,6 +7,7 @@ import pl.mrs.webappbank.model.accounts.Account;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -17,7 +18,7 @@ public class Client implements Serializable {
     private String login;
     private String password;
     private int age;
-    ArrayList<Account> listOfAccounts;
+    List<Account> listOfAccounts = new ArrayList<>();
 
     public Client(String pid, String login, String password, String name, String surname, int age) {
         this.pid = pid;

@@ -8,44 +8,49 @@
     </h:head>
     <h:body>
         Lista Klientów:
-        <h:dataTable border="2" value="#{controller.accountManager.allClients}" var="klient">
-            <h:column>
-                <f:facet name="header">PID</f:facet>
-                <h:outputText value="#{klient.pid}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Login</f:facet>
-                <h:outputText value="#{klient.login}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Name</f:facet>
-                <h:outputText value="#{klient.name}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Surname</f:facet>
-                <h:outputText value="#{klient.surname}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Age</f:facet>
-                <h:outputText value="#{klient.age}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Accounts</f:facet>
-                <h:dataTable border="2" value="#{klient.listOfAccounts}" var="konto">
-                    <h:column>
-                        <f:facet name="header">Account Number</f:facet>
-                        <h:outputText value="#{konto.accountNumber}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">State</f:facet>
-                        <h:outputText value="#{konto.stateOfAccount}"/>
-                        <h:outputText value="#{konto.currency}"/>
-                    </h:column>
-                </h:dataTable>
-            </h:column>
-        </h:dataTable>
         <h:form>
+            <h:dataTable border="2" value="#{clientController.allClients}" var="klient">
+                <h:column>
+                    <f:facet name="header">PID</f:facet>
+                    <h:outputText value="#{klient.pid}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Login</f:facet>
+                    <h:outputText value="#{klient.login}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Name</f:facet>
+                    <h:outputText value="#{klient.name}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Surname</f:facet>
+                    <h:outputText value="#{klient.surname}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Age</f:facet>
+                    <h:outputText value="#{klient.age}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Accounts</f:facet>
+                    <h:dataTable border="2" value="#{klient.listOfAccounts}" var="konto">
+                        <h:column>
+                            <f:facet name="header">Account Number</f:facet>
+                            <h:outputText value="#{konto.accountNumber}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">State</f:facet>
+                            <h:outputText value="#{konto.stateOfAccount}"/>
+                            <h:outputText value="#{konto.currency}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Actions</f:facet>
+                    <h:commandButton value="Delete" action="#{clientController.deleteClient(klient)}"/>
+                </h:column>
+            </h:dataTable>
             <h:commandButton value="Cancel" action="index"/><br/>
+            <h:commandButton value="Refresh" action="#{clientController.initCurrentClients}"/><br/>
         </h:form>
     </h:body>
 </html>
