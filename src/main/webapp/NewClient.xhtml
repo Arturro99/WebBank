@@ -9,14 +9,14 @@
         New Client
         
         <h:form>
-            PersonalID: <h:inputText value="#{clientController.newClient.pid}"/><br/>
+            *PersonalID: <h:inputText value="#{clientController.newClient.pid}" required="true"/><br/>
             Name: <h:inputText value="#{clientController.newClient.name}"/><br/>
-            Surname: <h:inputText value="#{clientController.newClient.surname}"/><br/>
-            Login: <h:inputText value="#{clientController.newClient.login}"/><br/>
-            Password: <h:inputSecret value="#{clientController.newClient.password}"/><br/>
+            *Surname: <h:inputText value="#{clientController.newClient.surname}" required="true"/><br/>
+            *Login: <h:inputText value="#{clientController.newClient.login}" required="true"/><br/>
+            *Password: <h:inputSecret value="#{clientController.newClient.password}" required="true"/><br/>
             Age: <h:inputText value="#{clientController.newClient.age}"/><br/>
             <h:commandButton value="Add" action="#{clientController.processNewClient()}"/><br/>
-            <h:commandButton value="Cancel" action="index"/><br/>
+            <h:commandButton value="Cancel" action="index" immediate="true"/><br/>
         </h:form>
 
     </h:body>

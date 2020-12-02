@@ -28,10 +28,12 @@
         <navigation-case>
             <from-outcome>NewPersonConfirm</from-outcome>
             <to-view-id>/NewClientConfirm.xhtml</to-view-id>
+            <redirect/>
         </navigation-case>
         <navigation-case>
             <from-outcome>index</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
+            <redirect/>
         </navigation-case>
     </navigation-rule>
 </faces-config>
