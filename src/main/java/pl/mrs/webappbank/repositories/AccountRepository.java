@@ -4,6 +4,7 @@ import pl.mrs.webappbank.model.Client;
 import pl.mrs.webappbank.model.accounts.Account;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AccountRepository implements IRepository<Account, String>{
     protected ArrayList<Account> listOfAccounts;
@@ -23,7 +24,7 @@ public class AccountRepository implements IRepository<Account, String>{
     }
 
     @Override
-    public ArrayList<Account> getList(){
+    public List<Account> findAll(){
         ArrayList<Account> clone = new ArrayList<Account>(listOfAccounts.size());
         for (Account item : listOfAccounts) {
             clone.add((Account) item.clone());

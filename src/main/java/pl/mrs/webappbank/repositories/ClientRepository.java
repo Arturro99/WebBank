@@ -3,48 +3,40 @@ package pl.mrs.webappbank.repositories;
 import pl.mrs.webappbank.modelv2.Client;
 import pl.mrs.webappbank.model.accounts.Account;
 
-import javax.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ClientRepository implements IRepository<Client,String> {
-    private ArrayList<Client> listOfClients;
+    private List<Client> clients = new ArrayList<>();
 
-//    public void addToListOfClients(Client client) {
-//        ;
-//    }
-
-//    public ArrayList<Client> getListOfClients() { return listOfClients; }
 
     public ClientRepository() {
-        this.listOfClients = new ArrayList<>();
+        this.clients = new ArrayList<>();
     }
 
     @Override
     public void add(Client element) {
-        listOfClients.add(element);
+        //TODO sprawdzenie unikalności z zadbaniem o wielowątkowość
+        clients.add(element);
     }
 
     @Override
     public void remove(int index) {
-        listOfClients.remove(index);
+        clients.remove(index);
     }
     public void assignAccount(String personalID, Account newAccount){
-        listOfClients.get(find(personalID)).addAccount(newAccount);
+        clients.get(find(personalID)).addAccount(newAccount);
     }
 
     @Override
-    public ArrayList<Client> getList() {
-        ArrayList<Client> clone = new ArrayList<>(listOfClients.size());
-        for (Client item : listOfClients) {
-            clone.add((Client) item.clone());
-        }
-        return clone;
+    public List<Client> findAll() {
+        return new ArrayList<>(clients);
     }
 
     @Override
     public int find(String identifier) {
         int i = 0;
-        for(Client item : listOfClients){
+        for(Client item : clients){
             if(item.getPid().equals(identifier))
                 return i;
             i++;
@@ -55,7 +47,7 @@ public class ClientRepository implements IRepository<Client,String> {
     @Override
     public String toString() {
         String output = "";
-        for(Client c : listOfClients)
+        for(Client c : clients)
             output += c.toString() + "\n";
         return  output;
     }

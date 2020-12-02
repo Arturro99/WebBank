@@ -5,6 +5,7 @@ import pl.mrs.webappbank.model.Transfer;
 import pl.mrs.webappbank.model.accounts.Account;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class TransferRepository implements IRepository<Transfer, UUID>{
@@ -25,7 +26,7 @@ public class TransferRepository implements IRepository<Transfer, UUID>{
     }
 
     @Override
-    public ArrayList<Transfer> getList() {
+    public List<Transfer> findAll() {
         ArrayList<Transfer> clone = new ArrayList<Transfer>(transferHistory.size());
         for (Transfer item : transferHistory) {
             clone.add((Transfer) item.clone());

@@ -13,6 +13,7 @@ import pl.mrs.webappbank.repositories.TransferRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
@@ -36,33 +37,33 @@ public class AccountManager implements IAccountManager{
         this.transferRepository = transferRepository;
     }
 
-    private String accountInit(String personalID, String login, String password, String name, String surname, int age) {
-        if(clientRepository.find(personalID) == -1)
-            clientRepository.add(new Client(personalID, login, password, name,surname,age));
+    private String accountInit(Client client) {
+        if (clientRepository.find(client.getPid()) == -1)
+            clientRepository.add(client);
         return generateNewAccountNumber();
     }
 
-    public void registerCommonAccount(String personalID, String login, String password, String name, String surname, int age){
-        String newAccountNumber = accountInit(personalID,login, password, name, surname, age);
+    public void registerCommonAccount(Client client){
+        String newAccountNumber = accountInit(client);
         Account newAccount = new CommonAccount(newAccountNumber,0.0);
         accountRepository.add(newAccount);
-        connectClientAccount(personalID,newAccount);
+        connectClientAccount(client.getPid(),newAccount);
     }
 
     @Override
-    public void registerCurrencyAccount(String personalID, String login, String password, String name, String surname, int age, Currency currency) {
-        String newAccountNumber = accountInit(personalID, name, login, password, surname, age);
+    public void registerCurrencyAccount(Client client, Currency currency) {
+        String newAccountNumber = accountInit(client);
         Account newAccount = new CurrencyAccount(newAccountNumber,0.0, currency);
         accountRepository.add(newAccount);
-        connectClientAccount(personalID,newAccount);
+        connectClientAccount(client.getPid(),newAccount);
     }
 
     @Override
-    public void registerSavingsAccount(String personalID, String name, String login, String password, String surname, int age, SavingsType savingsType) {
-        String newAccountNumber = accountInit(personalID, login, password, name, surname, age);
+    public void registerSavingsAccount(Client client, SavingsType savingsType) {
+        String newAccountNumber = accountInit(client);
         Account newAccount = new SavingsAccount(newAccountNumber,0.0, savingsType);
         accountRepository.add(newAccount);
-        connectClientAccount(personalID,newAccount);
+        connectClientAccount(client.getPid(),newAccount);
     }
 
     @Override
@@ -79,7 +80,7 @@ public class AccountManager implements IAccountManager{
         if( accountRepository.find(recipientAccountnumber) == -1)
             throw new NonexistentAccountException(recipientAccountnumber + "Do not exist");
         synchronized (this) {
-            ArrayList<Account> currentState = accountRepository.getList();
+            List<Account> currentState = accountRepository.findAll();
             int senderID = findAccountInList(currentState, senderAccountNumber);
             int recipientID = findAccountInList(currentState,recipientAccountnumber);
             if (currentState.get(senderID).getStateOfAccount() < amount)
@@ -107,7 +108,7 @@ public class AccountManager implements IAccountManager{
 
     @Override
     public void withdraw(String accountNumber, double amount) throws NotEnoughMoneyException {
-        ArrayList<Account> currentState = accountRepository.getList();
+        List<Account> currentState = accountRepository.findAll();
         int accountID = findAccountInList(currentState,accountNumber);
         if (currentState.get(accountID).getStateOfAccount() < amount)
             throw new NotEnoughMoneyException(accountNumber + "Has less than " + amount);
@@ -132,7 +133,7 @@ public class AccountManager implements IAccountManager{
         }while (accountRepository.find(generatedLong) >= 0);
         return generatedLong;
     }
-    public int findAccountInList(ArrayList<Account>listOfAccounts,String identifier) {
+    public int findAccountInList(List<Account>listOfAccounts,String identifier) {
         int i = 0;
         for(Account item : listOfAccounts){
             if(item.getAccountNumber().equals(identifier))
@@ -142,10 +143,10 @@ public class AccountManager implements IAccountManager{
         return -1;
     }
 
-    public ArrayList<Account> getAllAccounts(){
-        return accountRepository.getList();
+    public List<Account> getAllAccounts(){
+        return accountRepository.findAll();
     }
-    public ArrayList<Client> getAllClients(){
-        return clientRepository.getList();
+    public List<Client> getAllClients(){
+        return clientRepository.findAll();
     }
 }
