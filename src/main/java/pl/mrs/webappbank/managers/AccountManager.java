@@ -22,52 +22,39 @@ import java.util.UUID;
 public class AccountManager implements IAccountManager{
 
     private final AccountRepository accountRepository;
-    private final ClientRepository clientRepository;
     private final TransferRepository transferRepository;
 
     public AccountManager() {
         accountRepository = new AccountRepository();
-        clientRepository = new ClientRepository();
         transferRepository = new TransferRepository();
     }
 
-    public AccountManager(AccountRepository accountRepository, ClientRepository clientRepository, TransferRepository transferRepository) {
+    public AccountManager(AccountRepository accountRepository, TransferRepository transferRepository) {
         this.accountRepository = accountRepository;
-        this.clientRepository = clientRepository;
         this.transferRepository = transferRepository;
     }
 
-    private String accountInit(Client client) {
-        if (clientRepository.find(client.getPid()) == -1)
-            clientRepository.add(client);
-        return generateNewAccountNumber();
-    }
-
-    public void removeClient(Client client) {
-        clientRepository.remove(client);
-    }
-
     public void registerCommonAccount(Client client){
-        String newAccountNumber = accountInit(client);
+        String newAccountNumber = generateNewAccountNumber();
         Account newAccount = new CommonAccount(newAccountNumber,0.0);
         accountRepository.add(newAccount);
-        connectClientAccount(client,newAccount);
+        client.addAccount(newAccount);
     }
 
     @Override
     public void registerCurrencyAccount(Client client, Currency currency) {
-        String newAccountNumber = accountInit(client);
+        String newAccountNumber = generateNewAccountNumber();
         Account newAccount = new CurrencyAccount(newAccountNumber,0.0, currency);
         accountRepository.add(newAccount);
-        connectClientAccount(client,newAccount);
+        client.addAccount(newAccount);
     }
 
     @Override
     public void registerSavingsAccount(Client client, SavingsType savingsType) {
-        String newAccountNumber = accountInit(client);
+        String newAccountNumber = generateNewAccountNumber();
         Account newAccount = new SavingsAccount(newAccountNumber,0.0, savingsType);
         accountRepository.add(newAccount);
-        connectClientAccount(client,newAccount);
+        client.addAccount(newAccount);
     }
 
     @Override
@@ -100,8 +87,6 @@ public class AccountManager implements IAccountManager{
     @Override
     public String getInfo(DataType dataType) {
         switch (dataType){
-            case CLIENTS:
-                return clientRepository.toString();
             case ACCOUNTS:
                 return accountRepository.toString();
             case TRANSFERS:
@@ -124,10 +109,6 @@ public class AccountManager implements IAccountManager{
         accountRepository.changeState(accountNumber,amount);
     }
 
-    private void connectClientAccount(Client client, Account newAccount) {
-        clientRepository.assignAccount(client,newAccount);
-    }
-
     String generateNewAccountNumber(){
         String generatedLong = "";
         do {
@@ -137,6 +118,7 @@ public class AccountManager implements IAccountManager{
         }while (accountRepository.find(generatedLong) >= 0);
         return generatedLong;
     }
+
     public int findAccountInList(List<Account>listOfAccounts,String identifier) {
         int i = 0;
         for(Account item : listOfAccounts){
@@ -149,8 +131,5 @@ public class AccountManager implements IAccountManager{
 
     public List<Account> getAllAccounts(){
         return accountRepository.findAll();
-    }
-    public List<Client> getAllClients(){
-        return clientRepository.findAll();
     }
 }

@@ -54,9 +54,9 @@ public class AccountRepository implements IRepository<Account, String>{
 
     @Override
     public String toString() {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         for(Account a : listOfAccounts)
-            output += a.toString() + "\n";
-        return  output;
+            output.append(a.toString()).append("\n");
+        return output.toString();
     }
 }
