@@ -9,7 +9,7 @@
     <h:body>
         Lista Klientów:
         <h:form>
-            <h:dataTable border="2" value="#{clientController.allClients}" var="klient">
+            <h:dataTable border="2" value="#{clientListController.allClients}" var="klient">
                 <h:column>
                     <f:facet name="header">PID</f:facet>
                     <h:outputText value="#{klient.pid}"/>
@@ -46,11 +46,11 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">Actions</f:facet>
-                    <h:commandButton value="Delete" action="#{clientController.deleteClient(klient)}"/>
+                    <h:commandButton value="Delete" action="#{clientListController.deleteClient(klient)}"/>
                 </h:column>
             </h:dataTable>
             <h:commandButton value="Cancel" action="index"/><br/>
-            <h:commandButton value="Refresh" action="#{clientController.initCurrentClients}"/><br/>
+            <h:commandButton value="Refresh" action="#{clientListController.initController}"/><br/>
         </h:form>
     </h:body>
 </html>

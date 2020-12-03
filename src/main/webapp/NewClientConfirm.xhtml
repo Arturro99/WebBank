@@ -12,12 +12,12 @@
     Confirm new client
 
     <h:form>
-        PersonalID: <h:outputText value="#{clientController.newClient.pid}"/><br/>
-        Name: <h:outputText value="#{clientController.newClient.name}"/><br/>
-        Surname: <h:outputText value="#{clientController.newClient.surname}"/><br/>
-        Login: <h:outputText value="#{clientController.newClient.login}"/><br/>
-        Age: <h:outputText value="#{clientController.newClient.age}"/><br/>
-        <h:commandButton value="OK" action="#{clientController.confirmClient()}"/><br/>
+        PersonalID: <h:outputText value="#{newClientController.newClient.pid}"/><br/>
+        Name: <h:outputText value="#{newClientController.newClient.name}"/><br/>
+        Surname: <h:outputText value="#{newClientController.newClient.surname}"/><br/>
+        Login: <h:outputText value="#{newClientController.newClient.login}"/><br/>
+        Age: <h:outputText value="#{newClientController.newClient.age}"/><br/>
+        <h:commandButton value="OK" action="#{newClientController.confirmClient()}"/><br/>
     </h:form>
 
 </h:body>

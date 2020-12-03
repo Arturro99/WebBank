@@ -40,8 +40,22 @@
     <navigation-rule>
         <from-view-id>/NewClientConfirm.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>NewPersonConfirm</from-outcome>
+            <from-outcome>NewClientConfirm</from-outcome>
             <to-view-id>/NewClientConfirm.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/AccountList.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>AccountList</from-outcome>
+            <to-view-id>/AccountList.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>
