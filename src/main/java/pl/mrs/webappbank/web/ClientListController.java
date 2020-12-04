@@ -21,6 +21,7 @@ import java.util.List;
 public class ClientListController implements Serializable {
 
     private List<Client> currentClients;
+    private Client editedClient;
 
     @Inject
     ClientManager clientManager;
@@ -36,6 +37,15 @@ public class ClientListController implements Serializable {
     public List<Client> getAllClients() {
         return currentClients;
     }
+
+    public void editClient(Client c) {
+        clientManager.addClient(c);
+    }
+
+    public void setEditable(Client c) {
+        c.setEditable(!c.isEditable());
+    }
+    public boolean getEditable(Client c) { return c.isEditable(); }
 
     @PostConstruct
     public void initController() {

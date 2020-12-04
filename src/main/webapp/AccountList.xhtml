@@ -12,26 +12,31 @@
             <h:dataTable border="2" value="#{clientListController.allClients}" var="klient">
                 <h:column>
                     <f:facet name="header">PID</f:facet>
-                    <h:outputText value="#{klient.pid}"/>
+                    <h:outputText value="#{klient.pid}"/> <br/>
+                    <h:inputText value="#{klient.pid}" rendered="#{clientListController.getEditable(klient)}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Login</f:facet>
-                    <h:outputText value="#{klient.login}"/>
+                    <h:outputText value="#{klient.login}"/> <br/>
+                    <h:inputText value="#{klient.login}" rendered="#{clientListController.getEditable(klient)}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Name</f:facet>
-                    <h:outputText value="#{klient.name}"/>
+                    <h:outputText value="#{klient.name}"/> <br/>
+                    <h:inputText value="#{klient.name}" rendered="#{clientListController.getEditable(klient)}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Surname</f:facet>
-                    <h:outputText value="#{klient.surname}"/>
+                    <h:outputText value="#{klient.surname}"/> <br/>
+                    <h:inputText value="#{klient.surname}" rendered="#{clientListController.getEditable(klient)}"/>
                 </h:column>
                 <h:column>
                     <f:facet name="header">Age</f:facet>
-                    <h:outputText value="#{klient.age}"/>
+                    <h:outputText value="#{klient.age}"/> <br/>
+                    <h:inputText value="#{klient.age}" rendered="#{clientListController.getEditable(klient)}"/>
                 </h:column>
                 <h:column>
-                    <f:facet name="header">Accounts</f:facet>
+                    <f:facet name="header">Accounts</f:facet> <br/>
                     <h:dataTable border="2" value="#{klient.listOfAccounts}" var="konto">
                         <h:column>
                             <f:facet name="header">Account Number</f:facet>
@@ -47,6 +52,10 @@
                 <h:column>
                     <f:facet name="header">Actions</f:facet>
                     <h:commandButton value="Delete" action="#{clientListController.deleteClient(klient)}"/>
+                    <h:commandButton value="Edit" action="#{clientListController.setEditable(klient)}"/>
+                    <h:commandButton value="Save changes" action="#{clientListController.editClient(klient)}" rendered="#{clientListController.getEditable(klient)}">
+                        <f:actionListener binding="#{clientListController.setEditable(klient)}"/>
+                    </h:commandButton><br/>
                 </h:column>
             </h:dataTable>
             <h:commandButton value="Cancel" action="index"/><br/>
