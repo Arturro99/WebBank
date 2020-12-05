@@ -64,4 +64,18 @@
             <redirect/>
         </navigation-case>
     </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/Loans.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>LoanConfirm</from-outcome>
+            <to-view-id>/LoanConfirm.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>Loans</from-outcome>
+            <to-view-id>/Loans.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>
