@@ -1,21 +1,22 @@
 package pl.mrs.webappbank.repositories;
 
-import pl.mrs.webappbank.model.Currency;
-import pl.mrs.webappbank.model.accounts.*;
+import pl.mrs.webappbank.modelv2.Currency;
+import pl.mrs.webappbank.modelv2.accounts.*;
 import pl.mrs.webappbank.modelv2.Client;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-public class ClientRepository implements IRepository<Client,String> {
+public class ClientRepository implements IRepository<Client,UUID> {
     private List<Client> clients = new ArrayList<>();
 
 
     public ClientRepository() {
         this.clients = new ArrayList<>();
-        Client c1 = new Client("002020202020", "destroyer69", "1234", "dupa","blada",18);
-        Client c2 = new Client("481828218181", "qwerty", "567", "Ziomson","PL",12);
-        Client c3 = new Client("156549", "azerty", "666", "JP","dwa",8);
+        Client c1 = new Client("destroyer69", "1234", "dupa","blada",18);
+        Client c2 = new Client("qwerty", "567", "Ziomson","PL",12);
+        Client c3 = new Client("azerty", "666", "JP","dwa",8);
         clients.add(c1);
         clients.add(c2);
         clients.add(c3);
@@ -46,7 +47,7 @@ public class ClientRepository implements IRepository<Client,String> {
     }
 
     @Override
-    public int find(String identifier) {
+    public int find(UUID identifier) {
         return clients.indexOf(clients.stream()
                 .filter(c -> c.getPid().equals(identifier))
                 .findAny()

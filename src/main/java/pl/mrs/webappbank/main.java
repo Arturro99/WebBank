@@ -1,17 +1,5 @@
 package pl.mrs.webappbank;
 
-import pl.mrs.webappbank.exceptions.NonexistentAccountException;
-import pl.mrs.webappbank.exceptions.NotEnoughMoneyException;
-import pl.mrs.webappbank.managers.AccountManager;
-import pl.mrs.webappbank.managers.DataType;
-import pl.mrs.webappbank.model.Client;
-import pl.mrs.webappbank.model.Currency;
-import pl.mrs.webappbank.repositories.ClientRepository;
-
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Scanner;
-
 public class main {
     public static void main( String[] args )
     {

@@ -1,18 +1,17 @@
 package pl.mrs.webappbank.modelv2;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.mrs.webappbank.model.accounts.Account;
+import pl.mrs.webappbank.modelv2.accounts.Account;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 public class Client implements Serializable {
-    private String pid;
+    private UUID pid;
     private String name;
     private String surname;
     private String login;
@@ -21,8 +20,12 @@ public class Client implements Serializable {
     private boolean editable;
     List<Account> listOfAccounts = new ArrayList<>();
 
-    public Client(String pid, String login, String password, String name, String surname, int age) {
-        this.pid = pid;
+    public Client() {
+        this.pid = UUID.randomUUID();
+    }
+
+    public Client(String login, String password, String name, String surname, int age) {
+        this.pid = UUID.randomUUID();
         this.login = login;
         this.password = password;
         this.name = name;
@@ -32,13 +35,13 @@ public class Client implements Serializable {
     }
 
 
-    @Override
-    public Object clone() {
-        Client clone = new Client(pid, login, password, name,surname,age);
-        clone.listOfAccounts = new ArrayList<>(listOfAccounts.size());
-        clone.listOfAccounts.addAll(listOfAccounts);
-        return clone;
-    }
+//    @Override
+//    public Object clone() {
+//        Client clone = new Client(login, password, name,surname,age);
+//        clone.listOfAccounts = new ArrayList<>(listOfAccounts.size());
+//        clone.listOfAccounts.addAll(listOfAccounts);
+//        return clone;
+//    }
 
     public void addAccount(Account account) {
         listOfAccounts.add(account);

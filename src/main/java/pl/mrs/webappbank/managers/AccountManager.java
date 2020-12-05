@@ -3,19 +3,14 @@ package pl.mrs.webappbank.managers;
 import pl.mrs.webappbank.exceptions.NonexistentAccountException;
 import pl.mrs.webappbank.exceptions.NotEnoughMoneyException;
 import pl.mrs.webappbank.modelv2.Client;
-import pl.mrs.webappbank.model.Currency;
-import pl.mrs.webappbank.model.Transfer;
-import pl.mrs.webappbank.model.accounts.*;
+import pl.mrs.webappbank.modelv2.Currency;
+import pl.mrs.webappbank.modelv2.Transfer;
+import pl.mrs.webappbank.modelv2.accounts.*;
 import pl.mrs.webappbank.repositories.AccountRepository;
-import pl.mrs.webappbank.repositories.ClientRepository;
-import pl.mrs.webappbank.repositories.IRepository;
 import pl.mrs.webappbank.repositories.TransferRepository;
 
 import javax.enterprise.context.ApplicationScoped;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.UUID;
 
 
 @ApplicationScoped

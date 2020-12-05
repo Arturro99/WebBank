@@ -1,10 +1,8 @@
 package pl.mrs.webappbank.model;
 
-import pl.mrs.webappbank.model.accounts.Account;
+import pl.mrs.webappbank.modelv2.accounts.Account;
 
 import java.util.ArrayList;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
 
 
 public class Client {

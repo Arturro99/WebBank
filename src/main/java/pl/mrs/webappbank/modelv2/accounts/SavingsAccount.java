@@ -1,4 +1,4 @@
-package pl.mrs.webappbank.model.accounts;
+package pl.mrs.webappbank.modelv2.accounts;
 
 public class SavingsAccount extends Account{
     private SavingsType savingsType;

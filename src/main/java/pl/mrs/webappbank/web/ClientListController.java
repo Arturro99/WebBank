@@ -3,12 +3,9 @@ package pl.mrs.webappbank.web;
 import lombok.Data;
 import pl.mrs.webappbank.managers.AccountManager;
 import pl.mrs.webappbank.managers.ClientManager;
-import pl.mrs.webappbank.model.Currency;
 import pl.mrs.webappbank.modelv2.Client;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;

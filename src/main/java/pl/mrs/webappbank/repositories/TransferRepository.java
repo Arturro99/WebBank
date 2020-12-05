@@ -1,8 +1,6 @@
 package pl.mrs.webappbank.repositories;
 
-import pl.mrs.webappbank.model.Client;
-import pl.mrs.webappbank.model.Transfer;
-import pl.mrs.webappbank.model.accounts.Account;
+import pl.mrs.webappbank.modelv2.Transfer;
 
 import java.util.ArrayList;
 import java.util.List;
