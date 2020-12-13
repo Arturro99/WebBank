@@ -11,7 +11,7 @@ public interface IAccountManager {
     void registerCommonAccount(Client client);
     void registerCurrencyAccount(Client client, Currency currency);
     void registerSavingsAccount(Client client, SavingsType savingsType);
-    void removeAccount(Account account) throws NonexistentAccountException;
+    void removeAccount(Client client, Account account) throws NonexistentAccountException;
     void transferMoney(String  senderAccountNumber, String recipientAccountnumber, double amount) throws NonexistentAccountException, NotEnoughMoneyException;
     String getInfo(DataType dataType);
     void withdraw(String accountNumber, double amount) throws NotEnoughMoneyException;

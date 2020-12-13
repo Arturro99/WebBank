@@ -4,19 +4,21 @@ import pl.mrs.webappbank.modelv2.Client;
 import pl.mrs.webappbank.repositories.ClientRepository;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import java.util.List;
 
 
 @ApplicationScoped
 public class ClientManager {
-    private final ClientRepository clientRepository;
+    @Inject
+    private ClientRepository clientRepository;
 
     public ClientManager(ClientRepository clientRepository) {
-        this.clientRepository = clientRepository;
+//        this.clientRepository = clientRepository;
     }
 
     public ClientManager() {
-        clientRepository = new ClientRepository();
+//        clientRepository = new ClientRepository();
     }
 
     public void addClient(Client client) {

@@ -36,12 +36,25 @@
             <redirect/>
         </navigation-case>
     </navigation-rule>
-
     <navigation-rule>
         <from-view-id>/NewClientConfirm.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>NewClientConfirm</from-outcome>
             <to-view-id>/NewClientConfirm.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
+        <from-view-id>/NewAccount.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>NewAccount</from-outcome>
+            <to-view-id>/NewAccount.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>

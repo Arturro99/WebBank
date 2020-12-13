@@ -18,10 +18,20 @@ public class AccountManager implements IAccountManager{
 
     private final AccountRepository accountRepository;
     private final TransferRepository transferRepository;
+    private boolean exampleAccounts;
 
     public AccountManager() {
         accountRepository = new AccountRepository();
         transferRepository = new TransferRepository();
+        exampleAccounts = false;
+    }
+
+    public boolean isExampleAccounts() {
+        return exampleAccounts;
+    }
+
+    public void setExampleAccounts(boolean exampleAccounts) {
+        this.exampleAccounts = exampleAccounts;
     }
 
     public AccountManager(AccountRepository accountRepository, TransferRepository transferRepository) {
@@ -53,10 +63,13 @@ public class AccountManager implements IAccountManager{
     }
 
     @Override
-    public void removeAccount(Account account) throws NonexistentAccountException {
+    public void removeAccount(Client client, Account account) throws NonexistentAccountException {
         if(accountRepository.find(account.getAccountNumber()) == -1)
             throw new NonexistentAccountException(account.getAccountNumber() + "Do not exist");
-        accountRepository.remove(account);
+        synchronized (this) {
+            client.deleteAccount(account);
+            accountRepository.remove(account);
+        }
     }
 
     @Override

@@ -46,6 +46,9 @@
                             <h:outputText value="#{konto.stateOfAccount}"/>
                             <h:outputText value="#{konto.currency}"/>
                         </h:column>
+                        <h:column>
+                            <h:commandButton value="Delete Account" action="#{clientListController.deleteAccount(klient, konto)}"/>
+                        </h:column>
                     </h:dataTable>
                 </h:column>
                 <h:column>

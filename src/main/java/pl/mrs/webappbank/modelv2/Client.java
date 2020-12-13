@@ -46,5 +46,13 @@ public class Client implements Serializable {
     public void addAccount(Account account) {
         listOfAccounts.add(account);
     }
+    public void deleteAccount(Account account){listOfAccounts.remove(account);}
 
+    @Override
+    public String toString() {
+        return name +
+                " " + surname +
+                ", login='" + login + '\'' +
+                ", age=" + age;
+    }
 }

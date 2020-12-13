@@ -1,9 +1,13 @@
 package pl.mrs.webappbank.web;
 
 import lombok.Data;
+import pl.mrs.webappbank.exceptions.NonexistentAccountException;
 import pl.mrs.webappbank.managers.AccountManager;
 import pl.mrs.webappbank.managers.ClientManager;
 import pl.mrs.webappbank.modelv2.Client;
+import pl.mrs.webappbank.modelv2.Currency;
+import pl.mrs.webappbank.modelv2.accounts.Account;
+import pl.mrs.webappbank.modelv2.accounts.SavingsType;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -26,8 +30,22 @@ public class ClientListController implements Serializable {
     @Inject
     AccountManager accountManager;
 
+    public ClientListController() {
+
+    }
+
     public String deleteClient(Client c) {
         clientManager.removeClient(c);
+        return "AccountList";
+    }
+    public String deleteAccount(Client c, Account a){
+        try {
+            accountManager.removeAccount(c,a);
+        }
+        catch (NonexistentAccountException e)
+        {
+            System.out.println(e.getMessage());
+        }
         return "AccountList";
     }
 
@@ -44,22 +62,31 @@ public class ClientListController implements Serializable {
     }
     public boolean getEditable(Client c) { return c.isEditable(); }
 
+
     @PostConstruct
     public void initController() {
+        addExampleAccounts();
         currentClients = clientManager.getAllClients();
+    }
+    public void addExampleAccounts(){
+        if(accountManager.isExampleAccounts())
+            return;
+        Client c1 = new Client("destroyer69", "1234", "dupa","blada",18);
+        Client c2 = new Client("qwerty", "567", "Ziomson","PL",12);
+        Client c3 = new Client("azerty", "666", "JP","dwa",8);
+        clientManager.addClient(c1);
+        clientManager.addClient(c2);
+        clientManager.addClient(c3);
 
-//        Client c1 = new Client("002020202020", "destroyer69", "1234", "dupa","blada",18);
-//        Client c2 = new Client("481828218181", "qwerty", "567", "Ziomson","PL",12);
-//        Client c3 = new Client("156549", "azerty", "666", "JP","dwa",8);
-//        clientManager.addClient(c1);
-//        clientManager.addClient(c2);
-//        clientManager.addClient(c3);
-//        accountManager.registerCurrencyAccount(clientManager.getAllClients().get(0), Currency.PLN);
-//        accountManager.registerCurrencyAccount(clientManager.getAllClients().get(1), Currency.EUR);
-//        accountManager.registerCommonAccount(clientManager.getAllClients().get(1));
-//        accountManager.registerCommonAccount(clientManager.getAllClients().get(2));
-//        accountManager.payInto(accountManager.getAllAccounts().get(0).getAccountNumber(),242);
-//        accountManager.payInto(accountManager.getAllAccounts().get(1).getAccountNumber(),21522.21);
-//        accountManager.payInto(accountManager.getAllAccounts().get(2).getAccountNumber(),12.99);
+        accountManager.registerCommonAccount(clientManager.getAllClients().get(0));
+        accountManager.registerCommonAccount(clientManager.getAllClients().get(1));
+        accountManager.registerCurrencyAccount(clientManager.getAllClients().get(1),Currency.EUR);
+        accountManager.registerCommonAccount(clientManager.getAllClients().get(2));
+
+        accountManager.payInto(accountManager.getAllAccounts().get(0).getAccountNumber(),9990);
+        accountManager.payInto(accountManager.getAllAccounts().get(1).getAccountNumber(),90);
+        accountManager.payInto(accountManager.getAllAccounts().get(2).getAccountNumber(),94990);
+        accountManager.payInto(accountManager.getAllAccounts().get(2).getAccountNumber(),850);
+        accountManager.setExampleAccounts(true);
     }
 }
