@@ -1,16 +1,27 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        Hello from Facelets<br/>
-        <h:link outcome="/NewClient.xhtml">Dodaj Klienta</h:link><br/>
-        <h:link outcome="/NewAccount.xhtml">Dodaj Konto</h:link><br/>
-        <h:link outcome="/AccountList.xhtml">Lista Klientów</h:link><br/>
-        <h:link outcome="/Loans.xhtml">Weź pożyczkę</h:link><br/>
+        <ui:composition template="templates/template.xhtml">
+            <ui:define name="content">
+                <h:link outcome="/NewClient.xhtml">
+                    <div class="tile">Dodaj Klienta</div>
+                </h:link>
+                <h:link outcome="/NewAccount.xhtml">
+                    <div class="tile">Dodaj Konto</div>
+                </h:link>
+                <h:link outcome="/AccountList.xhtml">
+                    <div class="tile">Lista Klientów</div>
+                </h:link>
+                <h:link outcome="/Loans.xhtml">
+                    <div class="tile">Weź Pożyczkę</div>
+                </h:link><br/>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
 
