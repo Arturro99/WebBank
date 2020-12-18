@@ -8,16 +8,20 @@
 <h:head>
     <title>Confirm new client</title>
 </h:head>
-<h:body>
-    Confirm new client
+<ui:composition template="templates/template.xhtml">
+    <ui:define name="content">
+        <h:body>
+            Confirm new client
 
-    <h:form>
-        Name: <h:outputText value="#{newClientController.newClient.name}"/><br/>
-        Surname: <h:outputText value="#{newClientController.newClient.surname}"/><br/>
-        Login: <h:outputText value="#{newClientController.newClient.login}"/><br/>
-        Age: <h:outputText value="#{newClientController.newClient.age}"/><br/>
-        <h:commandButton value="OK" action="#{newClientController.confirmClient()}"/><br/>
-    </h:form>
+            <h:form>
+                Name: <h:outputText value="#{newClientController.newClient.name}"/><br/>
+                Surname: <h:outputText value="#{newClientController.newClient.surname}"/><br/>
+                Login: <h:outputText value="#{newClientController.newClient.login}"/><br/>
+                Age: <h:outputText value="#{newClientController.newClient.age}"/><br/>
+                <h:commandButton value="OK" action="#{newClientController.confirmClient()}"/><br/>
+            </h:form>
 
-</h:body>
+        </h:body>
+    </ui:define>
+</ui:composition>
 </html>

@@ -5,6 +5,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="templates/template.xhtml">
+<ui:define name="content">
 <h:body>
     Lista pożyczek:
     <h:form>
@@ -30,4 +32,6 @@
         </h:dataTable>
     </h:form>
 </h:body>
+</ui:define>
+</ui:composition>
 </html>
