@@ -25,16 +25,21 @@
                 <ui:include src="/templates/header.xhtml"/>
             </ui:insert>
         </div>
-        <div class="contentContainer">
-            <ui:insert name="content">
-                <ui:include src="/templates/content.xhtml"/>
-            </ui:insert>
-        </div>
-        <div class="footer">
-            <ui:insert name="footer">
-                <ui:include src="/templates/footer.xhtml"/>
-            </ui:insert>
-        </div>
+    </div>
+    <div class="contentContainer">
+        <ui:insert name="content">
+            <ui:include src="/templates/content.xhtml"/>
+        </ui:insert>
+    </div>
+    <div class="footer">
+        <ui:insert name="footer">
+            <ui:include src="/templates/footer.xhtml"/>
+        </ui:insert>
+    </div>
+    <div class="sidebar">
+        <ui:insert name="sidebar">
+            <ui:include src="/templates/sidebar.xhtml"/>
+        </ui:insert>
     </div>
 </h:body>
 </html>

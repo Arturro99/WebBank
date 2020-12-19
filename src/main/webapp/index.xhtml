@@ -9,13 +9,10 @@
 <h:body>
     <ui:composition template="templates/template.xhtml">
         <ui:define name="content">
-            <h:form>
-                <h:commandButton value="Dodaj Klienta" class="tile" action="NewClient"/>
-                <!--<h:link outcome="/NewClient.xhtml">Dodaj Klienta</h:link>-->
-                <h:commandButton value="Dodaj Konto" class="tile" action="NewAccount"/>
-                <h:commandButton value="Lista Klientów" class="tile" action="AccountList"/>
-                <h:commandButton value="Weź Pożyczke" class="tile" action="Loans"/>
-            </h:form>
+            <div class="gripContainer">
+                <h:button value="Dodaj Klienta 👱‍♂️👱‍♀️" styleClass="tile" outcome="NewClient"/>
+                <h:button value="Dodaj Konto 📕💵" styleClass="tile" outcome="NewAccount"/>
+            </div>
         </ui:define>
     </ui:composition>
 </h:body>
