@@ -25,11 +25,11 @@
             </h:column>
             <h:column>
                 <f:facet name="header">Actions</f:facet>
-                <h:commandButton value="Get" action="#{loansController.processLoan()}">
-                    <f:actionListener binding="#{loansController.instantiateLoan(loan)}"/>
-                </h:commandButton>
+                <h:commandButton value="Get" action="#{loansController.processLoan(loan)}"/>
+                <h:commandButton value="Delete" action="#{loansController.deleteLoan(loan)}"/>
             </h:column>
         </h:dataTable>
+        <h:messages errorClass="error"/>
     </h:form>
 </h:body>
 </ui:define>

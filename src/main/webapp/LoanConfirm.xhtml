@@ -8,12 +8,13 @@
 <ui:composition template="templates/template.xhtml">
     <ui:define name="content">
         <f:view>
-            Confirm loan
+            Confirm operation
 
             <h:form>
                 Description: <h:outputText value="#{loansController.loan.description}"/><br/>
                 Value: <h:outputText value="#{loansController.loan.value}"/><br/>
-                <h:commandButton value="OK" action="#{loansController.confirmLoan}"/><br/>
+                <h:commandButton value="Get" action="#{loansController.confirmLoan}" rendered="#{!loansController.toDeletion}"/><br/>
+                <h:commandButton value="Delete" action="#{loansController.confirmLoan}" rendered="#{loansController.toDeletion}"/><br/>
                 <h:commandButton value="Cancel" action="index" immediate="true"/><br/>
             </h:form>
         </f:view>

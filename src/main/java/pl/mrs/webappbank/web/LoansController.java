@@ -4,8 +4,11 @@ import lombok.Data;
 import pl.mrs.webappbank.managers.LoanManager;
 import pl.mrs.webappbank.modelv2.Loan;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -23,24 +26,57 @@ public class LoansController implements Serializable {
     @Inject
     Conversation conversation;
 
-    public String processLoan() {
-        conversation.begin();
-        return "LoanConfirm";
+    List<Loan> currentLoans;
+
+    boolean toDeletion;
+
+
+    public String processLoan(Loan loan) {
+        this.loan = loan;
+        if (loan.isAvailable()) {
+            toDeletion = false;
+            conversation.begin();
+            return "LoanConfirm";
+        }
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Loan already in use!", null);
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, message);
+        return null;
     }
 
     public String confirmLoan() {
-        loan.setAvailable(false);
+        if (toDeletion) {
+            loanManager.removeLoan(loan);
+            initController();
+        }
+        else
+            loan.setAvailable(false);
         conversation.end();
 
         return "Loans";
     }
 
     public List<Loan> getAllLoans() {
-        return loanManager.getAllLoans();
+        return currentLoans;
     }
 
-    public void instantiateLoan(Loan loan) {
-        this.loan = loan;
+    public String deleteLoan(Loan loan) {
+        this.loan  = loan;
+        if (loan.isAvailable()) {
+            toDeletion = true;
+            conversation.begin();
+            return "LoanConfirm";
+        }
+        else {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot remove unavailable loan!", null);
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, message);
+        }
+        return null;
     }
 
+    @PostConstruct
+    public void initController() {
+        currentLoans = loanManager.getAllLoans();
+    }
 }
