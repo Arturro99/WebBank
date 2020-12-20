@@ -7,35 +7,47 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <ui:composition template="templates/template.xhtml">
     <ui:define name="content">
+        Search by:
+        <h:form>
+            <h:selectOneMenu value="#{manageLoanController.filteringTypeHistory}">
+                <f:selectItem itemValue="lID" itemLabel="Loan id"/>
+                <f:selectItem itemValue="lDesc" itemLabel="Loan description"/>
+                <f:selectItem itemValue="cLog" itemLabel="Client login"/>
+                <f:selectItem itemValue="cID" itemLabel="Client id"/>
+            </h:selectOneMenu>
+            <h:inputText value="#{manageLoanController.filterHistory}"/>
+            <h:commandButton value="Apply" action="#{manageLoanController.applyFilter}"/><br/>
+            <h:messages errorClass="error"/>
+        </h:form>
         <h2>Loans history</h2>
         <h:dataTable value="#{manageLoanController.all}" var="loanLedger" border="2">
             <h:column>
                 <f:facet name="header">Ledger ID</f:facet>
-                <b><h:outputFormat value="#{loanLedger.uuid}"/> </b>
+                <b><h:outputFormat value="#{loanLedger.uuid}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/> </b>
             </h:column>
             <h:column>
                 <f:facet name="header">Loan ID</f:facet>
-                <b><h:outputFormat value="#{loanLedger.loan.id} "/></b>
+                <b><h:outputFormat value="#{loanLedger.loan.id}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/></b>
             </h:column>
             <h:column>
                 <f:facet name="header">Loan description</f:facet>
-                <h:outputFormat value="#{loanLedger.loan.description}"/>
+                <h:outputFormat value="#{loanLedger.loan.description}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/>
             </h:column>
             <h:column>
                 <f:facet name="header">CLient ID</f:facet>
-                <b><h:outputFormat value="#{loanLedger.client.pid}"/> </b>
+                <b><h:outputFormat value="#{loanLedger.client.pid}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/> </b>
             </h:column>
             <h:column>
                 <f:facet name="header">Client login</f:facet>
-                <h:outputFormat value="#{loanLedger.client.login}"/>
+                <h:outputFormat value="#{loanLedger.client.login}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/>
             </h:column>
             <h:column>
                 <f:facet name="header">Taking date</f:facet>
-                <i><h:outputFormat value="#{loanLedger.loanTakenDate}"/> </i>
+                <i><h:outputFormat value="#{loanLedger.loanTakenDate}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/> </i>
             </h:column>
             <h:column>
                 <f:facet name="header">Paying date</f:facet>
-                <h:outputFormat value="#{loanLedger.loanPaidDate}" rendered="#{!loanLedger.active}"/>
+                <h:outputFormat value="#{loanLedger.loanPaidDate}" rendered="#{!loanLedger.active and manageLoanController.matchFilter(loanLedger)}"/>
             </h:column>
         </h:dataTable>
     </ui:define>

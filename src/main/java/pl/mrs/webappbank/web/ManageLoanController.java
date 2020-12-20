@@ -6,6 +6,7 @@ import pl.mrs.webappbank.modelv2.Client;
 import pl.mrs.webappbank.modelv2.Loan;
 import pl.mrs.webappbank.modelv2.LoansLedger;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -27,6 +28,14 @@ public class ManageLoanController implements Serializable {
     boolean takeLoan;
     FacesMessage message;
     FacesContext context;
+    String filteringTypeHistory;
+    String filterHistory;
+
+    @PostConstruct
+    public void init() {
+        this.filteringTypeHistory = "";
+        this.filterHistory = "";
+    }
 
     public String processLoan() {
         context = FacesContext.getCurrentInstance();
@@ -48,7 +57,8 @@ public class ManageLoanController implements Serializable {
         return null;
     }
 
-    public List<LoansLedger> getAll() { return loansLedgerManager.getAll(); }
+    public List<LoansLedger> getAll() {
+        return loansLedgerManager.getAll(); }
 
     public String confirmLoan() {
         loansLedgerManager.takeLoan(loan, client);
@@ -72,6 +82,45 @@ public class ManageLoanController implements Serializable {
 
     public boolean areClientAndLoanChosen() {
         return client != null && loan != null;
+    }
+
+    public String applyFilter() {
+        if (filterHistory.equals("") || filteringTypeHistory.equals("")) {
+            context = FacesContext.getCurrentInstance();
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "No filter provided!", null);
+            context.addMessage(null, message);
+            return null;
+        }
+        return "LoansHistory";
+    }
+
+    public boolean matchFilter(LoansLedger ledger) {
+        if (filterHistory.equals("") || filteringTypeHistory.equals("")) {
+            return true;
+        }
+        switch (filteringTypeHistory) {
+            case "lID":
+                if (ledger.getLoan().getId().toString().equals(filterHistory)) {
+                    return true;
+                }
+                break;
+            case "lDesc":
+                if (ledger.getLoan().getDescription().equals(filterHistory)) {
+                    return true;
+                }
+                break;
+            case "cID":
+                if (ledger.getClient().getPid().toString().equals(filterHistory)) {
+                    return true;
+                }
+                break;
+            case "cLog":
+                if (ledger.getClient().getLogin().equals(filterHistory)) {
+                    return true;
+                }
+                break;
+        }
+        return false;
     }
 
 }
