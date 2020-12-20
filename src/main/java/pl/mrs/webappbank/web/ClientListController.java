@@ -10,11 +10,13 @@ import pl.mrs.webappbank.modelv2.accounts.Account;
 import pl.mrs.webappbank.modelv2.accounts.SavingsType;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Locale;
 
 @ViewScoped
 @Named
@@ -89,4 +91,5 @@ public class ClientListController implements Serializable {
         accountManager.payInto(accountManager.getAllAccounts().get(2).getAccountNumber(),850);
         accountManager.setExampleAccounts(true);
     }
+
 }

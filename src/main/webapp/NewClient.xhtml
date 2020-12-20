@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html lang="#{internationalizationController.language}"
+      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
     <title>New Client</title>
@@ -9,16 +10,17 @@
 <ui:composition template="templates/template.xhtml">
     <ui:define name="content">
         <h:body>
-            New Client
+            #{str['new']} #{str['client']}
 
             <h:form>
-                Name: <h:inputText value="#{newClientController.newClient.name}"/><br/>
-                *Surname: <h:inputText value="#{newClientController.newClient.surname}" required="true"/><br/>
-                *Login: <h:inputText value="#{newClientController.newClient.login}" required="true"/><br/>
-                *Password: <h:inputSecret value="#{newClientController.newClient.password}" required="true"/><br/>
-                Age: <h:inputText value="#{newClientController.newClient.age}"/><br/>
-                <h:commandButton value="Add" action="#{newClientController.processNewClient()}"/><br/>
-                <h:commandButton value="Cancel" action="index" immediate="true"/><br/>
+                #{str['name']}: <h:inputText value="#{newClientController.newClient.name}"/><br/>
+                *#{str['surname']}: <h:inputText value="#{newClientController.newClient.surname}" required="true"/><br/>
+                *#{str['login']}: <h:inputText value="#{newClientController.newClient.login}" required="true"/><br/>
+                *#{str['password']}: <h:inputSecret value="#{newClientController.newClient.password}"
+                                                    required="true"/><br/>
+                #{str['age']}: <h:inputText value="#{newClientController.newClient.age}"/><br/>
+                <h:commandButton value="#{str['add_client']}" action="#{newClientController.processNewClient()}"/><br/>
+                <h:commandButton value="#{str['cancel']}" action="index" immediate="true"/><br/>
             </h:form>
 
         </h:body>
