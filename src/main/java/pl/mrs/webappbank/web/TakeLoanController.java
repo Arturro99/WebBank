@@ -4,6 +4,7 @@ import lombok.Data;
 import pl.mrs.webappbank.managers.LoansLedgerManager;
 import pl.mrs.webappbank.modelv2.Client;
 import pl.mrs.webappbank.modelv2.Loan;
+import pl.mrs.webappbank.modelv2.LoansLedger;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -11,6 +12,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.List;
 
 @SessionScoped
 @Data
@@ -23,17 +25,30 @@ public class TakeLoanController implements Serializable {
     Client client;
     Loan loan;
     boolean takeLoan;
+    FacesMessage message;
+    FacesContext context;
 
     public String processLoan() {
+        context = FacesContext.getCurrentInstance();
         if (loan.isAvailable()) {
-            takeLoan = true;
-            return "LoanConfirm";
+            if (!client.isBlocked()) {
+                takeLoan = true;
+                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Loan taken successfully", null);
+                context.addMessage(null, message);
+                return "LoanConfirm";
+            }
+            else {
+                message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Client is blocked!", null);
+                context.addMessage(null, message);
+                return null;
+            }
         }
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Loan already in use!", null);
-        FacesContext context = FacesContext.getCurrentInstance();
+        message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Loan is currently in use!", null);
         context.addMessage(null, message);
         return null;
     }
+
+    public List<LoansLedger> getAll() { return loansLedgerManager.getAll(); }
 
     public String confirmLoan() {
         loansLedgerManager.takeLoan(loan, client);

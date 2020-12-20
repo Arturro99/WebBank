@@ -15,10 +15,6 @@
             <h:form>
                 <h:dataTable border="2" value="#{clientListController.allClients}" var="klient">
                     <h:column>
-                        <f:facet name="header">PID</f:facet>
-                        <h:outputText value="#{klient.pid}"/> <br/>
-                    </h:column>
-                    <h:column>
                         <f:facet name="header">Login</f:facet>
                         <h:outputText value="#{klient.login}"/> <br/>
                     </h:column>
@@ -29,10 +25,6 @@
                     <h:column>
                         <f:facet name="header">Surname</f:facet>
                         <h:outputText value="#{klient.surname}"/> <br/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Age</f:facet>
-                        <h:outputText value="#{klient.age}"/> <br/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">Actions</f:facet>
@@ -62,7 +54,7 @@
                         <h:commandButton value="Select" action="#{takeLoanController.setLoan(loan)}"/>
                     </h:column>
                 </h:dataTable>
-                <h:messages errorClass="error"/>
+                <h:messages infoClass="info" errorClass="error"/>
                 Wybrana pożyczka = #{takeLoanController.loan.toString()} <br/>
                 <h:commandButton value="Take" action="#{takeLoanController.processLoan}" rendered="#{takeLoanController.areClientAndLoanChosen()}"/>
             </h:form>
