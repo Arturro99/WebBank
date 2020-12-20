@@ -50,4 +50,7 @@ public class ClientRepository implements IRepository<Client,UUID> {
             output.append(c.toString()).append("\n");
         return output.toString();
     }
+
+    public void blockClient(Client client) { client.setBlocked(true); }
+    public void unBlockClient(Client client) { client.setBlocked(false); }
 }

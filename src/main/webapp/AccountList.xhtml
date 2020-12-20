@@ -37,6 +37,12 @@
                         <h:inputText value="#{klient.age}" rendered="#{clientListController.getEditable(klient)}"/>
                     </h:column>
                     <h:column>
+                        <f:facet name="header">Status</f:facet>
+                        <h:outputText value="Active" rendered="#{!klient.blocked}"/>
+                        <h:outputText value="Blocked" rendered="#{klient.blocked}"/>
+                        <br/>
+                    </h:column>
+                    <h:column>
                         <f:facet name="header">Accounts</f:facet> <br/>
                         <h:dataTable border="2" value="#{klient.listOfAccounts}" var="konto">
                             <h:column>
@@ -62,11 +68,15 @@
                         <h:commandButton value="Save changes" action="#{clientListController.editClient(klient)}"
                                          rendered="#{clientListController.getEditable(klient)}">
                             <f:actionListener binding="#{clientListController.setEditable(klient)}"/>
-                        </h:commandButton><br/>
+                        </h:commandButton>
+                        <h:commandButton value="Block" action="#{clientListController.manageClientBlockade(klient)}" rendered="#{!clientListController.isClientBlocked(klient)}"/>
+                        <h:commandButton value="Unblock" action="#{clientListController.manageClientBlockade(klient)}" rendered="#{clientListController.isClientBlocked(klient)}"/>
+                        <br/>
                     </h:column>
                 </h:dataTable>
                 <h:commandButton value="Cancel" action="index" immediate="true"/><br/>
                 <h:commandButton value="Refresh" action="#{clientListController.initController}"/><br/>
+                <h:messages errorClass="error"/>
             </h:form>
         </h:body>
     </ui:define>

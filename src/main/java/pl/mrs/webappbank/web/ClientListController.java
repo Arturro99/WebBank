@@ -10,6 +10,8 @@ import pl.mrs.webappbank.modelv2.accounts.Account;
 import pl.mrs.webappbank.modelv2.accounts.SavingsType;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -35,6 +37,12 @@ public class ClientListController implements Serializable {
     }
 
     public String deleteClient(Client c) {
+        if (isClientBlocked(c)) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot remove blocked client!", null);
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, message);
+            return null;
+        }
         clientManager.removeClient(c);
         return "AccountList";
     }
@@ -61,6 +69,9 @@ public class ClientListController implements Serializable {
         c.setEditable(!c.isEditable());
     }
     public boolean getEditable(Client c) { return c.isEditable(); }
+
+    public void manageClientBlockade(Client c) { clientManager.manageBlockade(c); }
+    public boolean isClientBlocked(Client c) { return clientManager.isClientBlocked(c); }
 
 
     @PostConstruct
