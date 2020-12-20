@@ -1,14 +1,18 @@
 package pl.mrs.webappbank.managers;
 
-import lombok.AllArgsConstructor;
+import pl.mrs.webappbank.modelv2.Client;
 import pl.mrs.webappbank.modelv2.Loan;
+import pl.mrs.webappbank.modelv2.LoansLedger;
 import pl.mrs.webappbank.repositories.LoanRepository;
+import pl.mrs.webappbank.repositories.LoansLedgerRepository;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Named;
 import java.util.List;
+import java.util.UUID;
 
 @ApplicationScoped
-@AllArgsConstructor
+@Named
 public class LoanManager {
     private final LoanRepository loanRepository;
 

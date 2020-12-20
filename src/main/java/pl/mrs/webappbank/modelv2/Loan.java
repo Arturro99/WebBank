@@ -12,12 +12,9 @@ public class Loan {
     private int value;
     private boolean available;
 
-    public Loan() {
-        this.id = UUID.randomUUID();
-    }
+    public Loan() { }
 
     public Loan(String description, int value, boolean available) {
-        this.id = UUID.randomUUID();
         this.description = description;
         this.value = value;
         this.available = available;

@@ -2,7 +2,9 @@ package pl.mrs.webappbank.web;
 
 import lombok.Data;
 import pl.mrs.webappbank.managers.LoanManager;
+import pl.mrs.webappbank.managers.LoansLedgerManager;
 import pl.mrs.webappbank.modelv2.Loan;
+import pl.mrs.webappbank.repositories.LoansLedgerRepository;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.Conversation;
@@ -22,6 +24,9 @@ public class LoansController implements Serializable {
 
     @Inject
     LoanManager loanManager;
+
+    @Inject
+    LoansLedgerManager loansLedgerManager;
 
     @Inject
     Conversation conversation;
@@ -49,8 +54,9 @@ public class LoansController implements Serializable {
             loanManager.removeLoan(loan);
             initController();
         }
-        else
-            loan.setAvailable(false);
+        else {
+            //loansLedgerManager.takeLoan(loan);
+        }
         conversation.end();
 
         return "Loans";
