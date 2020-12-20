@@ -8,17 +8,34 @@
 <ui:composition template="templates/template.xhtml">
     <ui:define name="content">
         <h2>Loans history</h2>
-        <h:dataTable value="#{takeLoanController.all}" var="loanLedger">
+        <h:dataTable value="#{manageLoanController.all}" var="loanLedger" border="2">
             <h:column>
+                <f:facet name="header">Ledger ID</f:facet>
+                <b><h:outputFormat value="#{loanLedger.uuid}"/> </b>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Loan ID</f:facet>
                 <b><h:outputFormat value="#{loanLedger.loan.id} "/></b>
-                <h:outputFormat value="(#{loanLedger.loan.description}) "/>
-                was taken by
-                <b><h:outputFormat value="#{loanLedger.client.pid} "/> </b>
-                <h:outputFormat value="(#{loanLedger.client.name} "/>
-                <h:outputFormat value="#{loanLedger.client.surname}) "/>
-                at
-                <i><h:outputFormat value="#{loanLedger.loanTakenDate} "/> </i>
-                <h:outputFormat value="and was paid at #{loanLedger.loanPaidDate}" rendered="#{loanLedger.loan.available}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Loan description</f:facet>
+                <h:outputFormat value="#{loanLedger.loan.description}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">CLient ID</f:facet>
+                <b><h:outputFormat value="#{loanLedger.client.pid}"/> </b>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Client login</f:facet>
+                <h:outputFormat value="#{loanLedger.client.login}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Taking date</f:facet>
+                <i><h:outputFormat value="#{loanLedger.loanTakenDate}"/> </i>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Paying date</f:facet>
+                <h:outputFormat value="#{loanLedger.loanPaidDate}" rendered="#{!loanLedger.active}"/>
             </h:column>
         </h:dataTable>
     </ui:define>

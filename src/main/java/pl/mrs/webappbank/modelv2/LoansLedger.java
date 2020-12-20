@@ -12,12 +12,17 @@ public class LoansLedger {
     private Loan loan;
     private Date loanTakenDate;
     private Date loanPaidDate;
+    private boolean active;
 
     public LoansLedger(Client client, Loan loan) {
         this.loanTakenDate = new Date();
         this.client = client;
         this.loan = loan;
+        this.active = true;
     }
 
-    public void payLoan() { this.loanPaidDate = new Date(); }
+    public void payLoan() {
+        this.loanPaidDate = new Date();
+        this.active = false;
+    }
 }

@@ -17,7 +17,7 @@ import java.util.List;
 @SessionScoped
 @Data
 @Named
-public class TakeLoanController implements Serializable {
+public class ManageLoanController implements Serializable {
 
     @Inject
     LoansLedgerManager loansLedgerManager;
@@ -53,8 +53,21 @@ public class TakeLoanController implements Serializable {
     public String confirmLoan() {
         loansLedgerManager.takeLoan(loan, client);
         takeLoan = false;
-        System.out.println(loansLedgerManager.getAll());
-        return "Loans";
+        return "TakeLoan";
+    }
+
+    public String payLoan(Client c, Loan l) {
+        getLedgerByClient(c).stream()
+                .filter(x -> x.getLoan().getId().equals(l.getId()))
+                .forEach(x -> {
+                x.payLoan();
+                x.getLoan().setAvailable(true);
+        });
+        return "TakeLoan";
+    }
+
+    public List<LoansLedger> getLedgerByClient(Client c) {
+        return loansLedgerManager.getLedgersByClient(c);
     }
 
     public boolean areClientAndLoanChosen() {
