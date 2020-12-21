@@ -4,10 +4,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      lang="#{internationalizationController.language}"
->
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
-    <title>Confirm new client</title>
+    <title>New Client Confirm</title>
+    <f:metadata>
+        <f:viewAction action="#{internationalizationController.onLoad()}"/>
+    </f:metadata>
 </h:head>
 <ui:composition template="templates/template.xhtml">
     <ui:define name="content">

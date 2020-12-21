@@ -143,12 +143,12 @@
     height: 5%;
     width: 30%;
 }
-.lang_switch.en{
+.lang_switch.pl{
     background-image: url("#{resource['images:en.png']}");
     background-size: 100%;
     background-repeat: no-repeat;
 }
-.lang_switch.pl{
+.lang_switch.en{
     background-image: url("#{resource['images:pl.png']}");
     background-size: 100%;
     background-repeat: no-repeat;
