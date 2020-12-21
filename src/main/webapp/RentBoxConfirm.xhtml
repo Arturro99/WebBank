@@ -16,18 +16,18 @@
     <ui:define name="content">
         <f:view>
             <h:form>
-                Description: <h:outputText value="#{resourcesController.safeBox.description}" rendered="#{!manageResourceController.rentBox}"/>
-                <h:outputText value="#{manageResourceController.safeBox.description}" rendered="#{manageResourceController.rentBox}"/><br/>
+                Description: <h:outputText value="#{loansController.safeBox.description}" rendered="#{!manageLoanController.rentBox}"/>
+                <h:outputText value="#{manageLoanController.safeBox.description}" rendered="#{manageLoanController.rentBox}"/><br/>
 
-                Position: <h:outputText value="#{manageResourceController.safeBox.position.row} / #{manageResourceController.safeBox.position.column}" rendered="#{!manageResourceController.rentBox}"/>
-                <h:outputText value="#{manageResourceController.safeBox.position.row} / #{manageResourceController.safeBox.position.column}" rendered="#{manageResourceController.rentBox}"/>
+                Position: <h:outputText value="#{manageLoanController.safeBox.position.row} / #{manageLoanController.safeBox.position.column}" rendered="#{!manageLoanController.rentBox}"/>
+                <h:outputText value="#{manageLoanController.safeBox.position.row} / #{manageLoanController.safeBox.position.column}" rendered="#{manageLoanController.rentBox}"/>
 
                 <br/>
-                <h:outputText value="Client: #{manageResourceController.client.name} #{manageResourceController.client.surname}" rendered="#{manageResourceController.rentBox}"/><br/>
+                <h:outputText value="Client: #{manageLoanController.client.name} #{manageLoanController.client.surname}" rendered="#{manageLoanController.rentBox}"/><br/>
 
 
-                <h:commandButton value="Get" action="#{manageResourceController.confirmRent}" rendered="#{!resourcesController.safeBoxToDeletion and manageResourceController.rentBox}"/><br/>
-                <h:commandButton value="Delete" action="#{resourcesController.confirmSafeBox}" rendered="#{resourcesController.safeBoxToDeletion and !manageResourceController.rentBox}"/><br/>
+                <h:commandButton value="Get" action="#{manageLoanController.confirmRent}" rendered="#{!loansController.safeBoxToDeletion and manageLoanController.rentBox}"/><br/>
+                <h:commandButton value="Delete" action="#{loansController.confirmSafeBox}" rendered="#{loansController.safeBoxToDeletion and !manageLoanController.rentBox}"/><br/>
                 <h:commandButton value="Cancel" action="index" immediate="true"/><br/>
             </h:form>
         </f:view>

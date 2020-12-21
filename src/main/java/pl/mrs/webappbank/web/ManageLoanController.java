@@ -1,7 +1,7 @@
 package pl.mrs.webappbank.web;
 
 import lombok.Data;
-import pl.mrs.webappbank.managers.EventsManager;
+import pl.mrs.webappbank.managers.LoansLedgerManager;
 import pl.mrs.webappbank.modelv2.*;
 
 import javax.annotation.PostConstruct;
@@ -16,10 +16,10 @@ import java.util.List;
 @SessionScoped
 @Data
 @Named
-public class ManageResourceController implements Serializable {
+public class ManageLoanController implements Serializable {
 
     @Inject
-    EventsManager eventsManager;
+    LoansLedgerManager loansLedgerManager;
 
     Client client;
     Loan loan;
@@ -77,17 +77,17 @@ public class ManageResourceController implements Serializable {
     }
 
     public List<LoansLedger> getAllLedgers() {
-        return eventsManager.getAllLedgers(); }
+        return loansLedgerManager.getAllLedgers(); }
     public List<SafeBoxRent> getAllBoxRents() {
-        return eventsManager.getAllBoxRents(); }
+        return loansLedgerManager.getAllBoxRents(); }
 
     public String confirmLoan() {
-        eventsManager.takeLoan(loan, client);
+        loansLedgerManager.takeLoan(loan, client);
         takeLoan = false;
         return "TakeLoan";
     }
     public String confirmRent() {
-        eventsManager.rentBox(safeBox, client);
+        loansLedgerManager.rentBox(safeBox, client);
         rentBox = false;
         return "RentBox";
     }
@@ -112,10 +112,10 @@ public class ManageResourceController implements Serializable {
     }
 
     public List<LoansLedger> getLedgerByClient(Client c) {
-        return eventsManager.getLedgersByClient(c);
+        return loansLedgerManager.getLedgersByClient(c);
     }
     public List<SafeBoxRent> getRentByClient(Client c) {
-        return eventsManager.getRentsByClient(c);
+        return loansLedgerManager.getRentsByClient(c);
     }
 
     public boolean areClientAndLoanChosen() {

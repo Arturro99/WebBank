@@ -11,11 +11,11 @@ import java.util.List;
 
 @ApplicationScoped
 @Named
-public class ResourcesManager {
+public class LoanManager {
     private final LoanRepository loanRepository;
     private final SafeBoxRepository safeBoxRepository;
 
-    public ResourcesManager() {
+    public LoanManager() {
         this.loanRepository = new LoanRepository();
         this.safeBoxRepository = new SafeBoxRepository();
     }

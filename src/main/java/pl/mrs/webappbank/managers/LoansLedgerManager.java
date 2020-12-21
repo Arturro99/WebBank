@@ -9,9 +9,9 @@ import java.util.List;
 
 @ApplicationScoped
 @Named
-public class EventsManager {
+public class LoansLedgerManager {
     private final EventsRepository eventsRepository;
-    public EventsManager() {
+    public LoansLedgerManager() {
         this.eventsRepository = new EventsRepository();
     }
 

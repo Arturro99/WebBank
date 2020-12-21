@@ -28,24 +28,24 @@
                     </h:column>
                     <h:column>
                         <f:facet name="header">Loans</f:facet>
-                        <h:dataTable border="2" value="#{manageResourceController.getLedgerByClient(klient)}" var="ledger">
+                        <h:dataTable border="2" value="#{manageLoanController.getLedgerByClient(klient)}" var="ledger">
                             <h:column>
                                 <h:outputText value="#{ledger.loan.description}"/>
-                                <h:commandButton value="Pay" action="#{manageResourceController.payLoan(klient, ledger.loan)}"/><br/>
+                                <h:commandButton value="Pay" action="#{manageLoanController.payLoan(klient, ledger.loan)}"/><br/>
                             </h:column>
                         </h:dataTable>
                     </h:column>
                     <h:column>
                         <f:facet name="header">Actions</f:facet>
-                        <h:commandButton value="Select" action="#{manageResourceController.setClient(klient)}"/><br/>
+                        <h:commandButton value="Select" action="#{manageLoanController.setClient(klient)}"/><br/>
                     </h:column>
                 </h:dataTable>
             </h:form>
 
             <h:form>
-                Wybrany klient = #{manageResourceController.client.toString()}<br/>
+                Wybrany klient = #{manageLoanController.client.toString()}<br/>
                 Wybierz pożyczkę:
-                <h:dataTable border="2" value="#{resourcesController.allLoans}" var="loan">
+                <h:dataTable border="2" value="#{loansController.allLoans}" var="loan">
                     <h:column>
                         <f:facet name="header">Description</f:facet>
                         <h:outputFormat value="#{loan.description}"/>
@@ -60,12 +60,12 @@
                     </h:column>
                     <h:column>
                         <f:facet name="header">Actions</f:facet>
-                        <h:commandButton value="Select" action="#{manageResourceController.setLoan(loan)}"/>
+                        <h:commandButton value="Select" action="#{manageLoanController.setLoan(loan)}"/>
                     </h:column>
                 </h:dataTable>
                 <h:messages infoClass="info" errorClass="error"/>
-                Wybrana pożyczka = #{manageResourceController.loan.toString()} <br/>
-                <h:commandButton value="Take" action="#{manageResourceController.processLoan}" rendered="#{manageResourceController.areClientAndLoanChosen()}"/>
+                Wybrana pożyczka = #{manageLoanController.loan.toString()} <br/>
+                <h:commandButton value="Take" action="#{manageLoanController.processLoan}" rendered="#{manageLoanController.areClientAndLoanChosen()}"/>
             </h:form>
         </ui:define>
     </ui:composition>

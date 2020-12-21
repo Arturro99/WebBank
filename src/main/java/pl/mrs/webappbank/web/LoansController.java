@@ -1,8 +1,8 @@
 package pl.mrs.webappbank.web;
 
 import lombok.Data;
-import pl.mrs.webappbank.managers.ResourcesManager;
-import pl.mrs.webappbank.managers.EventsManager;
+import pl.mrs.webappbank.managers.LoanManager;
+import pl.mrs.webappbank.managers.LoansLedgerManager;
 import pl.mrs.webappbank.modelv2.Loan;
 import pl.mrs.webappbank.modelv2.SafeBox;
 
@@ -19,15 +19,15 @@ import java.util.List;
 @ConversationScoped
 @Named
 @Data
-public class ResourcesController implements Serializable {
+public class LoansController implements Serializable {
     private Loan loan;
     private SafeBox safeBox;
 
     @Inject
-    ResourcesManager resourcesManager;
+    LoanManager loanManager;
 
     @Inject
-    EventsManager eventsManager;
+    LoansLedgerManager loansLedgerManager;
 
     @Inject
     Conversation conversation;
@@ -55,7 +55,7 @@ public class ResourcesController implements Serializable {
 
     public String confirmLoan() {
         if (toDeletion) {
-            resourcesManager.removeLoan(loan);
+            loanManager.removeLoan(loan);
             initController();
         }
         else {
@@ -67,7 +67,7 @@ public class ResourcesController implements Serializable {
     }
     public String confirmSafeBox() {
         if (safeBoxToDeletion) {
-            resourcesManager.removeSavebox(safeBox);
+            loanManager.removeSavebox(safeBox);
             initController();
         }
         else {
@@ -116,8 +116,8 @@ public class ResourcesController implements Serializable {
 
     @PostConstruct
     public void initController() {
-        currentLoans = resourcesManager.getAllLoans();
-        currentSafeBoxes = resourcesManager.getAllSafeBoxes();
+        currentLoans = loanManager.getAllLoans();
+        currentSafeBoxes = loanManager.getAllSafeBoxes();
     }
 
     public SafeBox getSafeBox() {

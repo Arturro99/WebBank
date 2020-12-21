@@ -9,76 +9,76 @@
     <ui:define name="content">
         Search by:
         <h:form>
-            <h:selectOneMenu value="#{manageResourceController.filteringTypeHistory}">
+            <h:selectOneMenu value="#{manageLoanController.filteringTypeHistory}">
                 <f:selectItem itemValue="rID" itemLabel="Resource id"/>
                 <f:selectItem itemValue="rDesc" itemLabel="Resource description"/>
                 <f:selectItem itemValue="cLog" itemLabel="Client login"/>
                 <f:selectItem itemValue="cID" itemLabel="Client id"/>
             </h:selectOneMenu>
-            <h:inputText value="#{manageResourceController.filterHistory}"/>
-            <h:commandButton value="Apply" action="#{manageResourceController.applyFilter}"/><br/>
+            <h:inputText value="#{manageLoanController.filterHistory}"/>
+            <h:commandButton value="Apply" action="#{manageLoanController.applyFilter}"/><br/>
             <h:messages errorClass="error"/>
         </h:form>
         <h2>Loans history</h2>
-        <h:dataTable value="#{manageResourceController.allLedgers}" var="loanLedger" border="2">
+        <h:dataTable value="#{manageLoanController.allLedgers}" var="loanLedger" border="2">
             <h:column>
                 <f:facet name="header">Ledger ID</f:facet>
-                <b><h:outputFormat value="#{loanLedger.uuid}" rendered="#{manageResourceController.matchFilter(loanLedger)}"/> </b>
+                <b><h:outputFormat value="#{loanLedger.uuid}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/> </b>
             </h:column>
             <h:column>
                 <f:facet name="header">Loan ID</f:facet>
-                <b><h:outputFormat value="#{loanLedger.loan.id}" rendered="#{manageResourceController.matchFilter(loanLedger)}"/></b>
+                <b><h:outputFormat value="#{loanLedger.loan.id}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/></b>
             </h:column>
             <h:column>
                 <f:facet name="header">Loan description</f:facet>
-                <h:outputFormat value="#{loanLedger.loan.description}" rendered="#{manageResourceController.matchFilter(loanLedger)}"/>
+                <h:outputFormat value="#{loanLedger.loan.description}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/>
             </h:column>
             <h:column>
                 <f:facet name="header">CLient ID</f:facet>
-                <b><h:outputFormat value="#{loanLedger.client.pid}" rendered="#{manageResourceController.matchFilter(loanLedger)}"/> </b>
+                <b><h:outputFormat value="#{loanLedger.client.pid}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/> </b>
             </h:column>
             <h:column>
                 <f:facet name="header">Client login</f:facet>
-                <h:outputFormat value="#{loanLedger.client.login}" rendered="#{manageResourceController.matchFilter(loanLedger)}"/>
+                <h:outputFormat value="#{loanLedger.client.login}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/>
             </h:column>
             <h:column>
                 <f:facet name="header">Taking date</f:facet>
-                <i><h:outputFormat value="#{loanLedger.startDate}" rendered="#{manageResourceController.matchFilter(loanLedger)}"/> </i>
+                <i><h:outputFormat value="#{loanLedger.startDate}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/> </i>
             </h:column>
             <h:column>
                 <f:facet name="header">Paying date</f:facet>
-                <h:outputFormat value="#{loanLedger.endDate}" rendered="#{!loanLedger.active and manageResourceController.matchFilter(loanLedger)}"/>
+                <h:outputFormat value="#{loanLedger.endDate}" rendered="#{!loanLedger.active and manageLoanController.matchFilter(loanLedger)}"/>
             </h:column>
         </h:dataTable>
         <h2>Box Rents history</h2>
-        <h:dataTable value="#{manageResourceController.allBoxRents}" var="boxRent" border="2">
+        <h:dataTable value="#{manageLoanController.allBoxRents}" var="boxRent" border="2">
             <h:column>
                 <f:facet name="header">Rent ID</f:facet>
-                <b><h:outputFormat value="#{boxRent.uuid}" rendered="#{manageResourceController.matchFilter(boxRent)}"/> </b>
+                <b><h:outputFormat value="#{boxRent.uuid}" rendered="#{manageLoanController.matchFilter(boxRent)}"/> </b>
             </h:column>
             <h:column>
                 <f:facet name="header">SafeBox ID</f:facet>
-                <b><h:outputFormat value="#{boxRent.safeBox.id}" rendered="#{manageResourceController.matchFilter(boxRent)}"/></b>
+                <b><h:outputFormat value="#{boxRent.safeBox.id}" rendered="#{manageLoanController.matchFilter(boxRent)}"/></b>
             </h:column>
             <h:column>
                 <f:facet name="header">Box Description</f:facet>
-                <h:outputFormat value="#{boxRent.safeBox.description}" rendered="#{manageResourceController.matchFilter(boxRent)}"/>
+                <h:outputFormat value="#{boxRent.safeBox.description}" rendered="#{manageLoanController.matchFilter(boxRent)}"/>
             </h:column>
             <h:column>
                 <f:facet name="header">CLient ID</f:facet>
-                <b><h:outputFormat value="#{boxRent.client.pid}" rendered="#{manageResourceController.matchFilter(boxRent)}"/> </b>
+                <b><h:outputFormat value="#{boxRent.client.pid}" rendered="#{manageLoanController.matchFilter(boxRent)}"/> </b>
             </h:column>
             <h:column>
                 <f:facet name="header">Client login</f:facet>
-                <h:outputFormat value="#{boxRent.client.login}" rendered="#{manageResourceController.matchFilter(boxRent)}"/>
+                <h:outputFormat value="#{boxRent.client.login}" rendered="#{manageLoanController.matchFilter(boxRent)}"/>
             </h:column>
             <h:column>
                 <f:facet name="header">Taking date</f:facet>
-                <i><h:outputFormat value="#{boxRent.startDate}" rendered="#{manageResourceController.matchFilter(boxRent)}"/> </i>
+                <i><h:outputFormat value="#{boxRent.startDate}" rendered="#{manageLoanController.matchFilter(boxRent)}"/> </i>
             </h:column>
             <h:column>
                 <f:facet name="header">Return date</f:facet>
-                <h:outputFormat value="#{boxRent.endDate}" rendered="#{!loanLedger.active and manageResourceController.matchFilter(boxRent)}"/>
+                <h:outputFormat value="#{boxRent.endDate}" rendered="#{!loanLedger.active and manageLoanController.matchFilter(boxRent)}"/>
             </h:column>
         </h:dataTable>
     </ui:define>
