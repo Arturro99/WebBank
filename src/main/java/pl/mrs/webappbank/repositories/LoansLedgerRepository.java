@@ -10,7 +10,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class LoansLedgerRepository implements IRepository<LoansLedger, UUID> {
-    private List<LoansLedger> ledgers;
+    final private List<LoansLedger> ledgers;
 
     public LoansLedgerRepository() {
         this.ledgers = new ArrayList<>();
@@ -60,7 +60,7 @@ public class LoansLedgerRepository implements IRepository<LoansLedger, UUID> {
 
     public void payLoan(LoansLedger loanLedger) {
         synchronized (ledgers) {
-            loanLedger.payLoan();
+            loanLedger.endEvent();
         }
     }
 }

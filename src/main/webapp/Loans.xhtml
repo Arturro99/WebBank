@@ -1,36 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html
+      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
+<head>
+    <title>Loans</title>
+    <f:metadata>
+        <f:viewAction action="#{internationalizationController.onLoad()}"/>
+    </f:metadata>
+</head>
 <ui:composition template="templates/template.xhtml">
-<ui:define name="content">
-<h:body>
-    Lista pożyczek:
-    <h:form>
-        <h:dataTable border="2" value="#{loansController.allLoans}" var="loan">
-            <h:column>
-                <f:facet name="header">Description</f:facet>
-                <h:outputFormat value="#{loan.description}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Value</f:facet>
-                <h:outputFormat value="#{loan.value}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Available</f:facet>
-                <h:outputFormat value="#{loan.available}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Actions</f:facet>
-                <h:commandButton value="Delete" action="#{loansController.deleteLoan(loan)}"/>
-            </h:column>
-        </h:dataTable>
-        <h:messages infoClass="info" errorClass="error"/>
-    </h:form>
-</h:body>
-</ui:define>
+    <ui:define name="content">
+        <h:body>
+            <h:form>
+                <h:dataTable border="2" value="#{loansController.allLoans}" var="loan">
+                    <h:column>
+                        <f:facet name="header">#{str['description']}</f:facet>
+                        <h:outputFormat value="#{loan.description}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{str['value']}</f:facet>
+                        <h:outputFormat value="#{loan.value}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{str['available']}</f:facet>
+                        <h:outputFormat value="#{loan.available}"/>
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">#{str['actions']}</f:facet>
+                        <h:commandButton value="#{str['get']}" action="#{loansController.processLoan()}">
+                            <f:actionListener binding="#{loansController.instantiateLoan(loan)}"/>
+                        </h:commandButton>
+                    </h:column>
+                </h:dataTable>
+                <h:messages infoClass="info" errorClass="error"/>
+            </h:form>
+        </h:body>
+    </ui:define>
 </ui:composition>
 </html>

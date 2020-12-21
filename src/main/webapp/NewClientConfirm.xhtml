@@ -6,19 +6,21 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
-    <title>Confirm new client</title>
+    <title>New Client Confirm</title>
+    <f:metadata>
+        <f:viewAction action="#{internationalizationController.onLoad()}"/>
+    </f:metadata>
 </h:head>
 <ui:composition template="templates/template.xhtml">
     <ui:define name="content">
         <h:body>
-            Confirm new client
-
+            #{str['new']} #{str['client']}:
             <h:form>
-                Name: <h:outputText value="#{newClientController.newClient.name}"/><br/>
-                Surname: <h:outputText value="#{newClientController.newClient.surname}"/><br/>
-                Login: <h:outputText value="#{newClientController.newClient.login}"/><br/>
-                Age: <h:outputText value="#{newClientController.newClient.age}"/><br/>
-                <h:commandButton value="OK" action="#{newClientController.confirmClient()}"/><br/>
+                #{str['name']}: <h:outputText value="#{newClientController.newClient.name}"/><br/>
+                #{str['surname']}: <h:outputText value="#{newClientController.newClient.surname}"/><br/>
+                #{str['login']}: <h:outputText value="#{newClientController.newClient.login}"/><br/>
+                #{str['age']}: <h:outputText value="#{newClientController.newClient.age}"/><br/>
+                <h:commandButton value="#{str['ok']}" action="#{newClientController.confirmClient()}"/><br/>
             </h:form>
 
         </h:body>

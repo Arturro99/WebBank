@@ -10,15 +10,21 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+      >
 
 <h:head>
     <title>SideBar</title>
 </h:head>
 <h:body>
     <ui:composition>
-        <h:button styleClass="sidebar_button" value="🏠" outcome="index"/>
-        <h:button styleClass="sidebar_button" value="Konta" outcome="AccountList"/>
+        <h:form >
+            <h:commandButton styleClass="lang_switch #{internationalizationController.language}" action="#{internationalizationController.changeLanguage()}"/>
+        </h:form>
+<!--        <p class="sidebar_button">#{internationalizationController.language}</p>-->
+        <h:button styleClass="sidebar_button home" value="🏠" outcome="index"/>
+        <h:button styleClass="sidebar_button" value="#{str['accounts']}" outcome="AccountList"/>
+        <h:button styleClass="sidebar_button" value="#{str['loans']}" outcome="Loans"/>
         <h:button styleClass="sidebar_button" value="Pożyczki" outcome="Loans"/>
         <h:button styleClass="sidebar_button" value="Historia" outcome="LoansHistory"/>
     </ui:composition>

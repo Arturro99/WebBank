@@ -2,17 +2,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
+    <f:metadata>
+        <f:viewAction action="#{internationalizationController.onLoad()}"/>
+    </f:metadata>
     <title>Facelet Title</title>
 </h:head>
 <h:body>
     <ui:composition template="templates/template.xhtml">
         <ui:define name="content">
             <div class="gripContainer">
-                <h:button value="Dodaj Klienta 👱‍♂️👱‍♀️" styleClass="tile" outcome="NewClient"/>
-                <h:button value="Dodaj Konto 📕💵" styleClass="tile" outcome="NewAccount"/>
-                <h:button value="Weź/Zwróć pożyczkę 🤑🤑-->🧐👛-->😱-->😓🔫" styleClass="tile" outcome="TakeLoan"/>
+                <h:button value="#{str['add_client']} 👱‍♂️👱‍♀️" styleClass="tile" outcome="NewClient"/>
+                <h:button value="#{str['add_account']}📕💰" styleClass="tile" outcome="NewAccount"/>
             </div>
         </ui:define>
     </ui:composition>
