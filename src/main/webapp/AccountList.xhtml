@@ -73,8 +73,8 @@
                                          rendered="#{clientListController.getEditable(klient)}">
                             <f:actionListener binding="#{clientListController.setEditable(klient)}"/>
                         </h:commandButton>
-                        <h:commandButton value="Block" action="#{clientListController.manageClientBlockade(klient)}" rendered="#{!clientListController.isClientBlocked(klient)}"/>
-                        <h:commandButton value="Unblock" action="#{clientListController.manageClientBlockade(klient)}" rendered="#{clientListController.isClientBlocked(klient)}"/>
+                        <h:commandButton value="Block" action="#{clientListController.manageClientBlockade(klient)}" rendered="#{!klient.blocked}"/>
+                        <h:commandButton value="Unblock" action="#{clientListController.manageClientBlockade(klient)}" rendered="#{klient.blocked}"/>
                         <br/>
                     </h:column>
                 </h:dataTable>

@@ -104,4 +104,9 @@ public class LoansController implements Serializable {
         currentLoans = loanManager.getAllLoans();
         editedLoan = new HashMap<>();
     }
+
+    public String finishDeletion() {
+        toDeletion = false;
+        return "index";
+    }
 }

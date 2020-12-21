@@ -37,4 +37,9 @@ public class NewLoanController implements Serializable {
         conversation.end();
         return "Loans";
     }
+
+    public String finishCreation() {
+        loanCreated = false;
+        return "index";
+    }
 }

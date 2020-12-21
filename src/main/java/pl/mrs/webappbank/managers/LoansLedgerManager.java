@@ -25,20 +25,22 @@ public class LoansLedgerManager {
             loan.setAvailable(false);
             LoansLedger ledger = new LoansLedger(account, loan);
             loansLedgerRepository.add(ledger);
+            account.setStateOfAccount(account.getStateOfAccount() + loan.getValue());
             return true;
         }
         return false;
     }
 
-    public boolean payLoan(Loan loan) {
+    public boolean payLoan(Loan loan, Account account) {
         if (!loan.isAvailable()) {
-            loan.setAvailable(true);
-//            List<Client> cl = loansLedgerRepository.findAll().stream()
-//                             .filter(x -> x.getLoan().getId().equals(loan.getId()))
-//                             .map(LoansLedger::getClient)
-//                            .collect(Collectors.toList());
-//            cl.get(0).payLoan(loan);
+            getLedgersByAccount(account).stream()
+                    .filter(x -> x.getLoan().getId().equals(loan.getId()))
+                    .forEach(x -> {
+                        x.endEvent();
+                        x.getLoan().setAvailable(true);
+                    });
             loansLedgerRepository.payLoan(loansLedgerRepository.findLedgerByLoan(loan));
+            account.setStateOfAccount(account.getStateOfAccount() - loan.getValue());
             return true;
         }
         return false;

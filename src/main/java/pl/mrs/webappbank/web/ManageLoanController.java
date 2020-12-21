@@ -68,12 +68,7 @@ public class ManageLoanController implements Serializable {
 
     public String payLoan(Account acc, Loan l) {
         if (acc.getStateOfAccount() >= l.getValue()) {
-            getLedgerByAccount(acc).stream()
-                    .filter(x -> x.getLoan().getId().equals(l.getId()))
-                    .forEach(x -> {
-                        x.endEvent();
-                        x.getLoan().setAvailable(true);
-                    });
+            loansLedgerManager.payLoan(l, acc);
             return "TakeLoan";
         }
         else {
@@ -124,6 +119,11 @@ public class ManageLoanController implements Serializable {
                 break;
         }
         return false;
+    }
+
+    public String finishTaking() {
+        takeLoan = false;
+        return "index";
     }
 
 }

@@ -12,16 +12,8 @@ public class LoansLedger extends Event{
     private Account account;
     private Loan loan;
 
-    public LoansLedger(Client client, Loan loan) {
-        this.client = client;
+    public LoansLedger(Account account, Loan loan) {
+        this.account = account;
         this.loan = loan;
-    }
-
-    public Loan getLoan() {
-        return loan;
-    }
-
-    public Client getClient() {
-        return client;
     }
 }

@@ -1,7 +1,9 @@
 package pl.mrs.webappbank.modelv2.accounts;
 
+import lombok.Data;
 import pl.mrs.webappbank.modelv2.Currency;
 
+@Data
 public abstract class Account {
 
     protected final String accountNumber;
@@ -11,9 +13,6 @@ public abstract class Account {
         this.accountNumber = accountNumber;
         this.stateOfAccount = stateOfAccount;
     }
-
-    public String getAccountNumber() { return accountNumber; }
-    public double getStateOfAccount() { return stateOfAccount; }
 
     public void changeStateOfAccount(double amount) { this.stateOfAccount += amount; }
 

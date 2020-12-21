@@ -34,7 +34,12 @@
                 <h:commandButton value="Create" action="#{newLoanController.confirmLoan}"
                                  rendered="#{newLoanController.loanCreated}" immediate="true"/><br/>
 
-                <h:commandButton value="#{str['cancel']}" action="index" immediate="true"/><br/>
+                <h:commandButton value="#{str['cancel']}" action="#{manageLoanController.finishTaking}"
+                                 immediate="true" rendered="#{manageLoanController.takeLoan}"/><br/>
+                <h:commandButton value="#{str['cancel']}" action="#{loansController.finishDeletion}"
+                                 immediate="true" rendered="#{loansController.toDeletion}"/><br/>
+                <h:commandButton value="#{str['cancel']}" action="#{newLoanController.finishCreation}"
+                                 immediate="true" rendered="#{newLoanController.loanCreated}"/><br/>
             </h:form>
         </f:view>
     </ui:define>
