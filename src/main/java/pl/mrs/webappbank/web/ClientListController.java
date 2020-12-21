@@ -4,8 +4,11 @@ import lombok.Data;
 import pl.mrs.webappbank.exceptions.NonexistentAccountException;
 import pl.mrs.webappbank.managers.AccountManager;
 import pl.mrs.webappbank.managers.ClientManager;
+import pl.mrs.webappbank.managers.LoansLedgerManager;
 import pl.mrs.webappbank.modelv2.Client;
 import pl.mrs.webappbank.modelv2.Currency;
+import pl.mrs.webappbank.modelv2.Loan;
+import pl.mrs.webappbank.modelv2.LoansLedger;
 import pl.mrs.webappbank.modelv2.accounts.Account;
 import pl.mrs.webappbank.modelv2.accounts.SavingsType;
 
@@ -16,7 +19,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @ViewScoped
 @Named
@@ -24,7 +29,11 @@ import java.util.List;
 public class ClientListController implements Serializable {
 
     private List<Client> currentClients;
-    private Client editedClient;
+    private Client client;
+    HashMap<String, Boolean> editedClient;
+
+    FacesMessage message;
+    FacesContext context;
 
     @Inject
     ClientManager clientManager;
@@ -32,14 +41,23 @@ public class ClientListController implements Serializable {
     @Inject
     AccountManager accountManager;
 
+    @Inject
+    LoansLedgerManager loansLedgerManager;
+
     public ClientListController() {
 
     }
 
     public String deleteClient(Client c) {
         if (isClientBlocked(c)) {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot remove blocked client!", null);
-            FacesContext context = FacesContext.getCurrentInstance();
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot remove blocked client!", null);
+            context = FacesContext.getCurrentInstance();
+            context.addMessage(null, message);
+            return null;
+        }
+        else if (clientHasLoan(c)) {
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot remove client with loan!", null);
+            context = FacesContext.getCurrentInstance();
             context.addMessage(null, message);
             return null;
         }
@@ -47,14 +65,20 @@ public class ClientListController implements Serializable {
         return "AccountList";
     }
     public String deleteAccount(Client c, Account a){
-        try {
-            accountManager.removeAccount(c,a);
+        if (!accountHasLoan(a)) {
+            try {
+                accountManager.removeAccount(c, a);
+            } catch (NonexistentAccountException e) {
+                System.out.println(e.getMessage());
+            }
+            return "AccountList";
         }
-        catch (NonexistentAccountException e)
-        {
-            System.out.println(e.getMessage());
+        else {
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot remove account with loan!", null);
+            context = FacesContext.getCurrentInstance();
+            context.addMessage(null, message);
+            return null;
         }
-        return "AccountList";
     }
 
     public List<Client> getAllClients() {
@@ -66,9 +90,16 @@ public class ClientListController implements Serializable {
     }
 
     public void setEditable(Client c) {
-        c.setEditable(!c.isEditable());
+        if (editedClient.containsKey(c.getPid().toString()) && editedClient.get(c.getPid().toString()))
+            editedClient.replace(c.getPid().toString(), false);
+        else
+            editedClient.put(c.getPid().toString(), true);
     }
-    public boolean getEditable(Client c) { return c.isEditable(); }
+    public boolean getEditable(Client c) {
+        if (editedClient.containsKey(c.getPid().toString()))
+            return editedClient.get(c.getPid().toString());
+        return false;
+    }
 
     public void manageClientBlockade(Client c) { clientManager.manageBlockade(c); }
     public boolean isClientBlocked(Client c) { return clientManager.isClientBlocked(c); }
@@ -78,6 +109,7 @@ public class ClientListController implements Serializable {
     public void initController() {
         addExampleAccounts();
         currentClients = clientManager.getAllClients();
+        editedClient = new HashMap<>();
     }
     public void addExampleAccounts(){
         if(accountManager.isExampleAccounts())
@@ -99,5 +131,23 @@ public class ClientListController implements Serializable {
         accountManager.payInto(accountManager.getAllAccounts().get(2).getAccountNumber(),94990);
         accountManager.payInto(accountManager.getAllAccounts().get(2).getAccountNumber(),850);
         accountManager.setExampleAccounts(true);
+    }
+
+    private boolean clientHasLoan(Client c) {
+        return c.getListOfAccounts().stream()
+                .map(Account::getAccountNumber)
+                .anyMatch(
+                        loansLedgerManager.getAll().stream()
+                                .filter(LoansLedger::isActive)
+                                .map(x -> x.getAccount().getAccountNumber())
+                                .collect(Collectors.toSet())
+                                ::contains);
+    }
+
+    private boolean accountHasLoan(Account acc) {
+        return loansLedgerManager.getAll().stream()
+                .filter(LoansLedger::isActive)
+                .map(x -> x.getAccount().getAccountNumber())
+                .anyMatch(acc.getAccountNumber()::contains);
     }
 }
