@@ -9,7 +9,8 @@ import java.util.UUID;
 public class Loan extends Resource{
     private int value;
 
-    public Loan() { this.available = true; }
+    public Loan() {
+        super(null,true);}
 
     public Loan(String description, int value, boolean available) {
         super(description,available);

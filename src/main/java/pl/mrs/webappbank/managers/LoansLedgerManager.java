@@ -1,10 +1,7 @@
 package pl.mrs.webappbank.managers;
 
-import pl.mrs.webappbank.modelv2.Client;
-import pl.mrs.webappbank.modelv2.Loan;
-import pl.mrs.webappbank.modelv2.LoansLedger;
+import pl.mrs.webappbank.modelv2.*;
 import pl.mrs.webappbank.modelv2.accounts.Account;
-import pl.mrs.webappbank.repositories.LoansLedgerRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
@@ -13,9 +10,9 @@ import java.util.List;
 @ApplicationScoped
 @Named
 public class LoansLedgerManager {
-    private final LoansLedgerRepository loansLedgerRepository;
+    private final Admin.LoansLedgerRepository loansLedgerRepository;
     public LoansLedgerManager() {
-        this.loansLedgerRepository = new LoansLedgerRepository();
+        this.loansLedgerRepository = new Admin.LoansLedgerRepository();
     }
 
     public boolean takeLoan(Loan loan, Account account, Client client) {

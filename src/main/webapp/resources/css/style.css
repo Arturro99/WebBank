@@ -125,7 +125,7 @@
     height: 100%;
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 25% 25% 25% 25%;
+    grid-template-rows: 20% 20% 20% 20% 20% ;
     gap: 2px 2px;
     grid-template-areas:
         "."

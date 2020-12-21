@@ -1,28 +1,20 @@
 package pl.mrs.webappbank.web;
 
 import lombok.Data;
-import pl.mrs.webappbank.managers.ClientManager;
 import pl.mrs.webappbank.managers.LoanManager;
 import pl.mrs.webappbank.managers.LoansLedgerManager;
-import pl.mrs.webappbank.modelv2.Client;
 import pl.mrs.webappbank.modelv2.Loan;
-import pl.mrs.webappbank.modelv2.accounts.Account;
-import pl.mrs.webappbank.repositories.LoansLedgerRepository;
+import pl.mrs.webappbank.modelv2.SafeBox;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 @SessionScoped
 @Named
@@ -46,7 +38,6 @@ public class LoansController implements Serializable {
     List<Loan> currentLoans;
     HashMap<String, Boolean> editedLoan;
 
-    boolean toDeletion;
     boolean safeBoxToDeletion;
 
     public String confirmDeletion() {
@@ -83,11 +74,11 @@ public class LoansController implements Serializable {
             context.addMessage(null, message);
         }
         initController();
-        conversation.end();
+       // conversation.end();
 
-        return "Loans";
+       // return "Loans";
     }
-    public String confirmSafeBox() {
+    public void confirmSafeBox() {
         if (safeBoxToDeletion) {
             loanManager.removeSavebox(safeBox);
             initController();
@@ -95,14 +86,11 @@ public class LoansController implements Serializable {
         else {
             //loansLedgerManager.takeLoan(loan);
         }
-        conversation.end();
+      //  conversation.end();
 
-        return "RentBox";
+        //return "RentBox";
     }
 
-    public List<Loan> getAllLoans() {
-        return currentLoans;
-    }
     public List<SafeBox> getAllSafeBoxes() {
         return currentSafeBoxes;
     }
@@ -129,7 +117,7 @@ public class LoansController implements Serializable {
         this.safeBox  = safeBox;
         if (safeBox.isAvailable()) {
             safeBoxToDeletion = true;
-            conversation.begin();
+            //conversation.begin();
             return "RentBoxConfirm";
         }
         else {

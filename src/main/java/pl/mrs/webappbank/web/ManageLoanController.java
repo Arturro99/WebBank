@@ -2,9 +2,7 @@ package pl.mrs.webappbank.web;
 
 import lombok.Data;
 import pl.mrs.webappbank.managers.LoansLedgerManager;
-import pl.mrs.webappbank.modelv2.Client;
-import pl.mrs.webappbank.modelv2.Loan;
-import pl.mrs.webappbank.modelv2.LoansLedger;
+import pl.mrs.webappbank.modelv2.*;
 import pl.mrs.webappbank.modelv2.accounts.Account;
 
 import javax.annotation.PostConstruct;
@@ -81,7 +79,8 @@ public class ManageLoanController implements Serializable {
     public List<LoansLedger> getAllLedgers() {
         return loansLedgerManager.getAllLedgers(); }
     public List<SafeBoxRent> getAllBoxRents() {
-        return loansLedgerManager.getAllBoxRents(); }
+        return loansLedgerManager.getAllBoxRents();
+    }
 
     public String confirmLoan() {
         loansLedgerManager.takeLoan(loan, account, client);
@@ -97,10 +96,10 @@ public class ManageLoanController implements Serializable {
     public String payLoan(Account acc, Loan l) {
         if (acc.getStateOfAccount() >= l.getValue()) {
             getLedgerByAccount(acc).stream()
-                    .filter(x -> x.getLoan().getId().equals(l.getId()))
+                    .filter(x -> x.getResource().getId().equals(l.getId()))
                     .forEach(x -> {
                         x.endEvent();
-                        x.getLoan().setAvailable(true);
+                        x.getResource().setAvailable(true);
                     });
             return "TakeLoan";
         }

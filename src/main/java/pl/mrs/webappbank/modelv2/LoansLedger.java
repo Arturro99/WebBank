@@ -9,19 +9,15 @@ import java.util.UUID;
 
 @Data
 public class LoansLedger extends Event{
-    private Client client;
+    private Account account;
 
-    public LoansLedger(Client client, Loan loan) {
-        this.client = client;
+    public LoansLedger(Account account, Loan loan) {
+        this.account = account;
         this.resource = loan;
     }
-
-    public Loan getLoan() {
+    public Loan getLoan(){
         return (Loan) resource;
     }
 
-    public Client getClient() {
-        return client;
-    }
 
 }
