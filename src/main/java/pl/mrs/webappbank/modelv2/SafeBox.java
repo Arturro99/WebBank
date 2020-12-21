@@ -1,19 +1,16 @@
 package pl.mrs.webappbank.modelv2;
 
-public class SafeBox extends Resource {
-    static class Position{
-        int row;
-        int column;
+import java.util.Objects;
 
-        public Position(int row, int column) {
-            this.row = row;
-            this.column = column;
-        }
-    }
+public class SafeBox extends Resource {
     Position position;
 
-    public SafeBox(int row, int column) {
+    public SafeBox(String description, boolean available,int row, int column) {
+        super(description,available);
         this.position = new Position(row,column);
     }
 
+    public Position getPosition() {
+        return position;
+    }
 }

@@ -29,6 +29,7 @@ import java.util.stream.Collectors;
 @Data
 public class LoansController implements Serializable {
     private Loan loan;
+    private SafeBox safeBox;
 
     @Inject
     LoanManager loanManager;
@@ -40,9 +41,13 @@ public class LoansController implements Serializable {
 //    Conversation conversation;
 
     boolean toDeletion;
+    List<SafeBox> currentSafeBoxes;
+
     List<Loan> currentLoans;
     HashMap<String, Boolean> editedLoan;
 
+    boolean toDeletion;
+    boolean safeBoxToDeletion;
 
     public String confirmDeletion() {
         loanManager.removeLoan(loan);
@@ -78,6 +83,28 @@ public class LoansController implements Serializable {
             context.addMessage(null, message);
         }
         initController();
+        conversation.end();
+
+        return "Loans";
+    }
+    public String confirmSafeBox() {
+        if (safeBoxToDeletion) {
+            loanManager.removeSavebox(safeBox);
+            initController();
+        }
+        else {
+            //loansLedgerManager.takeLoan(loan);
+        }
+        conversation.end();
+
+        return "RentBox";
+    }
+
+    public List<Loan> getAllLoans() {
+        return currentLoans;
+    }
+    public List<SafeBox> getAllSafeBoxes() {
+        return currentSafeBoxes;
     }
 
     public void setEditable(Loan l) {
@@ -98,10 +125,29 @@ public class LoansController implements Serializable {
             return editedLoan.get(l.getId().toString());
         return false;
     }
+    public String deleteSafebox(SafeBox safeBox) {
+        this.safeBox  = safeBox;
+        if (safeBox.isAvailable()) {
+            safeBoxToDeletion = true;
+            conversation.begin();
+            return "RentBoxConfirm";
+        }
+        else {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot remove unavailable Safe Box!", null);
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, message);
+        }
+        return null;
+    }
 
     @PostConstruct
     public void initController() {
         currentLoans = loanManager.getAllLoans();
         editedLoan = new HashMap<>();
+        currentSafeBoxes = loanManager.getAllSafeBoxes();
+    }
+
+    public SafeBox getSafeBox() {
+        return safeBox;
     }
 }

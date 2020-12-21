@@ -15,9 +15,10 @@
         <ui:define name="content">
             <div class="gripContainer">
                 <h:button value="#{str['add_client']} 👱‍♂️👱‍♀️" styleClass="tile" outcome="NewClient"/>
-                <h:button value="#{str['add_account']} 📕💵" styleClass="tile" outcome="NewAccount"/>
                 <h:button value="Dodaj pożyczkę 🎁" styleClass="tile" outcome="NewLoan"/>
-                <h:button value="Weź/Zwróć pożyczkę 🤑🤑-->🧐👛-->😱-->😓🔫" styleClass="tile" outcome="TakeLoan"/>
+                <h:button value="#{str['add_account']}📕💰" styleClass="tile" outcome="NewAccount"/>
+                <h:button value="#{str['get']}/#{str['pay_off']} #{str['loan']} 🤑🤑-->🧐👛-->😱-->😓🔫" styleClass="tile" outcome="TakeLoan"/>
+                <h:button value="#{str['get']}/#{str['pay_off']} Safe Box" styleClass="tile" outcome="RentBox"/>
             </div>
         </ui:define>
     </ui:composition>

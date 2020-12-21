@@ -12,9 +12,8 @@ public class Loan extends Resource{
     public Loan() { this.available = true; }
 
     public Loan(String description, int value, boolean available) {
-        this.description = description;
-        this.value = value;
-        this.available = available;
+        super(description,available);
+        this.value= value;
     }
 
 

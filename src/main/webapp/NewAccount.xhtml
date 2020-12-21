@@ -52,11 +52,11 @@
                 <h:selectOneRadio value="#{newAccountController.selectedAccountType}" layout="pageDirection">
                     <f:selectItem itemValue="Common" itemLabel="#{str['common']}"/>
                     <f:selectItems value="#{newAccountController.currencyType}" var="type"
-                                   itemValue="#{str['currency']} #{type}"
-                                   itemLabel="Currency #{type}"/>
+                                   itemLabel="#{str['currency']} #{type}"
+                                   itemValue="Currency #{type}"/>
                     <f:selectItems value="#{newAccountController.savingsType}" var="type"
-                                   itemValue="#{str['savings']} #{type}"
-                                   itemLabel="Savings #{type}"/>
+                                   itemLabel="#{str['savings']} #{type}"
+                                   itemValue="Savings #{type}"/>
                 </h:selectOneRadio>
                 <h:commandButton value="#{str['create']}" action="NewAccountConfirm"/>
             </h:form>

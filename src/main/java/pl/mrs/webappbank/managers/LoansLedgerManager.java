@@ -9,13 +9,11 @@ import pl.mrs.webappbank.repositories.LoansLedgerRepository;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @ApplicationScoped
 @Named
 public class LoansLedgerManager {
     private final LoansLedgerRepository loansLedgerRepository;
-
     public LoansLedgerManager() {
         this.loansLedgerRepository = new LoansLedgerRepository();
     }
@@ -29,23 +27,35 @@ public class LoansLedgerManager {
         }
         return false;
     }
+    public boolean rentBox(SafeBox safeBox, Client client){
+        if(safeBox.isAvailable() && !client.isBlocked()){
+            safeBox.setAvailable(false);
+            SafeBoxRent rent = new SafeBoxRent(client, safeBox);
+            loansLedgerRepository.add(rent);
+            return true;
+        }
+        return false;
+    }
 
     public boolean payLoan(Loan loan) {
         if (!loan.isAvailable()) {
             loan.setAvailable(true);
-//            List<Client> cl = loansLedgerRepository.findAll().stream()
-//                             .filter(x -> x.getLoan().getId().equals(loan.getId()))
-//                             .map(LoansLedger::getClient)
-//                            .collect(Collectors.toList());
-//            cl.get(0).payLoan(loan);
             loansLedgerRepository.payLoan(loansLedgerRepository.findLedgerByLoan(loan));
             return true;
         }
         return false;
     }
 
-    public List<LoansLedger> getAll() { return loansLedgerRepository.findAll(); }
+    public List<LoansLedger> getAllLedgers() { return loansLedgerRepository.findAllLedgers(); }
     public List<LoansLedger> getLedgersByAccount(Account account) {
         return loansLedgerRepository.findLedgerByAccount(account);
+    }
+
+    public List<SafeBoxRent> getRentsByClient(Client c) {
+        return loansLedgerRepository.findRentByClient(c);
+    }
+
+    public List<SafeBoxRent> getAllBoxRents() {
+        return loansLedgerRepository.findAllRents();
     }
 }

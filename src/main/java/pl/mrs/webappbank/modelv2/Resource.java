@@ -7,6 +7,11 @@ public abstract class Resource {
     protected String description;
     protected boolean available;
 
+    public Resource(String description,boolean available) {
+        this.description = description;
+        this.available = available;
+    }
+
     public void setId(UUID randomUUID) {
         this.id = randomUUID;
     }

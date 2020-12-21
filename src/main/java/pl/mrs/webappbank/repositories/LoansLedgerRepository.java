@@ -10,28 +10,56 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class LoansLedgerRepository implements IRepository<LoansLedger, UUID> {
+public class LoansLedgerRepository implements IRepository<Event, UUID> {
     final private List<LoansLedger> ledgers;
+    final private List<SafeBoxRent> safeBoxesRents;
 
     public LoansLedgerRepository() {
+
         this.ledgers = new ArrayList<>();
+        this.safeBoxesRents = new ArrayList<>();
     }
 
     @Override
-    public void add(LoansLedger element) {
+    public void add(Event element) {
         element.setUuid(UUID.randomUUID());
-        ledgers.add(element);
+        if (element.getClass().equals(SafeBoxRent.class))
+            safeBoxesRents.add((SafeBoxRent) element);
+        else
+            ledgers.add((LoansLedger) element);
     }
 
     @Override
-    public void remove(LoansLedger element) {
-        synchronized (ledgers) {
-            ledgers.remove(element);
+    public void remove(Event element) {
+
+        if (element.getClass().equals(SafeBoxRent.class)) {
+            synchronized (safeBoxesRents) {
+                safeBoxesRents.remove(element);
+            }
+        } else {
+            synchronized (ledgers) {
+                ledgers.remove(element);
+            }
         }
     }
 
     @Override
-    public List<LoansLedger> findAll() {
+    public List<Event> findAll() {
+        List<Event> events;
+        synchronized (ledgers) {
+            events = new ArrayList<>(ledgers);
+            events.addAll(safeBoxesRents);
+        }
+        return events;
+    }
+
+    public List<SafeBoxRent> findAllRents() {
+        synchronized (safeBoxesRents) {
+            return new ArrayList<>(safeBoxesRents);
+        }
+    }
+
+    public List<LoansLedger> findAllLedgers() {
         synchronized (ledgers) {
             return new ArrayList<>(ledgers);
         }
@@ -39,15 +67,23 @@ public class LoansLedgerRepository implements IRepository<LoansLedger, UUID> {
 
     @Override
     public int find(UUID identifier) {
-        return ledgers.indexOf(ledgers.stream()
+        int index = -1;
+        index = ledgers.indexOf(ledgers.stream()
                 .filter(x -> x.getUuid().equals(identifier))
                 .findAny()
                 .orElse(null));
+        if (index < 0) {
+            index = safeBoxesRents.indexOf(safeBoxesRents.stream()
+                    .filter(x -> x.getUuid().equals(identifier))
+                    .findAny()
+                    .orElse(null));
+        }
+        return index;
     }
 
     public LoansLedger findLedgerByLoan(Loan loan) {
         return ledgers.stream()
-                .filter(x -> x.getLoan().getId().equals(loan.getId()))
+                .filter(x -> x.getResource().getId().equals(loan.getId()))
                 .findFirst()
                 .get();
     }
@@ -63,5 +99,12 @@ public class LoansLedgerRepository implements IRepository<LoansLedger, UUID> {
         synchronized (ledgers) {
             loanLedger.endEvent();
         }
+    }
+
+    public List<SafeBoxRent> findRentByClient(Client c) {
+        return safeBoxesRents.stream()
+                .filter(x -> x.getClient().getPid().equals(c.getPid()))
+                .filter(SafeBoxRent::isActive)
+                .collect(Collectors.toList());
     }
 }
