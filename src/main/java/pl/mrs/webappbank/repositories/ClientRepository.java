@@ -37,10 +37,10 @@ public class ClientRepository implements IRepository<Client,UUID> {
 
     @Override
     public int find(UUID identifier) {
-        return clients.indexOf(clients.stream()
-                .filter(c -> c.getPid().equals(identifier))
-                .findAny()
-                .orElse(new Client()));
+        return clients.stream()
+                .filter(x -> x.getPid().equals(identifier))
+                .map(clients::indexOf)
+                .findFirst().orElse(-5);
     }
 
     @Override

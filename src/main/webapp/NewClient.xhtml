@@ -24,6 +24,7 @@
                 #{str['age']}: <h:inputText value="#{newClientController.newClient.age}"/><br/>
                 <h:commandButton value="#{str['add_client']}" action="#{newClientController.processNewClient()}"/><br/>
                 <h:commandButton value="#{str['cancel']}" action="index" immediate="true"/><br/>
+                <h:messages errorClass="error"/>
             </h:form>
 
         </h:body>
