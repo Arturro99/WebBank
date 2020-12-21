@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class EventsRepository implements IRepository<Event, UUID> {
+public class LoansLedgerRepository implements IRepository<Event, UUID> {
     final private List<LoansLedger> ledgers;
     final private List<SafeBoxRent> safeBoxesRents;
 
-    public EventsRepository() {
+    public LoansLedgerRepository() {
 
         this.ledgers = new ArrayList<>();
         this.safeBoxesRents = new ArrayList<>();
