@@ -13,31 +13,40 @@
     </f:metadata>
 </head>
 <ui:composition template="templates/template.xhtml">
-    <ui:define name="content">
-        <h:body>
-            <h:form>
-                <h:dataTable border="2" value="#{loansController.allLoans}" var="loan">
-                    <h:column>
-                        <f:facet name="header">#{str['description']}</f:facet>
-                        <h:outputFormat value="#{loan.description}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">#{str['value']}</f:facet>
-                        <h:outputFormat value="#{loan.value}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">#{str['available']}</f:facet>
-                        <h:outputFormat value="#{loan.available}"/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">#{str['actions']}</f:facet>
-                        <h:commandButton value="#{str['get']}" action="#{loansController.processLoan()}">
-                            <f:actionListener binding="#{loansController.instantiateLoan(loan)}"/>
-                        </h:commandButton>
-                    </h:column>
-                </h:dataTable>
-            </h:form>
-        </h:body>
-    </ui:define>
+<ui:define name="content">
+<h:body>
+    Lista pożyczek:
+    <h:form>
+        <h:dataTable border="2" value="#{loansController.allLoans}" var="loan">
+            <h:column>
+                <f:facet name="header">Description</f:facet>
+                <h:outputFormat value="#{loan.description}"/><br/>
+                <h:inputText value="#{loan.description}" rendered="#{loansController.getEditable(loan)}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Value</f:facet>
+                <h:outputFormat value="#{loan.value}"/><br/>
+                <h:inputText value="#{loan.value}" rendered="#{loansController.getEditable(loan)}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Available</f:facet>
+                <h:outputFormat value="#{loan.available}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Actions</f:facet>
+                <h:commandButton value="Delete" action="#{loansController.deleteLoan(loan)}">
+                    <f:param name="loanId" value="#{loan.id}"/>
+                </h:commandButton>
+                <h:commandButton value="Edit" action="#{loansController.setEditable(loan)}" immediate="true"/>
+                <h:commandButton value="Save changes" action="#{loansController.editLoan(loan)}"
+                                 rendered="#{loansController.getEditable(loan)}">
+                    <f:actionListener binding="#{loansController.setEditable(loan)}"/>
+                </h:commandButton>
+            </h:column>
+        </h:dataTable>
+        <h:messages infoClass="info" errorClass="error"/>
+    </h:form>
+</h:body>
+</ui:define>
 </ui:composition>
 </html>

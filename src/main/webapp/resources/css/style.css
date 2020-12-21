@@ -49,7 +49,7 @@
     border-width: 5px;
     background-color: #264653;
     position: relative;
-    top: 20%;
+    top: 5%;
     margin-top: 5%;
     left: 10%;
     text-align: center;
@@ -120,7 +120,7 @@
     height: 100%;
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 50% 50%;
+    grid-template-rows: 25% 25% 25% 25%;
     gap: 2px 2px;
     grid-template-areas:
         "."
@@ -129,6 +129,9 @@
 
 .error {
     color: red;
+}
+.info {
+    color:green;
 }
 
 .lang_switch {
@@ -154,3 +157,4 @@
     background-size: 100%;
     background-repeat: no-repeat;
 }
+

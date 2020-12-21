@@ -31,6 +31,18 @@ public class ClientManager {
         clientRepository.remove(client);
     }
 
+    public void manageBlockade(Client client) {
+        if (isClientBlocked(client)) {
+            clientRepository.unBlockClient(client);
+        } else {
+            clientRepository.blockClient(client);
+        }
+    }
+
+    public boolean isClientBlocked(Client client) {
+        return clientRepository.findAll().get(clientRepository.find(client.getPid())).isBlocked();
+    }
+
 //    private void connectClientAccount(Client client, Account newAccount) {
 //        clientRepository.assignAccount(client,newAccount);
 //    }

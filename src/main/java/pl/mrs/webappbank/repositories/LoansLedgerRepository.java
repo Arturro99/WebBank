@@ -3,6 +3,7 @@ package pl.mrs.webappbank.repositories;
 import pl.mrs.webappbank.modelv2.Client;
 import pl.mrs.webappbank.modelv2.Loan;
 import pl.mrs.webappbank.modelv2.LoansLedger;
+import pl.mrs.webappbank.modelv2.accounts.Account;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,9 +52,9 @@ public class LoansLedgerRepository implements IRepository<LoansLedger, UUID> {
                 .get();
     }
 
-    public List<LoansLedger> findLedgerByClient(Client client) {
+    public List<LoansLedger> findLedgerByAccount(Account account) {
         return ledgers.stream()
-                .filter(x -> x.getClient().getPid().equals(client.getPid()))
+                .filter(x -> x.getAccount().getAccountNumber().equals(account.getAccountNumber()))
                 .filter(LoansLedger::isActive)
                 .collect(Collectors.toList());
     }

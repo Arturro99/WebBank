@@ -16,9 +16,24 @@
     <ui:define name="content">
         <f:view>
             <h:form>
-                #{str['description']}: <h:outputText value="#{loansController.loan.description}"/><br/>
-                #{str['value']}: <h:outputText value="#{loansController.loan.value}"/><br/>
-                <h:commandButton value="#{str['ok']}" action="#{loansController.confirmLoan}"/><br/>
+                #{str['description']}: <h:outputText value="#{loansController.loan.description}" rendered="#{loansController.toDeletion}"/>
+                <h:outputText value="#{manageLoanController.loan.description}" rendered="#{manageLoanController.takeLoan}"/><br/>
+                <h:outputText value="#{newLoanController.newLoan.description}" rendered="#{newLoanController.loanCreated}"/>
+
+                #{str['value']}: <h:outputText value="#{loansController.loan.value}" rendered="#{!manageLoanController.takeLoan}"/>
+                <h:outputText value="#{manageLoanController.loan.value}" rendered="#{manageLoanController.takeLoan}"/><br/>
+                <h:outputText value="#{newLoanController.newLoan.value}" rendered="#{newLoanController.loanCreated}"/>
+
+                <h:outputText value="Client: #{manageLoanController.client.name} #{manageLoanController.client.surname}" rendered="#{manageLoanController.takeLoan}"/><br/>
+
+
+                <h:commandButton value="Get" action="#{manageLoanController.confirmLoan}"
+                                 rendered="#{manageLoanController.takeLoan}" immediate="true"/><br/>
+                <h:commandButton value="Delete" action="#{loansController.confirmDeletion}"
+                                 rendered="#{loansController.toDeletion}" immediate="true"/><br/>
+                <h:commandButton value="Create" action="#{newLoanController.confirmLoan}"
+                                 rendered="#{newLoanController.loanCreated}" immediate="true"/><br/>
+
                 <h:commandButton value="#{str['cancel']}" action="index" immediate="true"/><br/>
             </h:form>
         </f:view>

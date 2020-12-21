@@ -17,7 +17,7 @@ public class Client implements Serializable {
     private String login;
     private String password;
     private int age;
-    private boolean editable;
+    private boolean blocked = false;
     List<Account> listOfAccounts = new ArrayList<>();
 
     public Client() {

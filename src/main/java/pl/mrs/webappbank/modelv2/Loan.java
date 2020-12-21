@@ -9,23 +9,17 @@ import java.util.UUID;
 public class Loan extends Resource{
     private int value;
 
-    public Loan() {
-        this.id = UUID.randomUUID();
-    }
+    public Loan() { this.available = true; }
 
     public Loan(String description, int value, boolean available) {
-        this.id = UUID.randomUUID();
         this.description = description;
         this.value = value;
         this.available = available;
     }
 
 
-    public int getValue() {
-        return value;
-    }
-
-    public void setValue(int value) {
-        this.value = value;
+    @Override
+    public String toString() {
+        return description + " (" + value + ") ";
     }
 }
