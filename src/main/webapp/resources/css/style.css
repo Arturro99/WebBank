@@ -69,6 +69,9 @@
     margin-top: 12%;
     display: block;
 }
+.contentContainer > *{
+    overflow: auto;
+}
 
 .footer .title {
     font-size: 120%;
@@ -121,7 +124,7 @@
     height: 100%;
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 33.33% 33.33% 33.33%;
+    grid-template-rows: 25% 25% 25% 25%;
     gap: 2px 2px;
     grid-template-areas:
         "."

@@ -9,12 +9,11 @@ import java.util.UUID;
 public class Loan extends Resource{
     private int value;
 
-    public Loan() { }
+//    public Loan() { }
 
     public Loan(String description, int value, boolean available) {
-        this.description = description;
-        this.value = value;
-        this.available = available;
+        super(description,available);
+        this.value= value;
     }
 
 

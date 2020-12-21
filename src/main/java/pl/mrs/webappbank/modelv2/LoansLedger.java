@@ -8,18 +8,18 @@ import java.util.UUID;
 @Data
 public class LoansLedger extends Event{
     private Client client;
-    private Loan loan;
 
     public LoansLedger(Client client, Loan loan) {
         this.client = client;
-        this.loan = loan;
+        this.resource = loan;
     }
 
     public Loan getLoan() {
-        return loan;
+        return (Loan) resource;
     }
 
     public Client getClient() {
         return client;
     }
+
 }

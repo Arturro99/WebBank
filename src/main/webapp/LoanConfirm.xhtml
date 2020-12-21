@@ -16,17 +16,17 @@
     <ui:define name="content">
         <f:view>
             <h:form>
-                Description: <h:outputText value="#{loansController.loan.description}" rendered="#{!manageLoanController.takeLoan}"/>
-                <h:outputText value="#{manageLoanController.loan.description}" rendered="#{manageLoanController.takeLoan}"/><br/>
+                Description: <h:outputText value="#{resourcesController.loan.description}" rendered="#{!manageResourceController.takeLoan}"/>
+                <h:outputText value="#{manageResourceController.loan.description}" rendered="#{manageResourceController.takeLoan}"/><br/>
 
-                Value: <h:outputText value="#{loansController.loan.value}" rendered="#{!manageLoanController.takeLoan}"/>
-                <h:outputText value="#{manageLoanController.loan.value}" rendered="#{manageLoanController.takeLoan}"/><br/>
+                Value: <h:outputText value="#{resourcesController.loan.value}" rendered="#{!manageResourceController.takeLoan}"/>
+                <h:outputText value="#{manageResourceController.loan.value}" rendered="#{manageResourceController.takeLoan}"/><br/>
 
-                <h:outputText value="Client: #{manageLoanController.client.name} #{manageLoanController.client.surname}" rendered="#{manageLoanController.takeLoan}"/><br/>
+                <h:outputText value="Client: #{manageResourceController.client.name} #{manageResourceController.client.surname}" rendered="#{manageResourceController.takeLoan}"/><br/>
 
 
-                <h:commandButton value="Get" action="#{manageLoanController.confirmLoan}" rendered="#{!loansController.toDeletion and manageLoanController.takeLoan}"/><br/>
-                <h:commandButton value="Delete" action="#{loansController.confirmLoan}" rendered="#{loansController.toDeletion and !manageLoanController.takeLoan}"/><br/>
+                <h:commandButton value="Get" action="#{manageResourceController.confirmLoan}" rendered="#{!resourcesController.toDeletion and manageResourceController.takeLoan}"/><br/>
+                <h:commandButton value="Delete" action="#{resourcesController.confirmLoan}" rendered="#{resourcesController.toDeletion and !manageResourceController.takeLoan}"/><br/>
                 <h:commandButton value="Cancel" action="index" immediate="true"/><br/>
             </h:form>
         </f:view>
