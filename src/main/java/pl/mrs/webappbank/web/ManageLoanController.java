@@ -71,7 +71,7 @@ public class ManageLoanController implements Serializable {
             getLedgerByAccount(acc).stream()
                     .filter(x -> x.getLoan().getId().equals(l.getId()))
                     .forEach(x -> {
-                        x.payLoan();
+                        x.endEvent();
                         x.getLoan().setAvailable(true);
                     });
             return "TakeLoan";

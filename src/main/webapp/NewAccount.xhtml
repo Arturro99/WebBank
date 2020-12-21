@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html
+      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
     <title>New Account</title>
+    <f:metadata>
+        <f:viewAction action="#{internationalizationController.onLoad()}"/>
+    </f:metadata>
 </h:head>
 <!--TODO Zapewnić, by użytkownik nie mógł nacisnąć CREATE, jeśli pola nie są wybrane-->
 <h:body>
@@ -15,43 +19,46 @@
             <h:form>
                 <h:dataTable border="2" value="#{clientListController.allClients}" var="klient">
                     <h:column>
-                        <f:facet name="header">PID</f:facet>
+                        <f:facet name="header">#{str['pid']}</f:facet>
                         <h:outputText value="#{klient.pid}"/> <br/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Login</f:facet>
+                        <f:facet name="header">#{str['login']}</f:facet>
                         <h:outputText value="#{klient.login}"/> <br/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Name</f:facet>
+                        <f:facet name="header">#{str['name']}</f:facet>
                         <h:outputText value="#{klient.name}"/> <br/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Surname</f:facet>
+                        <f:facet name="header">#{str['surname']}</f:facet>
                         <h:outputText value="#{klient.surname}"/> <br/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Age</f:facet>
+                        <f:facet name="header">#{str['age']}</f:facet>
                         <h:outputText value="#{klient.age}"/> <br/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Actions</f:facet>
-                        <h:commandButton value="Select" action="#{newAccountController.selectClient(klient)}"/>
+                        <f:facet name="header">#{str['actions']}</f:facet>
+                        <h:commandButton value="#{str['select']}"
+                                         action="#{newAccountController.selectClient(klient)}"/>
                     </h:column>
                 </h:dataTable>
             </h:form>
 
             <h:form>
-                Wybrany klient = #{newAccountController.selectedClient.toString()} <br/>
-                Choose Account Type
+                #{str['chosen']} #{str['client']}  = #{newAccountController.selectedClient.toString()} <br/>
+                #{str['choose']} #{str['account_type']}
                 <h:selectOneRadio value="#{newAccountController.selectedAccountType}" layout="pageDirection">
-                    <f:selectItem itemValue="Common" itemLabel="Common"/>
-                    <f:selectItems value="#{newAccountController.currencyType}" var="type" itemValue="Currency #{type}"
+                    <f:selectItem itemValue="Common" itemLabel="#{str['common']}"/>
+                    <f:selectItems value="#{newAccountController.currencyType}" var="type"
+                                   itemValue="#{str['currency']} #{type}"
                                    itemLabel="Currency #{type}"/>
-                    <f:selectItems value="#{newAccountController.savingsType}" var="type" itemValue="Savings #{type}"
+                    <f:selectItems value="#{newAccountController.savingsType}" var="type"
+                                   itemValue="#{str['savings']} #{type}"
                                    itemLabel="Savings #{type}"/>
                 </h:selectOneRadio>
-                <h:commandButton value="Create" action="NewAccountConfirm"/>
+                <h:commandButton value="#{str['create']}" action="NewAccountConfirm"/>
             </h:form>
         </ui:define>
     </ui:composition>

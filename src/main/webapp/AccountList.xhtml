@@ -1,11 +1,15 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<html lang="#{internationalizationController.language}"
+        xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-    <title>Facelet Title</title>
+    <f:metadata>
+        <f:viewAction action="#{internationalizationController.onLoad()}"/>
+    </f:metadata>
+    <title>Account List</title>
 </h:head>
 <ui:composition template="templates/template.xhtml">
     <ui:define name="content">
@@ -13,26 +17,26 @@
             <h:form>
                 <h:dataTable border="2" value="#{clientListController.allClients}" var="klient">
                     <h:column>
-                        <f:facet name="header">PID</f:facet>
+                        <f:facet name="header">#{str['pid']}</f:facet>
                         <h:outputText value="#{klient.pid}"/> <br/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Login</f:facet>
+                        <f:facet name="header">#{str['login']}</f:facet>
                         <h:outputText value="#{klient.login}"/> <br/>
                         <h:inputText value="#{klient.login}" rendered="#{clientListController.getEditable(klient)}"/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Name</f:facet>
+                        <f:facet name="header">#{str['name']}</f:facet>
                         <h:outputText value="#{klient.name}"/> <br/>
                         <h:inputText value="#{klient.name}" rendered="#{clientListController.getEditable(klient)}"/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Surname</f:facet>
+                        <f:facet name="header">#{str['surname']}</f:facet>
                         <h:outputText value="#{klient.surname}"/> <br/>
                         <h:inputText value="#{klient.surname}" rendered="#{clientListController.getEditable(klient)}"/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Age</f:facet>
+                        <f:facet name="header">#{str['age']}</f:facet>
                         <h:outputText value="#{klient.age}"/> <br/>
                         <h:inputText value="#{klient.age}" rendered="#{clientListController.getEditable(klient)}"/>
                     </h:column>
@@ -43,29 +47,29 @@
                         <br/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Accounts</f:facet> <br/>
+                        <f:facet name="header">#{str['accounts']}</f:facet> <br/>
                         <h:dataTable border="2" value="#{klient.listOfAccounts}" var="konto">
                             <h:column>
-                                <f:facet name="header">Account Number</f:facet>
+                                <f:facet name="header">#{str['account_number']}</f:facet>
                                 <h:outputText value="#{konto.accountNumber}"/>
                             </h:column>
                             <h:column>
-                                <f:facet name="header">State</f:facet>
+                                <f:facet name="header">#{str['state']}</f:facet>
                                 <h:outputText value="#{konto.stateOfAccount}"/>
                                 <h:outputText value="#{konto.currency}"/>
                             </h:column>
                             <h:column>
-                                <h:commandButton value="Delete Account"
+                                <h:commandButton value="#{str['delete_account']}"
                                                  action="#{clientListController.deleteAccount(klient, konto)}"/>
                             </h:column>
                         </h:dataTable>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Actions</f:facet>
-                        <h:commandButton value="Delete" action="#{clientListController.deleteClient(klient)}"/>
-                        <h:commandButton value="Edit" action="#{clientListController.setEditable(klient)}"
+                        <f:facet name="header">#{str['actions']}</f:facet>
+                        <h:commandButton value="#{str['delete']}" action="#{clientListController.deleteClient(klient)}"/>
+                        <h:commandButton value="#{str['edit']}" action="#{clientListController.setEditable(klient)}"
                                          immediate="true"/>
-                        <h:commandButton value="Save changes" action="#{clientListController.editClient(klient)}"
+                        <h:commandButton value="#{str['save_changes']}" action="#{clientListController.editClient(klient)}"
                                          rendered="#{clientListController.getEditable(klient)}">
                             <f:actionListener binding="#{clientListController.setEditable(klient)}"/>
                         </h:commandButton>
@@ -74,8 +78,8 @@
                         <br/>
                     </h:column>
                 </h:dataTable>
-                <h:commandButton value="Cancel" action="index" immediate="true"/><br/>
-                <h:commandButton value="Refresh" action="#{clientListController.initController}"/><br/>
+                <h:commandButton value="#{str['cancel']}" action="index" immediate="true"/><br/>
+                <h:commandButton value="#{str['refresh']}" action="#{clientListController.initController}"/><br/>
                 <h:messages errorClass="error"/>
             </h:form>
         </h:body>

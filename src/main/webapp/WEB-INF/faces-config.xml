@@ -91,4 +91,14 @@
             <redirect/>
         </navigation-case>
     </navigation-rule>
+    <application>
+        <locale-config>
+            <default-locale>en</default-locale>
+            <supported-locale>pl</supported-locale>
+        </locale-config>
+        <resource-bundle>
+            <base-name>pl.mrs.webappbank.strings</base-name>
+            <var>str</var>
+        </resource-bundle>
+    </application>
 </faces-config>

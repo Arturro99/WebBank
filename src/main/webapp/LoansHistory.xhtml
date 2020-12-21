@@ -38,11 +38,11 @@
             </h:column>
             <h:column>
                 <f:facet name="header">Taking date</f:facet>
-                <i><h:outputFormat value="#{loanLedger.loanTakenDate}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/> </i>
+                <i><h:outputFormat value="#{loanLedger.startDate}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/> </i>
             </h:column>
             <h:column>
                 <f:facet name="header">Paying date</f:facet>
-                <h:outputFormat value="#{loanLedger.loanPaidDate}" rendered="#{!loanLedger.active and manageLoanController.matchFilter(loanLedger)}"/>
+                <h:outputFormat value="#{loanLedger.endDate}" rendered="#{!loanLedger.active and manageLoanController.matchFilter(loanLedger)}"/>
             </h:column>
         </h:dataTable>
     </ui:define>
