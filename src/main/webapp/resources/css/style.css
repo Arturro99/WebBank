@@ -105,7 +105,8 @@
     transition: 0.5s;
     background-color: #b8870b;
 }
-.contentContainer{
+
+.contentContainer {
     position: absolute;
     top: 10%;
     left: 2.5%;
@@ -115,6 +116,7 @@
     width: 97.5%;
     overflow: auto;
 }
+
 .gripContainer {
     height: 100%;
     display: grid;
@@ -127,5 +129,29 @@
 }
 
 .error {
-    color:red;
+    color: red;
+}
+
+.lang_switch {
+    border-radius: 10%;
+    border-style: solid;
+    border-color: #ffffff;
+    font-size: 80%;
+    position: absolute;
+    top: 5%;
+    left: 6%;
+    height: 5%;
+    width: 30%;
+}
+
+.lang_switch.pl {
+    background-image: url("#{resource['images:en.png']}");
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+.lang_switch.en {
+    background-image: url("#{resource['images:pl.png']}");
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
