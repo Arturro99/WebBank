@@ -10,10 +10,14 @@ import java.util.UUID;
 @Data
 public class LoansLedger extends Event{
     private Account account;
-    private Loan loan;
 
     public LoansLedger(Account account, Loan loan) {
         this.account = account;
-        this.loan = loan;
+        this.resource = loan;
     }
+    public Loan getLoan(){
+        return (Loan) resource;
+    }
+
+
 }

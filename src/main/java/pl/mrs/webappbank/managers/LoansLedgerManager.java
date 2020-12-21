@@ -1,23 +1,18 @@
 package pl.mrs.webappbank.managers;
 
-import pl.mrs.webappbank.modelv2.Client;
-import pl.mrs.webappbank.modelv2.Loan;
-import pl.mrs.webappbank.modelv2.LoansLedger;
+import pl.mrs.webappbank.modelv2.*;
 import pl.mrs.webappbank.modelv2.accounts.Account;
-import pl.mrs.webappbank.repositories.LoansLedgerRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @ApplicationScoped
 @Named
 public class LoansLedgerManager {
-    private final LoansLedgerRepository loansLedgerRepository;
-
+    private final Admin.LoansLedgerRepository loansLedgerRepository;
     public LoansLedgerManager() {
-        this.loansLedgerRepository = new LoansLedgerRepository();
+        this.loansLedgerRepository = new Admin.LoansLedgerRepository();
     }
 
     public boolean takeLoan(Loan loan, Account account, Client client) {
@@ -26,6 +21,15 @@ public class LoansLedgerManager {
             LoansLedger ledger = new LoansLedger(account, loan);
             loansLedgerRepository.add(ledger);
             account.setStateOfAccount(account.getStateOfAccount() + loan.getValue());
+            return true;
+        }
+        return false;
+    }
+    public boolean rentBox(SafeBox safeBox, Client client){
+        if(safeBox.isAvailable() && !client.isBlocked()){
+            safeBox.setAvailable(false);
+            SafeBoxRent rent = new SafeBoxRent(client, safeBox);
+            loansLedgerRepository.add(rent);
             return true;
         }
         return false;
@@ -46,8 +50,16 @@ public class LoansLedgerManager {
         return false;
     }
 
-    public List<LoansLedger> getAll() { return loansLedgerRepository.findAll(); }
+    public List<LoansLedger> getAllLedgers() { return loansLedgerRepository.findAllLedgers(); }
     public List<LoansLedger> getLedgersByAccount(Account account) {
         return loansLedgerRepository.findLedgerByAccount(account);
+    }
+
+    public List<SafeBoxRent> getRentsByClient(Client c) {
+        return loansLedgerRepository.findRentByClient(c);
+    }
+
+    public List<SafeBoxRent> getAllBoxRents() {
+        return loansLedgerRepository.findAllRents();
     }
 }

@@ -91,6 +91,19 @@
             <redirect/>
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/RentBox.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>RentBoxConfirm</from-outcome>
+            <to-view-id>/RentBoxConfirm.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>RentBox</from-outcome>
+            <to-view-id>/RentBox.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
     <application>
         <locale-config>
             <default-locale>en</default-locale>

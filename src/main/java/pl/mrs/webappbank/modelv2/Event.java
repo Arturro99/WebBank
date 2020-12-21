@@ -8,7 +8,11 @@ public abstract class Event {
     protected Date startDate;
     protected Date endDate;
     protected boolean active;
+    protected Resource resource;
 
+    public Resource getResource() {
+        return resource;
+    }
 
     public Date getStartDate() {
         return startDate;

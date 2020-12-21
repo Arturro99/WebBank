@@ -1,34 +1,27 @@
 package pl.mrs.webappbank.web;
 
 import lombok.Data;
-import pl.mrs.webappbank.managers.ClientManager;
 import pl.mrs.webappbank.managers.LoanManager;
 import pl.mrs.webappbank.managers.LoansLedgerManager;
-import pl.mrs.webappbank.modelv2.Client;
 import pl.mrs.webappbank.modelv2.Loan;
-import pl.mrs.webappbank.modelv2.accounts.Account;
-import pl.mrs.webappbank.repositories.LoansLedgerRepository;
+import pl.mrs.webappbank.modelv2.SafeBox;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.Conversation;
-import javax.enterprise.context.ConversationScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 @SessionScoped
 @Named
 @Data
 public class LoansController implements Serializable {
     private Loan loan;
+    private SafeBox safeBox;
 
     @Inject
     LoanManager loanManager;
@@ -40,9 +33,12 @@ public class LoansController implements Serializable {
 //    Conversation conversation;
 
     boolean toDeletion;
+    List<SafeBox> currentSafeBoxes;
+
     List<Loan> currentLoans;
     HashMap<String, Boolean> editedLoan;
 
+    boolean safeBoxToDeletion;
 
     public String confirmDeletion() {
         loanManager.removeLoan(loan);
@@ -78,6 +74,25 @@ public class LoansController implements Serializable {
             context.addMessage(null, message);
         }
         initController();
+       // conversation.end();
+
+       // return "Loans";
+    }
+    public void confirmSafeBox() {
+        if (safeBoxToDeletion) {
+            loanManager.removeSavebox(safeBox);
+            initController();
+        }
+        else {
+            //loansLedgerManager.takeLoan(loan);
+        }
+      //  conversation.end();
+
+        //return "RentBox";
+    }
+
+    public List<SafeBox> getAllSafeBoxes() {
+        return currentSafeBoxes;
     }
 
     public void setEditable(Loan l) {
@@ -98,11 +113,30 @@ public class LoansController implements Serializable {
             return editedLoan.get(l.getId().toString());
         return false;
     }
+    public String deleteSafebox(SafeBox safeBox) {
+        this.safeBox  = safeBox;
+        if (safeBox.isAvailable()) {
+            safeBoxToDeletion = true;
+            //conversation.begin();
+            return "RentBoxConfirm";
+        }
+        else {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Cannot remove unavailable Safe Box!", null);
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, message);
+        }
+        return null;
+    }
 
     @PostConstruct
     public void initController() {
         currentLoans = loanManager.getAllLoans();
         editedLoan = new HashMap<>();
+        currentSafeBoxes = loanManager.getAllSafeBoxes();
+    }
+
+    public SafeBox getSafeBox() {
+        return safeBox;
     }
 
     public String finishDeletion() {

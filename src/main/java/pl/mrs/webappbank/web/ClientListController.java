@@ -137,7 +137,7 @@ public class ClientListController implements Serializable {
         return c.getListOfAccounts().stream()
                 .map(Account::getAccountNumber)
                 .anyMatch(
-                        loansLedgerManager.getAll().stream()
+                        loansLedgerManager.getAllLedgers().stream()
                                 .filter(LoansLedger::isActive)
                                 .map(x -> x.getAccount().getAccountNumber())
                                 .collect(Collectors.toSet())
@@ -145,7 +145,7 @@ public class ClientListController implements Serializable {
     }
 
     private boolean accountHasLoan(Account acc) {
-        return loansLedgerManager.getAll().stream()
+        return loansLedgerManager.getAllLedgers().stream()
                 .filter(LoansLedger::isActive)
                 .map(x -> x.getAccount().getAccountNumber())
                 .anyMatch(acc.getAccountNumber()::contains);

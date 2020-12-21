@@ -49,14 +49,15 @@
     border-width: 5px;
     background-color: #264653;
     position: relative;
-    top: 5%;
+    top: 15%;
     margin-top: 5%;
     left: 10%;
     text-align: center;
     font-size: 120%;
     width: 80%;
-    height: 20%;
+    height: 15%;
 }
+
 .sidebar_button:hover {
     transition: 0.5s;
     background-color: #3c6a7c;
@@ -67,6 +68,10 @@
     position: relative;
     margin-top: 12%;
     display: block;
+}
+
+.contentContainer>* {
+    overflow: auto;
 }
 
 .footer .title {
@@ -120,7 +125,7 @@
     height: 100%;
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: 25% 25% 25% 25%;
+    grid-template-rows: 20% 20% 20% 20% 20% ;
     gap: 2px 2px;
     grid-template-areas:
         "."
@@ -130,8 +135,9 @@
 .error {
     color: red;
 }
+
 .info {
-    color:green;
+    color: green;
 }
 
 .lang_switch {
@@ -157,4 +163,3 @@
     background-size: 100%;
     background-repeat: no-repeat;
 }
-
