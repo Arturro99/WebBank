@@ -1,6 +1,7 @@
 package pl.mrs.webappbank.modelv2;
 
 import lombok.Data;
+import pl.mrs.webappbank.modelv2.accounts.Account;
 
 import java.util.Date;
 import java.util.UUID;
@@ -8,15 +9,15 @@ import java.util.UUID;
 @Data
 public class LoansLedger {
     private UUID uuid;
-    private Client client;
+    private Account account;
     private Loan loan;
     private Date loanTakenDate;
     private Date loanPaidDate;
     private boolean active;
 
-    public LoansLedger(Client client, Loan loan) {
+    public LoansLedger(Account account, Loan loan) {
         this.loanTakenDate = new Date();
-        this.client = client;
+        this.account = account;
         this.loan = loan;
         this.active = true;
     }

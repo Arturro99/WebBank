@@ -5,6 +5,7 @@ import pl.mrs.webappbank.managers.LoansLedgerManager;
 import pl.mrs.webappbank.modelv2.Client;
 import pl.mrs.webappbank.modelv2.Loan;
 import pl.mrs.webappbank.modelv2.LoansLedger;
+import pl.mrs.webappbank.modelv2.accounts.Account;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -25,6 +26,7 @@ public class ManageLoanController implements Serializable {
 
     Client client;
     Loan loan;
+    Account account;
     boolean takeLoan;
     FacesMessage message;
     FacesContext context;
@@ -42,8 +44,6 @@ public class ManageLoanController implements Serializable {
         if (loan.isAvailable()) {
             if (!client.isBlocked()) {
                 takeLoan = true;
-                message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Loan taken successfully", null);
-                context.addMessage(null, message);
                 return "LoanConfirm";
             }
             else {
@@ -61,27 +61,35 @@ public class ManageLoanController implements Serializable {
         return loansLedgerManager.getAll(); }
 
     public String confirmLoan() {
-        loansLedgerManager.takeLoan(loan, client);
+        loansLedgerManager.takeLoan(loan, account, client);
         takeLoan = false;
         return "TakeLoan";
     }
 
-    public String payLoan(Client c, Loan l) {
-        getLedgerByClient(c).stream()
-                .filter(x -> x.getLoan().getId().equals(l.getId()))
-                .forEach(x -> {
-                x.payLoan();
-                x.getLoan().setAvailable(true);
-        });
-        return "TakeLoan";
+    public String payLoan(Account acc, Loan l) {
+        if (acc.getStateOfAccount() >= l.getValue()) {
+            getLedgerByAccount(acc).stream()
+                    .filter(x -> x.getLoan().getId().equals(l.getId()))
+                    .forEach(x -> {
+                        x.payLoan();
+                        x.getLoan().setAvailable(true);
+                    });
+            return "TakeLoan";
+        }
+        else {
+            context = FacesContext.getCurrentInstance();
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Not sufficient funds!", null);
+            context.addMessage(null, message);
+            return null;
+        }
     }
 
-    public List<LoansLedger> getLedgerByClient(Client c) {
-        return loansLedgerManager.getLedgersByClient(c);
+    public List<LoansLedger> getLedgerByAccount(Account acc) {
+        return loansLedgerManager.getLedgersByAccount(acc);
     }
 
-    public boolean areClientAndLoanChosen() {
-        return client != null && loan != null;
+    public boolean areAccountAndLoanChosen() {
+        return account != null && loan != null;
     }
 
     public String applyFilter() {
@@ -109,13 +117,8 @@ public class ManageLoanController implements Serializable {
                     return true;
                 }
                 break;
-            case "cID":
-                if (ledger.getClient().getPid().toString().equals(filterHistory)) {
-                    return true;
-                }
-                break;
-            case "cLog":
-                if (ledger.getClient().getLogin().equals(filterHistory)) {
+            case "aNum":
+                if (ledger.getAccount().getAccountNumber().equals(filterHistory)) {
                     return true;
                 }
                 break;

@@ -12,11 +12,17 @@ public class Loan {
     private int value;
     private boolean available;
 
-    public Loan() { }
+    public Loan() { this.available = true; }
 
     public Loan(String description, int value, boolean available) {
         this.description = description;
         this.value = value;
         this.available = available;
+    }
+
+
+    @Override
+    public String toString() {
+        return description + " (" + value + ") ";
     }
 }

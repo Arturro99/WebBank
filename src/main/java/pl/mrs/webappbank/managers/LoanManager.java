@@ -10,6 +10,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 @Named
@@ -24,6 +25,11 @@ public class LoanManager {
         if (loanRepository.findAll().stream()
                 .noneMatch(x -> x.getId().equals(loan.getId())))
             loanRepository.add(loan);
+    }
+
+    public void editLoan(Loan loan) {
+        loanRepository.findAll().get(loanRepository.find(loan.getId())).setValue(loan.getValue());
+        loanRepository.findAll().get(loanRepository.find(loan.getId())).setDescription(loan.getDescription());
     }
 
     public void removeLoan(Loan loan) {

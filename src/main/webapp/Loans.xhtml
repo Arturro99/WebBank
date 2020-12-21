@@ -13,11 +13,13 @@
         <h:dataTable border="2" value="#{loansController.allLoans}" var="loan">
             <h:column>
                 <f:facet name="header">Description</f:facet>
-                <h:outputFormat value="#{loan.description}"/>
+                <h:outputFormat value="#{loan.description}"/><br/>
+                <h:inputText value="#{loan.description}" rendered="#{loansController.getEditable(loan)}"/>
             </h:column>
             <h:column>
                 <f:facet name="header">Value</f:facet>
-                <h:outputFormat value="#{loan.value}"/>
+                <h:outputFormat value="#{loan.value}"/><br/>
+                <h:inputText value="#{loan.value}" rendered="#{loansController.getEditable(loan)}"/>
             </h:column>
             <h:column>
                 <f:facet name="header">Available</f:facet>
@@ -25,7 +27,14 @@
             </h:column>
             <h:column>
                 <f:facet name="header">Actions</f:facet>
-                <h:commandButton value="Delete" action="#{loansController.deleteLoan(loan)}"/>
+                <h:commandButton value="Delete" action="#{loansController.deleteLoan(loan)}">
+                    <f:param name="loanId" value="#{loan.id}"/>
+                </h:commandButton>
+                <h:commandButton value="Edit" action="#{loansController.setEditable(loan)}" immediate="true"/>
+                <h:commandButton value="Save changes" action="#{loansController.editLoan(loan)}"
+                                 rendered="#{loansController.getEditable(loan)}">
+                    <f:actionListener binding="#{loansController.setEditable(loan)}"/>
+                </h:commandButton>
             </h:column>
         </h:dataTable>
         <h:messages infoClass="info" errorClass="error"/>

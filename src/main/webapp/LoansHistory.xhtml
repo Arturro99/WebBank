@@ -12,8 +12,7 @@
             <h:selectOneMenu value="#{manageLoanController.filteringTypeHistory}">
                 <f:selectItem itemValue="lID" itemLabel="Loan id"/>
                 <f:selectItem itemValue="lDesc" itemLabel="Loan description"/>
-                <f:selectItem itemValue="cLog" itemLabel="Client login"/>
-                <f:selectItem itemValue="cID" itemLabel="Client id"/>
+                <f:selectItem itemValue="aNum" itemLabel="Account number"/>
             </h:selectOneMenu>
             <h:inputText value="#{manageLoanController.filterHistory}"/>
             <h:commandButton value="Apply" action="#{manageLoanController.applyFilter}"/><br/>
@@ -34,12 +33,8 @@
                 <h:outputFormat value="#{loanLedger.loan.description}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/>
             </h:column>
             <h:column>
-                <f:facet name="header">CLient ID</f:facet>
-                <b><h:outputFormat value="#{loanLedger.client.pid}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/> </b>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Client login</f:facet>
-                <h:outputFormat value="#{loanLedger.client.login}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/>
+                <f:facet name="header">Account number</f:facet>
+                <b><h:outputFormat value="#{loanLedger.account.accountNumber}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/> </b>
             </h:column>
             <h:column>
                 <f:facet name="header">Taking date</f:facet>

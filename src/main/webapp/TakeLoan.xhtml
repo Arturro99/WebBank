@@ -19,31 +19,39 @@
                         <h:outputText value="#{klient.login}"/> <br/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Name</f:facet>
-                        <h:outputText value="#{klient.name}"/> <br/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Surname</f:facet>
-                        <h:outputText value="#{klient.surname}"/> <br/>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Loans</f:facet>
-                        <h:dataTable border="2" value="#{manageLoanController.getLedgerByClient(klient)}" var="ledger">
+                        <f:facet name="header">Accounts</f:facet>
+                        <h:dataTable border="1" value="#{klient.listOfAccounts}" var="account">
                             <h:column>
-                                <h:outputText value="#{ledger.loan.description}"/>
-                                <h:commandButton value="Pay" action="#{manageLoanController.payLoan(klient, ledger.loan)}"/><br/>
+                                <f:facet name="header">Account Number</f:facet>
+                                <h:outputText value="#{account.accountNumber}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">State</f:facet>
+                                <h:outputText value="#{account.stateOfAccount}"/>
+                                <h:outputText value="#{account.currency}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Loans</f:facet>
+                                <h:dataTable border="1" value="#{manageLoanController.getLedgerByAccount(account)}" var="ledger">
+                                    <h:column>
+                                        <h:outputText value="#{ledger.loan.description} (#{ledger.loan.value})"/>
+                                        <h:commandButton value="Pay" action="#{manageLoanController.payLoan(account, ledger.loan)}"/><br/>
+                                    </h:column>
+                                </h:dataTable>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Actions</f:facet>
+                                <h:commandButton value="Select" action="#{manageLoanController.setClient(klient)}">
+                                    <f:actionListener binding="#{manageLoanController.setAccount(account)}"/>
+                                </h:commandButton><br/>
                             </h:column>
                         </h:dataTable>
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">Actions</f:facet>
-                        <h:commandButton value="Select" action="#{manageLoanController.setClient(klient)}"/><br/>
                     </h:column>
                 </h:dataTable>
             </h:form>
 
             <h:form>
-                Wybrany klient = #{manageLoanController.client.toString()}<br/>
+                Wybrane konto = #{manageLoanController.account.accountNumber}<br/>
                 Wybierz pożyczkę:
                 <h:dataTable border="2" value="#{loansController.allLoans}" var="loan">
                     <h:column>
@@ -65,7 +73,7 @@
                 </h:dataTable>
                 <h:messages infoClass="info" errorClass="error"/>
                 Wybrana pożyczka = #{manageLoanController.loan.toString()} <br/>
-                <h:commandButton value="Take" action="#{manageLoanController.processLoan}" rendered="#{manageLoanController.areClientAndLoanChosen()}"/>
+                <h:commandButton value="Take" action="#{manageLoanController.processLoan}" rendered="#{manageLoanController.areAccountAndLoanChosen()}"/>
             </h:form>
         </ui:define>
     </ui:composition>

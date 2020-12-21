@@ -3,6 +3,7 @@ package pl.mrs.webappbank.managers;
 import pl.mrs.webappbank.modelv2.Client;
 import pl.mrs.webappbank.modelv2.Loan;
 import pl.mrs.webappbank.modelv2.LoansLedger;
+import pl.mrs.webappbank.modelv2.accounts.Account;
 import pl.mrs.webappbank.repositories.LoansLedgerRepository;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -19,11 +20,10 @@ public class LoansLedgerManager {
         this.loansLedgerRepository = new LoansLedgerRepository();
     }
 
-    public boolean takeLoan(Loan loan, Client client) {
+    public boolean takeLoan(Loan loan, Account account, Client client) {
         if (loan.isAvailable() && !client.isBlocked()) {
             loan.setAvailable(false);
-//            client.addLoan(loan);
-            LoansLedger ledger = new LoansLedger(client, loan);
+            LoansLedger ledger = new LoansLedger(account, loan);
             loansLedgerRepository.add(ledger);
             return true;
         }
@@ -45,7 +45,7 @@ public class LoansLedgerManager {
     }
 
     public List<LoansLedger> getAll() { return loansLedgerRepository.findAll(); }
-    public List<LoansLedger> getLedgersByClient(Client client) {
-        return loansLedgerRepository.findLedgerByClient(client);
+    public List<LoansLedger> getLedgersByAccount(Account account) {
+        return loansLedgerRepository.findLedgerByAccount(account);
     }
 }
