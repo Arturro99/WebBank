@@ -6,11 +6,8 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class Loan {
-    private UUID id;
-    private String description;
+public class Loan extends Resource{
     private int value;
-    private boolean available;
 
     public Loan() {
         this.id = UUID.randomUUID();
@@ -21,5 +18,14 @@ public class Loan {
         this.description = description;
         this.value = value;
         this.available = available;
+    }
+
+
+    public int getValue() {
+        return value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 }

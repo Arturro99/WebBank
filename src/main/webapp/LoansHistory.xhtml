@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition template="templates/template.xhtml">
+    <ui:define name="content">
+        Search by:
+        <h:form>
+            <h:selectOneMenu value="#{manageLoanController.filteringTypeHistory}">
+                <f:selectItem itemValue="lID" itemLabel="Loan id"/>
+                <f:selectItem itemValue="lDesc" itemLabel="Loan description"/>
+                <f:selectItem itemValue="cLog" itemLabel="Client login"/>
+                <f:selectItem itemValue="cID" itemLabel="Client id"/>
+            </h:selectOneMenu>
+            <h:inputText value="#{manageLoanController.filterHistory}"/>
+            <h:commandButton value="Apply" action="#{manageLoanController.applyFilter}"/><br/>
+            <h:messages errorClass="error"/>
+        </h:form>
+        <h2>Loans history</h2>
+        <h:dataTable value="#{manageLoanController.all}" var="loanLedger" border="2">
+            <h:column>
+                <f:facet name="header">Ledger ID</f:facet>
+                <b><h:outputFormat value="#{loanLedger.uuid}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/> </b>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Loan ID</f:facet>
+                <b><h:outputFormat value="#{loanLedger.loan.id}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/></b>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Loan description</f:facet>
+                <h:outputFormat value="#{loanLedger.loan.description}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">CLient ID</f:facet>
+                <b><h:outputFormat value="#{loanLedger.client.pid}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/> </b>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Client login</f:facet>
+                <h:outputFormat value="#{loanLedger.client.login}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Taking date</f:facet>
+                <i><h:outputFormat value="#{loanLedger.startDate}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/> </i>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Paying date</f:facet>
+                <h:outputFormat value="#{loanLedger.endDate}" rendered="#{!loanLedger.active and manageLoanController.matchFilter(loanLedger)}"/>
+            </h:column>
+        </h:dataTable>
+    </ui:define>
+</ui:composition>
+</html>

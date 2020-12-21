@@ -55,4 +55,20 @@ public class Client implements Serializable {
                 ", login='" + login + '\'' +
                 ", age=" + age;
     }
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
+
+    public UUID getPid() {
+        return pid;
+    }
+
+    public String getLogin() {
+        return login;
+    }
 }
