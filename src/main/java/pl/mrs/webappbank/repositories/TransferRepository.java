@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class TransferRepository implements IRepository<Transfer, UUID>{
-    private ArrayList<Transfer> transferHistory;
+    private final ArrayList<Transfer> transferHistory;
 
     public TransferRepository() {
         transferHistory = new ArrayList<>();
@@ -15,12 +15,16 @@ public class TransferRepository implements IRepository<Transfer, UUID>{
 
     @Override
     public void add(Transfer element) {
-        transferHistory.add(element);
+        synchronized (transferHistory) {
+            transferHistory.add(element);
+        }
     }
 
     @Override
     public void remove(Transfer transfer) {
-        transferHistory.remove(transfer);
+        synchronized (transferHistory) {
+            transferHistory.remove(transfer);
+        }
     }
 
     @Override

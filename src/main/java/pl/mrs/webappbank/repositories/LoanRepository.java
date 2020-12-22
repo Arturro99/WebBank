@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class LoanRepository implements IRepository<Loan, UUID>{
-    private List<Loan> loans;
+    private final List<Loan> loans;
 
     public LoanRepository() {
         loans = new ArrayList<>();
@@ -30,13 +30,17 @@ public class LoanRepository implements IRepository<Loan, UUID>{
 
     @Override
     public void add(Loan element) {
-        element.setId(UUID.randomUUID());
-        loans.add(element);
+        synchronized (loans) {
+            element.setId(UUID.randomUUID());
+            loans.add(element);
+        }
     }
 
     @Override
     public void remove(Loan element) {
-        loans.remove(element);
+        synchronized (loans) {
+            loans.remove(element);
+        }
     }
 
     @Override

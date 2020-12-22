@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountRepository implements IRepository<Account, String>{
-    protected ArrayList<Account> listOfAccounts;
+    protected final ArrayList<Account> listOfAccounts;
 
     public AccountRepository() {
         listOfAccounts = new ArrayList<>();
@@ -14,12 +14,16 @@ public class AccountRepository implements IRepository<Account, String>{
 
     @Override
     public void add(Account element) {
-        listOfAccounts.add(element);
+        synchronized (listOfAccounts) {
+            listOfAccounts.add(element);
+        }
     }
 
     @Override
     public void remove(Account account) {
-        listOfAccounts.remove(account);
+        synchronized (listOfAccounts) {
+            listOfAccounts.remove(account);
+        }
     }
 
     @Override
@@ -42,11 +46,13 @@ public class AccountRepository implements IRepository<Account, String>{
         return -1;
     }
     public void transfer(String senderAccountNumber, String recipientAccountnumber, double amount){
+        synchronized (listOfAccounts) {
             listOfAccounts.get(find(senderAccountNumber)).changeStateOfAccount(-amount);
             listOfAccounts.get(find(recipientAccountnumber)).changeStateOfAccount(amount);
+        }
     }
     public void changeState(String accountNumber, double amount){
-        synchronized (this){
+        synchronized (listOfAccounts){
             listOfAccounts.get(find(accountNumber)).changeStateOfAccount(amount);
         }
     }
