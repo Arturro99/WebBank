@@ -5,76 +5,82 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
+<head>
+    <title>Loans History</title>
+    <f:metadata>
+        <f:viewAction action="#{internationalizationController.onLoad()}"/>
+    </f:metadata>
+</head>
 <ui:composition template="templates/template.xhtml">
     <ui:define name="content">
-        Search by:
+        #{str['search_by']}:
         <h:form>
             <h:selectOneMenu value="#{manageLoanController.filteringTypeHistory}">
-                <f:selectItem itemValue="aNum" itemLabel="Account number"/>
-                <f:selectItem itemValue="rID" itemLabel="Resource id"/>
-                <f:selectItem itemValue="rDesc" itemLabel="Resource description"/>
-                <f:selectItem itemValue="cLog" itemLabel="Client login"/>
-                <f:selectItem itemValue="cID" itemLabel="Client id"/>
+                <f:selectItem itemValue="aNum" itemLabel="#{str['account_number']}"/>
+                <f:selectItem itemValue="rID" itemLabel="#{str['resource_id']}"/>
+                <f:selectItem itemValue="rDesc" itemLabel="#{str['resource_description']}"/>
+                <f:selectItem itemValue="cLog" itemLabel="#{str['client_login']}"/>
+                <f:selectItem itemValue="cID" itemLabel="#{str['client_id']}"/>
             </h:selectOneMenu>
             <h:inputText value="#{manageLoanController.filterHistory}"/>
-            <h:commandButton value="Apply" action="#{manageLoanController.applyFilter}"/><br/>
+            <h:commandButton value="#{str['apply']}" action="#{manageLoanController.applyFilter}"/><br/>
             <h:messages errorClass="error"/>
         </h:form>
         <h2>Loans history</h2>
         <h:dataTable value="#{manageLoanController.allLedgers}" var="loanLedger" border="2">
             <h:column>
-                <f:facet name="header">Ledger ID</f:facet>
+                <f:facet name="header">#{str['ledger']} ID</f:facet>
                 <b><h:outputFormat value="#{loanLedger.uuid}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/> </b>
             </h:column>
             <h:column>
-                <f:facet name="header">Loan ID</f:facet>
+                <f:facet name="header">#{str['loan']} ID</f:facet>
                 <b><h:outputFormat value="#{loanLedger.loan.id}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/></b>
             </h:column>
             <h:column>
-                <f:facet name="header">Loan description</f:facet>
+                <f:facet name="header">#{str['loan']} #{str['description']}</f:facet>
                 <h:outputFormat value="#{loanLedger.loan.description}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/>
             </h:column>
             <h:column>
-                <f:facet name="header">Account number</f:facet>
+                <f:facet name="header">#{str['account_number']}</f:facet>
                 <b><h:outputFormat value="#{loanLedger.account.accountNumber}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/> </b>
             </h:column>
             <h:column>
-                <f:facet name="header">Taking date</f:facet>
+                <f:facet name="header">#{str['start_date']}</f:facet>
                 <i><h:outputFormat value="#{loanLedger.startDate}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/> </i>
             </h:column>
             <h:column>
-                <f:facet name="header">Paying date</f:facet>
+                <f:facet name="header">#{str['end_date']}</f:facet>
                 <h:outputFormat value="#{loanLedger.endDate}" rendered="#{!loanLedger.active and manageLoanController.matchFilter(loanLedger)}"/>
             </h:column>
         </h:dataTable>
         <h2>Box Rents history</h2>
         <h:dataTable value="#{manageLoanController.allBoxRents}" var="boxRent" border="2">
             <h:column>
-                <f:facet name="header">Rent ID</f:facet>
+                <f:facet name="header">#{str['rent']} ID</f:facet>
                 <b><h:outputFormat value="#{boxRent.uuid}" rendered="#{manageLoanController.matchFilter(boxRent)}"/> </b>
             </h:column>
             <h:column>
-                <f:facet name="header">SafeBox ID</f:facet>
+                <f:facet name="header">#{str['safe_box']} ID</f:facet>
                 <b><h:outputFormat value="#{boxRent.safeBox.id}" rendered="#{manageLoanController.matchFilter(boxRent)}"/></b>
             </h:column>
             <h:column>
-                <f:facet name="header">Box Description</f:facet>
+                <f:facet name="header">>#{str['safe_box']} >#{str['description']}</f:facet>
                 <h:outputFormat value="#{boxRent.safeBox.description}" rendered="#{manageLoanController.matchFilter(boxRent)}"/>
             </h:column>
             <h:column>
-                <f:facet name="header">CLient ID</f:facet>
+                <f:facet name="header">>#{str['client_id']}</f:facet>
                 <b><h:outputFormat value="#{boxRent.client.pid}" rendered="#{manageLoanController.matchFilter(boxRent)}"/> </b>
             </h:column>
             <h:column>
-                <f:facet name="header">Client login</f:facet>
+                <f:facet name="header">>#{str['client_login']}</f:facet>
                 <h:outputFormat value="#{boxRent.client.login}" rendered="#{manageLoanController.matchFilter(boxRent)}"/>
             </h:column>
             <h:column>
-                <f:facet name="header">Taking date</f:facet>
+                <f:facet name="header">>#{str['start_date']}</f:facet>
                 <i><h:outputFormat value="#{boxRent.startDate}" rendered="#{manageLoanController.matchFilter(boxRent)}"/> </i>
             </h:column>
             <h:column>
-                <f:facet name="header">Return date</f:facet>
+                <f:facet name="header">>#{str['end_date']}</f:facet>
                 <h:outputFormat value="#{boxRent.endDate}" rendered="#{!loanLedger.active and manageLoanController.matchFilter(boxRent)}"/>
             </h:column>
         </h:dataTable>

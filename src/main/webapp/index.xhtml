@@ -16,14 +16,14 @@
             <div class="gripContainer">
                 <h:button value="#{str['add_client']} 👱‍♂️👱‍♀️" styleClass="tile" outcome="NewClient"/>
                 <h:form>
-                    <h:commandButton value="Dodaj pożyczkę 🎁" styleClass="tile" action="#{manageLoanController.setType('loan')}"/>
+                    <h:commandButton value="#{str['add_loan']} 🎁" styleClass="tile" action="#{manageLoanController.setType('loan')}"/>
                 </h:form>
                 <h:form>
-                    <h:commandButton value="Dodaj Skrytkę" styleClass="tile" action="#{manageLoanController.setType('safeBox')}"/>
+                    <h:commandButton value="#{str['add_safe_box']} 🔐💾" styleClass="tile" action="#{manageLoanController.setType('safeBox')}"/>
                 </h:form>
                 <h:button value="#{str['add_account']}📕💰" styleClass="tile" outcome="NewAccount"/>
                 <h:button value="#{str['get']}/#{str['pay_off']} #{str['loan']} 🤑🤑-->🧐👛-->😱-->😓🔫" styleClass="tile" outcome="TakeLoan"/>
-                <h:button value="#{str['get']}/#{str['pay_off']} Safe Box" styleClass="tile" outcome="RentBox"/>
+                <h:button value="#{str['rent']}/#{str['return']} Safe Box 🔑🧰" styleClass="tile" outcome="RentBox"/>
             </div>
         </ui:define>
     </ui:composition>

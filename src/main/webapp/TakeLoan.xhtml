@@ -6,6 +6,9 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
+    <f:metadata>
+        <f:viewAction action="#{internationalizationController.onLoad()}"/>
+    </f:metadata>
     <title>Take Loan</title>
 </h:head>
 
@@ -15,33 +18,33 @@
             <h:form>
                 <h:dataTable border="2" value="#{clientListController.allClients}" var="klient">
                     <h:column>
-                        <f:facet name="header">Login</f:facet>
+                        <f:facet name="header">#{str['login']}</f:facet>
                         <h:outputText value="#{klient.login}"/> <br/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Accounts</f:facet>
+                        <f:facet name="header">#{str['accounts']}</f:facet>
                         <h:dataTable border="1" value="#{klient.listOfAccounts}" var="account">
                             <h:column>
-                                <f:facet name="header">Account Number</f:facet>
+                                <f:facet name="header">#{str['account_number']}</f:facet>
                                 <h:outputText value="#{account.accountNumber}"/>
                             </h:column>
                             <h:column>
-                                <f:facet name="header">State</f:facet>
+                                <f:facet name="header">#{str['state']}</f:facet>
                                 <h:outputText value="#{account.stateOfAccount}"/>
                                 <h:outputText value="#{account.currency}"/>
                             </h:column>
                             <h:column>
-                                <f:facet name="header">Loans</f:facet>
+                                <f:facet name="header">#{str['loans']}</f:facet>
                                 <h:dataTable border="1" value="#{manageLoanController.getLedgerByAccount(account)}" var="ledger">
                                     <h:column>
                                         <h:outputText value="#{ledger.loan.description} (#{ledger.loan.value})"/>
-                                        <h:commandButton value="Pay" action="#{manageLoanController.payLoan(account, ledger.loan)}"/><br/>
+                                        <h:commandButton value="#{str['pay_off']}" action="#{manageLoanController.payLoan(account, ledger.loan)}"/><br/>
                                     </h:column>
                                 </h:dataTable>
                             </h:column>
                             <h:column>
-                                <f:facet name="header">Actions</f:facet>
-                                <h:commandButton value="Select" action="#{manageLoanController.setClient(klient)}">
+                                <f:facet name="header">#{str['actions']}</f:facet>
+                                <h:commandButton value="#{str['select']}" action="#{manageLoanController.setClient(klient)}">
                                     <f:actionListener binding="#{manageLoanController.setAccount(account)}"/>
                                 </h:commandButton><br/>
                             </h:column>
@@ -51,29 +54,29 @@
             </h:form>
 
             <h:form>
-                Wybrane konto = #{manageLoanController.account.accountNumber}<br/>
+                #{str['chosen']} #{str['account']} = #{manageLoanController.account.accountNumber}<br/>
                 Wybierz pożyczkę:
                 <h:dataTable border="2" value="#{loansController.allLoans}" var="loan">
                     <h:column>
-                        <f:facet name="header">Description</f:facet>
+                        <f:facet name="header">#{str['description']}</f:facet>
                         <h:outputFormat value="#{loan.description}"/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Value</f:facet>
+                        <f:facet name="header">#{str['value']}</f:facet>
                         <h:outputFormat value="#{loan.value}"/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Available</f:facet>
+                        <f:facet name="header">#{str['available']}</f:facet>
                         <h:outputFormat value="#{loan.available}"/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Actions</f:facet>
+                        <f:facet name="header">#{str['actions']}</f:facet>
                         <h:commandButton value="Select" action="#{manageLoanController.setLoan(loan)}"/>
                     </h:column>
                 </h:dataTable>
                 <h:messages infoClass="info" errorClass="error"/>
-                Wybrana pożyczka = #{manageLoanController.loan.toString()} <br/>
-                <h:commandButton value="Take" action="#{manageLoanController.processLoan}" rendered="#{manageLoanController.areAccountAndLoanChosen()}"/>
+                #{str['chosen']} #{str['loan']} = #{manageLoanController.loan.toString()} <br/>
+                <h:commandButton value="#{str['get']}" action="#{manageLoanController.processLoan}" rendered="#{manageLoanController.areAccountAndLoanChosen()}"/>
             </h:form>
         </ui:define>
     </ui:composition>

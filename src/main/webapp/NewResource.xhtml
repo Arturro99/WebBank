@@ -6,24 +6,30 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
+    <f:metadata>
+        <f:viewAction action="#{internationalizationController.onLoad()}"/>
+    </f:metadata>
     <title>New Loan</title>
 </h:head>
 <ui:composition template="templates/template.xhtml">
     <ui:define name="content">
         <h:body>
-            New Loan
+            #{str['new']} #{str['resource']}
 
             <h:form>
-                *Description: <h:inputText value="#{newResourceController.newLoan.description}" rendered="#{manageLoanController.isLoanType()}" required="#{manageLoanController.isLoanType()}"/><br/>
+                *#{str['description']} <h:inputText value="#{newResourceController.newLoan.description}" rendered="#{manageLoanController.isLoanType()}" required="#{manageLoanController.isLoanType()}"/><br/>
                 <h:inputText value="#{newResourceController.newSafeBox.description}" rendered="#{manageLoanController.isSafeBoxType()}" required="#{manageLoanController.isSafeBoxType()}"/><br/>
-                *Value: <h:inputText value="#{newResourceController.newLoan.value}" required="#{manageLoanController.isLoanType()}" rendered="#{manageLoanController.isLoanType()}"/><br/>
-                *Position:<br/>
-                row: <h:inputText value="#{newResourceController.newSafeBox.position.row}" required="#{manageLoanController.isSafeBoxType()}" rendered="#{manageLoanController.isSafeBoxType()}"/>
+                <h:outputText value="*#{str['value']}: " rendered="#{manageLoanController.isLoanType()}"/>
+                <h:inputText value="#{newResourceController.newLoan.value}" required="#{manageLoanController.isLoanType()}" rendered="#{manageLoanController.isLoanType()}"/><br/>
+                <h:outputText value="#{str['position']}" rendered="#{manageLoanController.isSafeBoxType()}"/>
                 <br/>
-                column:
+                <h:outputText value="#{str['row']}: " rendered="#{manageLoanController.isSafeBoxType()}"/>
+                <h:inputText value="#{newResourceController.newSafeBox.position.row}" required="#{manageLoanController.isSafeBoxType()}" rendered="#{manageLoanController.isSafeBoxType()}"/>
+                <br/>
+                <h:outputText value="#{str['column']}: " rendered="#{manageLoanController.isSafeBoxType()}"/>
                 <h:inputText value="#{newResourceController.newSafeBox.position.column}" required="#{manageLoanController.isSafeBoxType()}" rendered="#{manageLoanController.isSafeBoxType()}"/><br/>
-                <h:commandButton value="Add Loan" action="#{newResourceController.processNewLoan()}" rendered="#{manageLoanController.isLoanType()}"/><br/>
-                <h:commandButton value="Add SafeBox" action="#{newResourceController.processNewBox()}" rendered="#{manageLoanController.isSafeBoxType()}"/><br/>
+                <h:commandButton value="#{str['add_loan']}" action="#{newResourceController.processNewLoan()}" rendered="#{manageLoanController.isLoanType()}"/><br/>
+                <h:commandButton value="#{str['add_safe_box']}" action="#{newResourceController.processNewBox()}" rendered="#{manageLoanController.isSafeBoxType()}"/><br/>
                 <h:messages errorClass="error"/>
             </h:form>
 

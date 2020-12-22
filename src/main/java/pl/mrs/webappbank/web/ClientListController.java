@@ -134,9 +134,9 @@ public class ClientListController implements Serializable {
     public void addExampleAccounts(){
         if(accountManager.isExampleAccounts())
             return;
-        Client c1 = new Client("destroyer69", "1234", "dupa","blada",18);
+        Client c1 = new Client("destroyer11111", "1234", "Jan","Błaszczyk",18);
         Client c2 = new Client("qwerty", "567", "Ziomson","PL",12);
-        Client c3 = new Client("azerty", "666", "JP","dwa",8);
+        Client c3 = new Client("azerty", "666", "Janusz","Pawlak",8);
         clientManager.addClient(c1);
         clientManager.addClient(c2);
         clientManager.addClient(c3);

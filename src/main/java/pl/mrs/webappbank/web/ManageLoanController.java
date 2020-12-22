@@ -93,12 +93,14 @@ public class ManageLoanController implements Serializable {
         if(loanManager.getAllLoans().contains(loan))
             loansLedgerManager.takeLoan(loan, account, client);
         takeLoan = false;
+        type = "nic";
         return "TakeLoan";
     }
     public String confirmRent() {
         if(loanManager.getAllSafeBoxes().contains(safeBox))
             loansLedgerManager.rentBox(safeBox, client);
         rentBox = false;
+        type = "nic";
         return "RentBox";
     }
 
@@ -195,6 +197,12 @@ public class ManageLoanController implements Serializable {
 
     public String finishTaking() {
         takeLoan = false;
+        type = "nic";
+        return "index";
+    }
+    public String finishRenting(){
+        rentBox = false;
+        type = "nic";
         return "index";
     }
     public String setType(String type){

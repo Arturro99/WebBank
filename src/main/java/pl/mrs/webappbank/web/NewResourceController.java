@@ -51,6 +51,7 @@ public class NewResourceController implements Serializable {
     }
     public String finishCreation() {
         resourceCreated = false;
+        conversation.end();
         return "index";
     }
 

@@ -14,6 +14,9 @@
       xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
+    <f:metadata>
+        <f:viewAction action="#{internationalizationController.onLoad()}"/>
+    </f:metadata>
     <title>RentBox</title>
 </h:head>
 
@@ -23,57 +26,57 @@
             <h:form>
                 <h:dataTable border="2" value="#{clientListController.allClients}" var="klient">
                     <h:column>
-                        <f:facet name="header">Login</f:facet>
+                        <f:facet name="header">#{str['login']}</f:facet>
                         <h:outputText value="#{klient.login}"/> <br/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Name</f:facet>
+                        <f:facet name="header">#{str['name']}</f:facet>
                         <h:outputText value="#{klient.name}"/> <br/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Surname</f:facet>
+                        <f:facet name="header">#{str['surname']}</f:facet>
                         <h:outputText value="#{klient.surname}"/> <br/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Boxes</f:facet>
+                        <f:facet name="header">#{str['safe_box']}</f:facet>
                         <h:dataTable border="2" value="#{manageLoanController.getRentByClient(klient)}" var="boxRent">
                             <h:column>
                                 <h:outputText value="#{boxRent.safeBox.description}"/>
-                                <h:commandButton value="Return" action="#{manageLoanController.returnBox(klient, boxRent.safeBox)}"/><br/>
+                                <h:commandButton value=">#{str['return']}" action="#{manageLoanController.returnBox(klient, boxRent.safeBox)}"/><br/>
                             </h:column>
                         </h:dataTable>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Actions</f:facet>
-                        <h:commandButton value="Select" action="#{manageLoanController.setClient(klient)}"/><br/>
+                        <f:facet name="header">#{str['actions']}</f:facet>
+                        <h:commandButton value="#{str['select']}" action="#{manageLoanController.setClient(klient)}"/><br/>
                     </h:column>
                 </h:dataTable>
             </h:form>
 
             <h:form>
-                Wybrany klient = #{manageLoanController.client.toString()}<br/>
-                Wybierz pożyczkę:
+                #{str['chosen']} #{str['client']} = #{manageLoanController.client.toString()}<br/>
+                #{str['select']} #{str['safe_box']}:
                 <h:dataTable border="2" value="#{loansController.allSafeBoxes}" var="box">
                     <h:column>
-                        <f:facet name="header">Description</f:facet>
+                        <f:facet name="header">#{str['description']}</f:facet>
                         <h:outputFormat value="#{box.description}"/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Position</f:facet>
+                        <f:facet name="header">#{str['position']}</f:facet>
                         <h:outputFormat value="#{box.position.row}/#{box.position.column}"/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Available</f:facet>
+                        <f:facet name="header">#{str['available']}</f:facet>
                         <h:outputFormat value="#{box.available}"/>
                     </h:column>
                     <h:column>
-                        <f:facet name="header">Actions</f:facet>
-                        <h:commandButton value="Select" action="#{manageLoanController.setSafeBox(box)}"/>
+                        <f:facet name="header">#{str['actions']}</f:facet>
+                        <h:commandButton value="#{str['select']}" action="#{manageLoanController.setSafeBox(box)}"/>
                     </h:column>
                 </h:dataTable>
                 <h:messages infoClass="info" errorClass="error"/>
-                Wybrana Skrytka = #{manageLoanController.safeBox.toString()} <br/>
-                <h:commandButton value="Take" action="#{manageLoanController.processRent()}" rendered="#{manageLoanController.areClientAndSafeBoxChosen()}"/>
+                #{str['chosen']} #{str['safe_box']} = #{manageLoanController.safeBox.toString()} <br/>
+                <h:commandButton value="#{str['apply']}" action="#{manageLoanController.processRent()}" rendered="#{manageLoanController.areClientAndSafeBoxChosen()}"/>
             </h:form>
         </ui:define>
     </ui:composition>

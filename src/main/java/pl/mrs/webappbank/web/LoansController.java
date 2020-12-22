@@ -46,6 +46,7 @@ public class LoansController implements Serializable {
         loanManager.removeLoan(loan);
         toDeletion = false;
         initController();
+        type="nic";
         return "Loans";
     }
 
@@ -97,6 +98,7 @@ public class LoansController implements Serializable {
     public void confirmSafeBox() {
         if (safeBoxToDeletion) {
             loanManager.removeSavebox(safeBox);
+            type = "nic";
             initController();
         }
         else {
@@ -161,6 +163,7 @@ public class LoansController implements Serializable {
 
     public String finishDeletion() {
         toDeletion = false;
+        type = "nic";
         return "index";
     }
     public boolean isLoanType()
