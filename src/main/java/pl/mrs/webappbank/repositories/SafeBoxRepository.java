@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class SafeBoxRepository implements IRepository<SafeBox,UUID>{
-    private List<SafeBox> boxes;
+    private final List<SafeBox> boxes;
     public SafeBoxRepository() {
         boxes = new ArrayList<>();
 
@@ -25,13 +25,17 @@ public class SafeBoxRepository implements IRepository<SafeBox,UUID>{
 
     @Override
     public void add(SafeBox element) {
-        element.setId(UUID.randomUUID());
-        boxes.add(element);
+        synchronized (boxes) {
+            element.setId(UUID.randomUUID());
+            boxes.add(element);
+        }
     }
 
     @Override
     public void remove(SafeBox element) {
-        boxes.remove(element);
+        synchronized (boxes) {
+            boxes.remove(element);
+        }
     }
 
     @Override

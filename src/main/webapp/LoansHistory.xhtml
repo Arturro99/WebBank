@@ -12,6 +12,12 @@
     </f:metadata>
 </head>
 <ui:composition template="templates/template.xhtml">
+
+    <ui:define name="header">
+        <h:link outcome="/index" value="Main Page"/> >>
+        <h:link outcome="/LoansHistory" value="Loans History"/>
+    </ui:define>
+
     <ui:define name="content">
         #{str['search_by']}:
         <h:form>

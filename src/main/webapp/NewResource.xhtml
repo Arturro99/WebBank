@@ -12,6 +12,13 @@
     <title>New Loan</title>
 </h:head>
 <ui:composition template="templates/template.xhtml">
+
+    <ui:define name="header">
+        <h:link outcome="/index" value="Main Page"/> >>
+        <h:link outcome="/NewResource" value="New Loan" rendered="#{manageLoanController.isLoanType()}"/>
+        <h:link outcome="/NewResource" value="New Box" rendered="#{manageLoanController.isSafeBoxType()}"/>
+    </ui:define>
+
     <ui:define name="content">
         <h:body>
             #{str['new']} #{str['resource']}

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class ClientRepository implements IRepository<Client,UUID> {
-    private List<Client> clients = new ArrayList<>();
+    private final List<Client> clients = new ArrayList<>();
 
 
     public ClientRepository() {
@@ -18,16 +18,21 @@ public class ClientRepository implements IRepository<Client,UUID> {
 
     @Override
     public void add(Client element) {
-        //TODO sprawdzenie unikalności z zadbaniem o wielowątkowość
-        clients.add(element);
+        synchronized (clients) {
+            clients.add(element);
+        }
     }
 
     @Override
     public void remove(Client client) {
-        clients.remove(client);
+        synchronized (clients) {
+            clients.remove(client);
+        }
     }
     public void assignAccount(Client client, Account newAccount){
-        clients.get(find(client.getPid())).addAccount(newAccount);
+        synchronized (clients) {
+            clients.get(find(client.getPid())).addAccount(newAccount);
+        }
     }
 
     @Override

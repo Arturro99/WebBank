@@ -22,6 +22,12 @@
 
 <h:body>
     <ui:composition template="templates/template.xhtml">
+
+        <ui:define name="header">
+            <h:link outcome="/index" value="Main Page"/> >>
+            <h:link outcome="/RentBox" value="Rent Box"/>
+        </ui:define>
+
         <ui:define name="content">
             <h:form>
                 <h:dataTable border="2" value="#{clientListController.allClients}" var="klient">
