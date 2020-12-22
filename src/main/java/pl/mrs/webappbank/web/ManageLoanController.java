@@ -1,6 +1,7 @@
 package pl.mrs.webappbank.web;
 
 import lombok.Data;
+import pl.mrs.webappbank.managers.LoanManager;
 import pl.mrs.webappbank.managers.LoansLedgerManager;
 import pl.mrs.webappbank.modelv2.*;
 import pl.mrs.webappbank.modelv2.accounts.Account;
@@ -21,6 +22,8 @@ public class ManageLoanController implements Serializable {
 
     @Inject
     LoansLedgerManager loansLedgerManager;
+    @Inject
+    LoanManager loanManager;
 
     String type = "nic";
     Client client;
@@ -86,12 +89,15 @@ public class ManageLoanController implements Serializable {
     }
 
     public String confirmLoan() {
-        loansLedgerManager.takeLoan(loan, account, client);
+
+        if(loanManager.getAllLoans().contains(loan))
+            loansLedgerManager.takeLoan(loan, account, client);
         takeLoan = false;
         return "TakeLoan";
     }
     public String confirmRent() {
-        loansLedgerManager.rentBox(safeBox, client);
+        if(loanManager.getAllSafeBoxes().contains(safeBox))
+            loansLedgerManager.rentBox(safeBox, client);
         rentBox = false;
         return "RentBox";
     }
