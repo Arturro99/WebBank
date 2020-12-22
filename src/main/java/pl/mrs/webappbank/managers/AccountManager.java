@@ -2,10 +2,10 @@ package pl.mrs.webappbank.managers;
 
 import pl.mrs.webappbank.exceptions.NonexistentAccountException;
 import pl.mrs.webappbank.exceptions.NotEnoughMoneyException;
-import pl.mrs.webappbank.modelv2.Client;
-import pl.mrs.webappbank.modelv2.Currency;
-import pl.mrs.webappbank.modelv2.Transfer;
-import pl.mrs.webappbank.modelv2.accounts.*;
+import pl.mrs.webappbank.model.users.Client;
+import pl.mrs.webappbank.model.accounts.Currency;
+import pl.mrs.webappbank.model.Transfer;
+import pl.mrs.webappbank.model.accounts.*;
 import pl.mrs.webappbank.repositories.AccountRepository;
 import pl.mrs.webappbank.repositories.TransferRepository;
 

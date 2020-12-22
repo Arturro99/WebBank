@@ -1,6 +1,4 @@
-package pl.mrs.webappbank.modelv2;
-
-import java.util.Objects;
+package pl.mrs.webappbank.model.resources;
 
 public class SafeBox extends Resource {
     Position position;

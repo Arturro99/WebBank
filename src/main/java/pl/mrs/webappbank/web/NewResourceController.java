@@ -2,8 +2,8 @@ package pl.mrs.webappbank.web;
 
 import lombok.Data;
 import pl.mrs.webappbank.managers.LoanManager;
-import pl.mrs.webappbank.modelv2.Loan;
-import pl.mrs.webappbank.modelv2.SafeBox;
+import pl.mrs.webappbank.model.resources.Loan;
+import pl.mrs.webappbank.model.resources.SafeBox;
 
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;

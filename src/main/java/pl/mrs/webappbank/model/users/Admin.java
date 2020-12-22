@@ -1,13 +1,8 @@
-package pl.mrs.webappbank.modelv2;
+package pl.mrs.webappbank.model.users;
 
 import lombok.Data;
-import pl.mrs.webappbank.modelv2.accounts.Account;
-import pl.mrs.webappbank.repositories.IRepository;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Data
 public class Admin {

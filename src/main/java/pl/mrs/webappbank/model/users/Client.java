@@ -1,8 +1,7 @@
-package pl.mrs.webappbank.modelv2;
+package pl.mrs.webappbank.model.users;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import pl.mrs.webappbank.modelv2.accounts.Account;
+import pl.mrs.webappbank.model.accounts.Account;
 
 import java.io.Serializable;
 import java.util.ArrayList;

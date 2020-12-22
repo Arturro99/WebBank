@@ -1,4 +1,6 @@
-package pl.mrs.webappbank.modelv2;
+package pl.mrs.webappbank.model.events;
+
+import pl.mrs.webappbank.model.resources.Resource;
 
 import java.util.Date;
 import java.util.UUID;

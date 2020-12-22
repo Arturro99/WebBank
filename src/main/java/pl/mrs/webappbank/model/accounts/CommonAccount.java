@@ -1,4 +1,4 @@
-package pl.mrs.webappbank.modelv2.accounts;
+package pl.mrs.webappbank.model.accounts;
 
 public class CommonAccount extends Account {
     public CommonAccount(String accountNumber, double stateOfAccount) {

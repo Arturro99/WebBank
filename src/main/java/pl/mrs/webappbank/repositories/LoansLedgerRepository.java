@@ -1,7 +1,11 @@
 package pl.mrs.webappbank.repositories;
 
-import pl.mrs.webappbank.modelv2.*;
-import pl.mrs.webappbank.modelv2.accounts.Account;
+import pl.mrs.webappbank.model.events.Event;
+import pl.mrs.webappbank.model.events.LoansLedger;
+import pl.mrs.webappbank.model.events.SafeBoxRent;
+import pl.mrs.webappbank.model.accounts.Account;
+import pl.mrs.webappbank.model.resources.Loan;
+import pl.mrs.webappbank.model.users.Client;
 
 import java.util.ArrayList;
 import java.util.List;

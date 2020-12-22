@@ -1,9 +1,6 @@
-package pl.mrs.webappbank.modelv2;
+package pl.mrs.webappbank.model.resources;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.util.UUID;
 
 @Data
 public class Loan extends Resource{
