@@ -174,7 +174,6 @@ public class ManageLoanController implements Serializable {
                 break;
             case "aNum":
             if(event.getClass().equals(LoansLedger.class)) {
-                    safeBoxRent = (SafeBoxRent) event;
                 if (ledger.getAccount().getAccountNumber().contains(filterHistory)) {
                     return true;
                      }

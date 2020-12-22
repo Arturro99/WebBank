@@ -51,8 +51,8 @@ public class LoansController implements Serializable {
     }
 
     public List<Loan> getAllLoans() {
-        currentLoans = loanManager.getAllLoans();
-        currentSafeBoxes = loanManager.getAllSafeBoxes();
+//        currentLoans = loanManager.getAllLoans();
+//        currentSafeBoxes = loanManager.getAllSafeBoxes();
         return currentLoans;
     }
 
@@ -110,8 +110,8 @@ public class LoansController implements Serializable {
     }
 
     public List<SafeBox> getAllSafeBoxes() {
-        currentLoans = loanManager.getAllLoans();
-        currentSafeBoxes = loanManager.getAllSafeBoxes();
+//        currentLoans = loanManager.getAllLoans();
+//        currentSafeBoxes = loanManager.getAllSafeBoxes();
         return currentSafeBoxes;
     }
 
