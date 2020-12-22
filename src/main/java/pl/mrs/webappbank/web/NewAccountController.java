@@ -23,6 +23,8 @@ public class NewAccountController implements Serializable {
 
     public String registerAccount()
     {
+        if(selectedAccountType == null || selectedClient == null)
+            return "NewAccount";
         String[] type_details;
         if(selectedAccountType.contains(" "))
             type_details = selectedAccountType.split(" ");
