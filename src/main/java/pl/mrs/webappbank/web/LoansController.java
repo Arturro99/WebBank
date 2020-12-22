@@ -51,8 +51,8 @@ public class LoansController implements Serializable {
     }
 
     public List<Loan> getAllLoans() {
-        currentLoans = loanManager.getAllLoans();
-        currentSafeBoxes = loanManager.getAllSafeBoxes();
+        //currentLoans = loanManager.getAllLoans();
+        //currentSafeBoxes = loanManager.getAllSafeBoxes();
         return currentLoans;
     }
 
@@ -95,7 +95,7 @@ public class LoansController implements Serializable {
         }
         initController();
     }
-    public void confirmSafeBox() {
+    public String confirmSafeBox() {
         if (safeBoxToDeletion) {
             loanManager.removeSavebox(safeBox);
             type = "nic";
@@ -106,12 +106,12 @@ public class LoansController implements Serializable {
         }
       //  conversation.end();
 
-        //return "RentBox";
+        return "Loans";
     }
 
     public List<SafeBox> getAllSafeBoxes() {
-        currentLoans = loanManager.getAllLoans();
-        currentSafeBoxes = loanManager.getAllSafeBoxes();
+        //currentLoans = loanManager.getAllLoans();
+        //currentSafeBoxes = loanManager.getAllSafeBoxes();
         return currentSafeBoxes;
     }
 

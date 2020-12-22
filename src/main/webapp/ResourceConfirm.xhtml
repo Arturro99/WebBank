@@ -63,7 +63,7 @@
                 <h:commandButton value="#{str['cancel']}" action="#{manageLoanController.finishRenting}"
                                  immediate="true" rendered="#{manageLoanController.takeLoan}"/><br/>
                 <h:commandButton value="#{str['cancel']}" action="#{loansController.finishDeletion}"
-                                 immediate="true" rendered="#{loansController.toDeletion}"/><br/>
+                                 immediate="true" rendered="#{loansController.safeBoxToDeletion}"/><br/>
                 <h:commandButton value="#{str['cancel']}" action="#{newResourceController.finishCreation}"
                                  immediate="true" rendered="#{newResourceController.resourceCreated}"/><br/>
             </h:form>
