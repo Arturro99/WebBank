@@ -1,4 +1,4 @@
-package pl.mrs.webappbank.modelv2;
+package pl.mrs.webappbank.model.accounts;
 
 public enum Currency {
     USD, EUR, PLN

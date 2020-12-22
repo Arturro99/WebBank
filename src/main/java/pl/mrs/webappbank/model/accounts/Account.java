@@ -1,7 +1,6 @@
-package pl.mrs.webappbank.modelv2.accounts;
+package pl.mrs.webappbank.model.accounts;
 
 import lombok.Data;
-import pl.mrs.webappbank.modelv2.Currency;
 
 @Data
 public abstract class Account {

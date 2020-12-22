@@ -3,8 +3,13 @@ package pl.mrs.webappbank.web;
 import lombok.Data;
 import pl.mrs.webappbank.managers.LoanManager;
 import pl.mrs.webappbank.managers.LoansLedgerManager;
-import pl.mrs.webappbank.modelv2.*;
-import pl.mrs.webappbank.modelv2.accounts.Account;
+import pl.mrs.webappbank.model.events.Event;
+import pl.mrs.webappbank.model.events.LoansLedger;
+import pl.mrs.webappbank.model.events.SafeBoxRent;
+import pl.mrs.webappbank.model.accounts.Account;
+import pl.mrs.webappbank.model.resources.Loan;
+import pl.mrs.webappbank.model.resources.SafeBox;
+import pl.mrs.webappbank.model.users.Client;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;

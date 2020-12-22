@@ -1,7 +1,6 @@
 package pl.mrs.webappbank.repositories;
 
-import pl.mrs.webappbank.modelv2.Loan;
-import pl.mrs.webappbank.modelv2.SafeBox;
+import pl.mrs.webappbank.model.resources.SafeBox;
 
 import java.util.ArrayList;
 import java.util.List;

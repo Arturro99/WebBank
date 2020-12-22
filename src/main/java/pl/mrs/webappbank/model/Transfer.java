@@ -1,6 +1,6 @@
-package pl.mrs.webappbank.modelv2;
+package pl.mrs.webappbank.model;
 
-import pl.mrs.webappbank.modelv2.accounts.Account;
+import pl.mrs.webappbank.model.accounts.Account;
 
 import java.util.UUID;
 

@@ -1,15 +1,13 @@
 package pl.mrs.webappbank.managers;
 
-import pl.mrs.webappbank.modelv2.Loan;
-import pl.mrs.webappbank.modelv2.SafeBox;
+import pl.mrs.webappbank.model.resources.Loan;
+import pl.mrs.webappbank.model.resources.SafeBox;
 import pl.mrs.webappbank.repositories.LoanRepository;
 import pl.mrs.webappbank.repositories.SafeBoxRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 @ApplicationScoped
 @Named

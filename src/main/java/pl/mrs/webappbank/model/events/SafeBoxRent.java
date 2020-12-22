@@ -1,6 +1,8 @@
-package pl.mrs.webappbank.modelv2;
+package pl.mrs.webappbank.model.events;
 
 import lombok.Data;
+import pl.mrs.webappbank.model.users.Client;
+import pl.mrs.webappbank.model.resources.SafeBox;
 
 @Data
 public class SafeBoxRent extends Event{

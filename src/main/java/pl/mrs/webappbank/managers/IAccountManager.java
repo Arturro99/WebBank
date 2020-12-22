@@ -2,10 +2,10 @@ package pl.mrs.webappbank.managers;
 
 import pl.mrs.webappbank.exceptions.NonexistentAccountException;
 import pl.mrs.webappbank.exceptions.NotEnoughMoneyException;
-import pl.mrs.webappbank.modelv2.Currency;
-import pl.mrs.webappbank.modelv2.accounts.Account;
-import pl.mrs.webappbank.modelv2.accounts.SavingsType;
-import pl.mrs.webappbank.modelv2.Client;
+import pl.mrs.webappbank.model.accounts.Currency;
+import pl.mrs.webappbank.model.accounts.Account;
+import pl.mrs.webappbank.model.accounts.SavingsType;
+import pl.mrs.webappbank.model.users.Client;
 
 public interface IAccountManager {
     void registerCommonAccount(Client client);

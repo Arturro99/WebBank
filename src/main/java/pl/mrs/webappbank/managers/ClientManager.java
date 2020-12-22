@@ -1,6 +1,6 @@
 package pl.mrs.webappbank.managers;
 
-import pl.mrs.webappbank.modelv2.Client;
+import pl.mrs.webappbank.model.users.Client;
 import pl.mrs.webappbank.repositories.ClientRepository;
 
 import javax.enterprise.context.ApplicationScoped;

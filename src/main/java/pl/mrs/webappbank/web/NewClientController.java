@@ -3,7 +3,7 @@ package pl.mrs.webappbank.web;
 import lombok.Data;
 import pl.mrs.webappbank.managers.AccountManager;
 import pl.mrs.webappbank.managers.ClientManager;
-import pl.mrs.webappbank.modelv2.Client;
+import pl.mrs.webappbank.model.users.Client;
 
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;

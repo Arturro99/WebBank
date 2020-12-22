@@ -1,6 +1,4 @@
-package pl.mrs.webappbank.modelv2.accounts;
-
-import pl.mrs.webappbank.modelv2.Currency;
+package pl.mrs.webappbank.model.accounts;
 
 public class CurrencyAccount extends Account {
     private Currency currency;
