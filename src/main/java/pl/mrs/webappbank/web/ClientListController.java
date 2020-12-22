@@ -5,32 +5,35 @@ import pl.mrs.webappbank.exceptions.NonexistentAccountException;
 import pl.mrs.webappbank.managers.AccountManager;
 import pl.mrs.webappbank.managers.ClientManager;
 import pl.mrs.webappbank.managers.LoansLedgerManager;
-import pl.mrs.webappbank.modelv2.Client;
+import pl.mrs.webappbank.modelv2.*;
 import pl.mrs.webappbank.modelv2.Currency;
-import pl.mrs.webappbank.modelv2.Loan;
-import pl.mrs.webappbank.modelv2.LoansLedger;
 import pl.mrs.webappbank.modelv2.accounts.Account;
 import pl.mrs.webappbank.modelv2.accounts.SavingsType;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
-@ViewScoped
+@SessionScoped
 @Named
 @Data
 public class ClientListController implements Serializable {
 
     private List<Client> currentClients;
+    private List<Account> currentAccounts;
     private Client client;
     HashMap<String, Boolean> editedClient;
+    HashMap<Account, Client> clientAccounts;
+
+    String filteringType;
+    String filter;
 
     FacesMessage message;
     FacesContext context;
@@ -62,6 +65,7 @@ public class ClientListController implements Serializable {
             return null;
         }
         clientManager.removeClient(c);
+        initController();
         return "AccountList";
     }
     public String deleteAccount(Client c, Account a){
@@ -71,6 +75,7 @@ public class ClientListController implements Serializable {
             } catch (NonexistentAccountException e) {
                 System.out.println(e.getMessage());
             }
+            initController();
             return "AccountList";
         }
         else {
@@ -84,6 +89,7 @@ public class ClientListController implements Serializable {
     public List<Client> getAllClients() {
         return currentClients;
     }
+    public List<Account> getAllAccounts() {return currentAccounts; }
 
     public void editClient(Client c) {
         clientManager.addClient(c);
@@ -108,8 +114,22 @@ public class ClientListController implements Serializable {
     @PostConstruct
     public void initController() {
         addExampleAccounts();
+        clientAccounts = new HashMap<>();
         currentClients = clientManager.getAllClients();
+        currentAccounts = accountManager.getAllAccounts();
+        for (Client currentClient : currentClients) {
+            for (int j = 0; j < currentClient.getListOfAccounts().size(); j++) {
+                for (Account currentAccount : currentAccounts) {
+                    if (currentClient.getListOfAccounts().get(j).getAccountNumber()
+                            .equals(currentAccount.getAccountNumber())) {
+                        clientAccounts.put(currentAccount, currentClient);
+                    }
+                }
+            }
+        }
         editedClient = new HashMap<>();
+        filter = "";
+        filteringType = "";
     }
     public void addExampleAccounts(){
         if(accountManager.isExampleAccounts())
@@ -149,5 +169,46 @@ public class ClientListController implements Serializable {
                 .filter(LoansLedger::isActive)
                 .map(x -> x.getAccount().getAccountNumber())
                 .anyMatch(acc.getAccountNumber()::contains);
+    }
+
+    public List<Account> getAccountsByClient(Client client) {
+        List<Account> tmp = new ArrayList<>();
+        for (Map.Entry<Account, Client> entry : clientAccounts.entrySet()) {
+            if (Objects.equals(client.getPid(), entry.getValue().getPid())) {
+                tmp.add(entry.getKey());
+            }
+        }
+        return tmp;
+    }
+
+    public String applyFilter() {
+        if (filter.equals("") || filteringType.equals("")) {
+            context = FacesContext.getCurrentInstance();
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "No filter provided!", null);
+            context.addMessage(null, message);
+            return null;
+        }
+        return "AccountList";
+    }
+
+    public boolean matchFilter(Client client, Account account) {
+        if (filter.equals("") || filteringType.equals("")) {
+            return true;
+        }
+        switch (filteringType) {
+            case "aNum":
+                if (account != null)
+                    return account.getAccountNumber().contains(filter);
+                else return client.getListOfAccounts().stream().anyMatch(a -> a.getAccountNumber().contains(filter));
+            case "cID":
+                return client.getPid().toString().contains(filter);
+            case "cLog":
+                return client.getLogin().contains(filter);
+            case "status":
+                return (filter.matches("Active") && !client.isBlocked()) ||
+                        (filter.matches("Blocked") && client.isBlocked());
+
+        }
+        return false;
     }
 }
