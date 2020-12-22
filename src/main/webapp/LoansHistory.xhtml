@@ -6,6 +6,12 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <ui:composition template="templates/template.xhtml">
+
+    <ui:define name="header">
+        <h:link outcome="/index" value="Main Page"/> >>
+        <h:link outcome="/LoansHistory" value="Loans History"/>
+    </ui:define>
+
     <ui:define name="content">
         Search by:
         <h:form>

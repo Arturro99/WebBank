@@ -12,6 +12,11 @@
     <title>Account List</title>
 </h:head>
 <ui:composition template="templates/template.xhtml">
+    <ui:define name="header">
+        <h:link outcome="/index" value="Main Page"/> >>
+        <h:link outcome="/AccountList" value="Account/Client list"/>
+    </ui:define>
+
     <ui:define name="content">
         <h:body>
             <h:form>

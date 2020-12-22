@@ -15,6 +15,12 @@
 <!--TODO Zapewnić, by użytkownik nie mógł nacisnąć CREATE, jeśli pola nie są wybrane-->
 <h:body>
     <ui:composition template="templates/template.xhtml">
+
+        <ui:define name="header">
+            <h:link outcome="/index" value="Main Page"/> >>
+            <h:link outcome="/NewAccount" value="New Account"/>
+        </ui:define>
+
         <ui:define name="content">
             <h:form>
                 <h:dataTable border="2" value="#{clientListController.allClients}" var="klient">

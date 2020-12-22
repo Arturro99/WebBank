@@ -13,6 +13,12 @@
     </f:metadata>
 </head>
 <ui:composition template="templates/template.xhtml">
+
+    <ui:define name="header">
+        <h:link outcome="/index" value="Main Page"/> >>
+        <h:link outcome="/Loans" value="Loans"/>
+    </ui:define>
+
 <ui:define name="content">
 <h:body>
     Lista pożyczek:
