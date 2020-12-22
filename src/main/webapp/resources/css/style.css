@@ -6,7 +6,7 @@
     overflow: hidden;
 }
 
-.header>* {
+.header > * {
     font-size: 150%;
     background-color: #2a9d8f;
 }
@@ -70,7 +70,7 @@
     display: block;
 }
 
-.contentContainer>* {
+.contentContainer > * {
     overflow: auto;
 }
 
@@ -79,7 +79,7 @@
     font-weight: bold;
 }
 
-.footer>* {
+.footer > * {
     background-color: #e76f51;
 }
 
@@ -101,7 +101,8 @@
     font-size: 200%;
     text-align: center;
     background-color: #e9c46a;
-    height: auto;
+    height: 100%;
+    width: 100%;
     transition: 0.5s;
 }
 
@@ -124,12 +125,13 @@
 .gripContainer {
     height: 100%;
     display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: 20% 20% 20% 20% 20% ;
-    gap: 2px 2px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 0px 0px;
     grid-template-areas:
-        "."
-        ".";
+    ". ."
+    ". ."
+    ". .";
 }
 
 .error {

@@ -42,6 +42,10 @@ public class LoanManager {
         loanRepository.findAll().get(loanRepository.find(loan.getId())).setValue(loan.getValue());
         loanRepository.findAll().get(loanRepository.find(loan.getId())).setDescription(loan.getDescription());
     }
+    public void editSafeBox(SafeBox safeBox){
+        safeBoxRepository.findAll().get(safeBoxRepository.find(safeBox.getId())).setPosition(safeBox.getPosition());
+        safeBoxRepository.findAll().get(safeBoxRepository.find(safeBox.getId())).setDescription(safeBox.getDescription());
+    }
 
     public void removeLoan(Loan loan) {
         loanRepository.remove(loan);

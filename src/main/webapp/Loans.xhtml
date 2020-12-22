@@ -44,8 +44,43 @@
                 </h:commandButton>
             </h:column>
         </h:dataTable>
-        <h:commandButton value="Refresh" action="#{loansController.initController}"/><br/>
         <h:messages infoClass="info" errorClass="error"/>
+    </h:form>
+    Lista pożyczek:
+    <h:form>
+        <h:dataTable border="2" value="#{loansController.allSafeBoxes}" var="safeBox">
+            <h:column>
+                <f:facet name="header">Description</f:facet>
+                <h:outputFormat value="#{safeBox.description}"/><br/>
+                <h:inputText value="#{safeBox.description}" rendered="#{loansController.getEditable(safeBox)}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Row</f:facet>
+                <h:outputFormat value="#{safeBox.position.row}"/><br/>
+                <h:inputText value="#{safeBox.position.row}" rendered="#{loansController.getEditable(safeBox)}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Column</f:facet>
+                <h:outputFormat value="#{safeBox.position.column}"/><br/>
+                <h:inputText value="#{safeBox.position.column}" rendered="#{loansController.getEditable(safeBox)}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Available</f:facet>
+                <h:outputFormat value="#{safeBox.available}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Actions</f:facet>
+                <h:commandButton value="Delete" action="#{loansController.deleteSafebox(safeBox)}">
+                    <f:param name="safeBoxId" value="#{safeBox.id}"/>
+                </h:commandButton>
+                <h:commandButton value="Edit" action="#{loansController.setEditable(safeBox)}" immediate="true"/>
+                <h:commandButton value="Save changes" action="#{loansController.editSafeBox(safeBox)}"
+                                 rendered="#{loansController.getEditable(safeBox)}">
+                    <f:actionListener binding="#{loansController.setEditable(safeBox)}"/>
+                </h:commandButton>
+            </h:column>
+        </h:dataTable>
+        <h:commandButton value="Refresh" action="#{loansController.initController}"/><br/>
     </h:form>
 </h:body>
 </ui:define>

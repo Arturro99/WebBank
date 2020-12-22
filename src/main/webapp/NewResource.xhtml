@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>New Loan</title>
+</h:head>
+<ui:composition template="templates/template.xhtml">
+    <ui:define name="content">
+        <h:body>
+            New Loan
+
+            <h:form>
+                *Description: <h:inputText value="#{newResourceController.newLoan.description}" rendered="#{manageLoanController.isLoanType()}" required="#{manageLoanController.isLoanType()}"/><br/>
+                <h:inputText value="#{newResourceController.newSafeBox.description}" rendered="#{manageLoanController.isSafeBoxType()}" required="#{manageLoanController.isSafeBoxType()}"/><br/>
+                *Value: <h:inputText value="#{newResourceController.newLoan.value}" required="#{manageLoanController.isLoanType()}" rendered="#{manageLoanController.isLoanType()}"/><br/>
+                *Position:<br/>
+                row: <h:inputText value="#{newResourceController.newSafeBox.position.row}" required="#{manageLoanController.isSafeBoxType()}" rendered="#{manageLoanController.isSafeBoxType()}"/>
+                <br/>
+                column:
+                <h:inputText value="#{newResourceController.newSafeBox.position.column}" required="#{manageLoanController.isSafeBoxType()}" rendered="#{manageLoanController.isSafeBoxType()}"/><br/>
+                <h:commandButton value="Add Loan" action="#{newResourceController.processNewLoan()}" rendered="#{manageLoanController.isLoanType()}"/><br/>
+                <h:commandButton value="Add SafeBox" action="#{newResourceController.processNewBox()}" rendered="#{manageLoanController.isSafeBoxType()}"/><br/>
+                <h:messages errorClass="error"/>
+            </h:form>
+
+        </h:body>
+    </ui:define>
+</ui:composition>
+</html>

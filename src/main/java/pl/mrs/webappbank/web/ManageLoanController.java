@@ -1,6 +1,7 @@
 package pl.mrs.webappbank.web;
 
 import lombok.Data;
+import pl.mrs.webappbank.managers.LoanManager;
 import pl.mrs.webappbank.managers.LoansLedgerManager;
 import pl.mrs.webappbank.modelv2.*;
 import pl.mrs.webappbank.modelv2.accounts.Account;
@@ -21,7 +22,10 @@ public class ManageLoanController implements Serializable {
 
     @Inject
     LoansLedgerManager loansLedgerManager;
+    @Inject
+    LoanManager loanManager;
 
+    String type = "nic";
     Client client;
     Loan loan;
     Account account;
@@ -41,10 +45,11 @@ public class ManageLoanController implements Serializable {
 
     public String processLoan() {
         context = FacesContext.getCurrentInstance();
+        type = "loan";
         if (loan.isAvailable()) {
             if (!client.isBlocked()) {
                 takeLoan = true;
-                return "LoanConfirm";
+                return "ResourceConfirm";
             }
             else {
                 message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Client is blocked!", null);
@@ -58,12 +63,13 @@ public class ManageLoanController implements Serializable {
     }
     public String processRent() {
         context = FacesContext.getCurrentInstance();
+        type = "safeBox";
         if (safeBox.isAvailable()) {
             if (!client.isBlocked()) {
                 rentBox = true;
                 message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Safe Box rent", null);
                 context.addMessage(null, message);
-                return "RentBoxConfirm";
+                return "ResourceConfirm";
             }
             else {
                 message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Client is blocked!", null);
@@ -83,12 +89,15 @@ public class ManageLoanController implements Serializable {
     }
 
     public String confirmLoan() {
-        loansLedgerManager.takeLoan(loan, account, client);
+
+        if(loanManager.getAllLoans().contains(loan))
+            loansLedgerManager.takeLoan(loan, account, client);
         takeLoan = false;
         return "TakeLoan";
     }
     public String confirmRent() {
-        loansLedgerManager.rentBox(safeBox, client);
+        if(loanManager.getAllSafeBoxes().contains(safeBox))
+            loansLedgerManager.rentBox(safeBox, client);
         rentBox = false;
         return "RentBox";
     }
@@ -188,5 +197,18 @@ public class ManageLoanController implements Serializable {
         takeLoan = false;
         return "index";
     }
+    public String setType(String type){
+        this.type=type;
+        return "NewResource";
+    }
+    public boolean isLoanType()
+    {
+        return type.equals("loan");
+    }
+    public boolean isSafeBoxType()
+    {
+        return type.equals("safeBox");
+    }
+
 
 }

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<head>
+    <title>Loan Confirm</title>
+    <f:metadata>
+        <f:viewAction action="#{internationalizationController.onLoad()}"/>
+    </f:metadata>
+</head>
+<ui:composition template="templates/template.xhtml">
+    <ui:define name="content">
+        <f:view>
+            <h:form rendered="#{manageLoanController.isLoanType() or loansController.isLoanType()}">
+                #{str['description']}: <h:outputText value="#{loansController.loan.description}" rendered="#{loansController.toDeletion}"/>
+                <h:outputText value="#{manageLoanController.loan.description}" rendered="#{manageLoanController.takeLoan}"/>
+                <h:outputText value="#{newResourceController.newLoan.description}" rendered="#{newResourceController.resourceCreated}"/>
+                <br/>
+                #{str['value']}: <h:outputText value="#{loansController.loan.value}" rendered="#{!manageLoanController.takeLoan}"/>
+                <h:outputText value="#{manageLoanController.loan.value}" rendered="#{manageLoanController.takeLoan}"/>
+                <h:outputText value="#{newResourceController.newLoan.value}" rendered="#{newResourceController.resourceCreated}"/>
+                <br/>
+                <h:outputText value="Client: #{manageLoanController.client.name} #{manageLoanController.client.surname}" rendered="#{manageLoanController.takeLoan}"/><br/>
+
+
+                <h:commandButton value="Get" action="#{manageLoanController.confirmLoan}"
+                                 rendered="#{manageLoanController.takeLoan}" immediate="true"/><br/>
+                <h:commandButton value="Delete" action="#{loansController.confirmDeletion}"
+                                 rendered="#{loansController.toDeletion}" immediate="true"/><br/>
+                <h:commandButton value="Create" action="#{newResourceController.confirmLoan}"
+                                 rendered="#{newResourceController.resourceCreated}" immediate="true"/><br/>
+
+                <h:commandButton value="#{str['cancel']}" action="#{manageLoanController.finishTaking}"
+                                 immediate="true" rendered="#{manageLoanController.takeLoan}"/><br/>
+                <h:commandButton value="#{str['cancel']}" action="#{loansController.finishDeletion}"
+                                 immediate="true" rendered="#{loansController.toDeletion}"/><br/>
+                <h:commandButton value="#{str['cancel']}" action="#{newResourceController.finishCreation}"
+                                 immediate="true" rendered="#{newResourceController.resourceCreated}"/><br/>
+            </h:form>
+            <h:form rendered="#{manageLoanController.isSafeBoxType() or loansController.isSafeBoxType()}">
+                Description: <h:outputText value="#{loansController.safeBox.description}" rendered="#{!manageLoanController.rentBox}"/>
+                <h:outputText value="#{manageLoanController.safeBox.description}" rendered="#{manageLoanController.rentBox}"/>
+                <h:outputText value="#{newResourceController.newSafeBox.description}" rendered="#{newResourceController.resourceCreated}"/>
+                <br/>
+                Position:
+                <h:outputText value="#{loansController.safeBox.position.row} #{loansController.safeBox.position.column}" rendered="#{!manageLoanController.rentBox}"/>
+                <h:outputText value="#{manageLoanController.safeBox.position.row} / #{manageLoanController.safeBox.position.column}" rendered="#{manageLoanController.rentBox}"/>
+                <h:outputText value="#{newResourceController.newSafeBox.position.row} / #{newResourceController.newSafeBox.position.column}" rendered="#{newResourceController.resourceCreated}"/>
+
+                <br/>
+                <h:outputText value="Client: #{manageLoanController.client.name} #{manageLoanController.client.surname}" rendered="#{manageLoanController.rentBox}"/><br/>
+
+                <h:commandButton value="Create" action="#{newResourceController.confirmSafeBox()}"
+                                 rendered="#{newResourceController.resourceCreated}" immediate="true"/><br/>
+                <h:commandButton value="Get" action="#{manageLoanController.confirmRent}" rendered="#{!loansController.safeBoxToDeletion and manageLoanController.rentBox}"/><br/>
+                <h:commandButton value="Delete" action="#{loansController.confirmSafeBox}" rendered="#{loansController.safeBoxToDeletion and !manageLoanController.rentBox}"/><br/>
+                <h:commandButton value="Cancel" action="index" immediate="true"/><br/>
+            </h:form>
+        </f:view>
+    </ui:define>
+</ui:composition>
+</html>
