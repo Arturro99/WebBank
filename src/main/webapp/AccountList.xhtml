@@ -15,66 +15,81 @@
     <ui:define name="content">
         <h:body>
             <h:form>
+                <h:selectOneMenu value="#{clientListController.filteringType}">
+                    <f:selectItem itemValue="aNum" itemLabel="Account number"/>
+                    <f:selectItem itemValue="cLog" itemLabel="Client login"/>
+                    <f:selectItem itemValue="cID" itemLabel="Client id"/>
+                    <f:selectItem itemValue="status" itemLabel="Client status"/>
+                </h:selectOneMenu>
+                <h:inputText value="#{clientListController.filter}"/>
+                <h:commandButton value="Apply" action="#{clientListController.applyFilter}"/><br/>
+            </h:form>
+            <h:form>
+                <h2>Clients list</h2>
                 <h:dataTable border="2" value="#{clientListController.allClients}" var="klient">
                     <h:column>
                         <f:facet name="header">#{str['pid']}</f:facet>
-                        <h:outputText value="#{klient.pid}"/> <br/>
+                        <h:outputText value="#{klient.pid}" rendered="#{clientListController.matchFilter(klient, null)}"/> <br/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">#{str['login']}</f:facet>
-                        <h:outputText value="#{klient.login}"/> <br/>
+                        <h:outputText value="#{klient.login}" rendered="#{clientListController.matchFilter(klient, null)}"/> <br/>
                         <h:inputText value="#{klient.login}" rendered="#{clientListController.getEditable(klient)}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">#{str['name']}</f:facet>
-                        <h:outputText value="#{klient.name}"/> <br/>
+                        <h:outputText value="#{klient.name}" rendered="#{clientListController.matchFilter(klient, null)}"/> <br/>
                         <h:inputText value="#{klient.name}" rendered="#{clientListController.getEditable(klient)}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">#{str['surname']}</f:facet>
-                        <h:outputText value="#{klient.surname}"/> <br/>
+                        <h:outputText value="#{klient.surname}" rendered="#{clientListController.matchFilter(klient, null)}"/> <br/>
                         <h:inputText value="#{klient.surname}" rendered="#{clientListController.getEditable(klient)}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">#{str['age']}</f:facet>
-                        <h:outputText value="#{klient.age}"/> <br/>
+                        <h:outputText value="#{klient.age}" rendered="#{clientListController.matchFilter(klient, null)}"/> <br/>
                         <h:inputText value="#{klient.age}" rendered="#{clientListController.getEditable(klient)}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">Status</f:facet>
-                        <h:outputText value="Active" rendered="#{!klient.blocked}"/>
-                        <h:outputText value="Blocked" rendered="#{klient.blocked}"/>
+                        <h:outputText value="Active" rendered="#{!klient.blocked and clientListController.matchFilter(klient, null)}"/>
+                        <h:outputText value="Blocked" rendered="#{klient.blocked and clientListController.matchFilter(klient, null)}"/>
                         <br/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">#{str['accounts']}</f:facet> <br/>
-                        <h:dataTable border="2" value="#{klient.listOfAccounts}" var="konto">
+                        <h:dataTable border="2" value="#{clientListController.getAccountsByClient(klient)}" var="konto">
                             <h:column>
                                 <f:facet name="header">#{str['account_number']}</f:facet>
-                                <h:outputText value="#{konto.accountNumber}"/>
+                                <h:outputText value="#{konto.accountNumber}" rendered="#{clientListController.matchFilter(klient, konto)}"/>
                             </h:column>
                             <h:column>
                                 <f:facet name="header">#{str['state']}</f:facet>
-                                <h:outputText value="#{konto.stateOfAccount}"/>
-                                <h:outputText value="#{konto.currency}"/>
+                                <h:outputText value="#{konto.stateOfAccount}" rendered="#{clientListController.matchFilter(klient, konto)}"/>
+                                <h:outputText value="#{konto.currency}" rendered="#{clientListController.matchFilter(klient, konto)}"/>
                             </h:column>
                             <h:column>
                                 <h:commandButton value="#{str['delete_account']}"
-                                                 action="#{clientListController.deleteAccount(klient, konto)}"/>
+                                                 action="#{clientListController.deleteAccount(klient, konto)}"
+                                                 rendered="#{clientListController.matchFilter(klient, konto)}"/>
                             </h:column>
                         </h:dataTable>
                     </h:column>
                     <h:column>
                         <f:facet name="header">#{str['actions']}</f:facet>
-                        <h:commandButton value="#{str['delete']}" action="#{clientListController.deleteClient(klient)}"/>
+                        <h:commandButton value="#{str['delete']}" action="#{clientListController.deleteClient(klient)}"
+                                         rendered="#{clientListController.matchFilter(klient, konto)}"/>
                         <h:commandButton value="#{str['edit']}" action="#{clientListController.setEditable(klient)}"
-                                         immediate="true"/>
+                                         immediate="true" rendered="#{clientListController.matchFilter(klient, konto)}"/>
                         <h:commandButton value="#{str['save_changes']}" action="#{clientListController.editClient(klient)}"
-                                         rendered="#{clientListController.getEditable(klient)}">
+                                         rendered="#{clientListController.getEditable(klient) and clientListController.matchFilter(klient, konto)}">
                             <f:actionListener binding="#{clientListController.setEditable(klient)}"/>
                         </h:commandButton>
-                        <h:commandButton value="Block" action="#{clientListController.manageClientBlockade(klient)}" rendered="#{!klient.blocked}"/>
-                        <h:commandButton value="Unblock" action="#{clientListController.manageClientBlockade(klient)}" rendered="#{klient.blocked}"/>
+                        <h:commandButton value="Block" action="#{clientListController.manageClientBlockade(klient)}"
+                                         rendered="#{!klient.blocked and clientListController.matchFilter(klient, konto)}"/>
+                        <h:commandButton value="Unblock" action="#{clientListController.manageClientBlockade(klient)}"
+                                         rendered="#{klient.blocked and clientListController.matchFilter(klient, konto)}"/>
                         <br/>
                     </h:column>
                 </h:dataTable>
