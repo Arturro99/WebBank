@@ -65,6 +65,20 @@
     </navigation-rule>
 
     <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>NewResource</from-outcome>
+            <to-view-id>/NewResource.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>LoanConfirm</from-outcome>
+            <to-view-id>/ResourceConfirm.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
         <from-view-id>/AccountList.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>AccountList</from-outcome>
@@ -79,10 +93,19 @@
     </navigation-rule>
 
     <navigation-rule>
+        <from-view-id>/NewResource.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>LoanConfirm</from-outcome>
+            <to-view-id>/ResourceConfirm.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule>
         <from-view-id>/Loans.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>LoanConfirm</from-outcome>
-            <to-view-id>/LoanConfirm.xhtml</to-view-id>
+            <to-view-id>/ResourceConfirm.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>
@@ -94,8 +117,8 @@
     <navigation-rule>
         <from-view-id>/RentBox.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>RentBoxConfirm</from-outcome>
-            <to-view-id>/RentBoxConfirm.xhtml</to-view-id>
+            <from-outcome>ResourceConfirm</from-outcome>
+            <to-view-id>/ResourceConfirm.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>

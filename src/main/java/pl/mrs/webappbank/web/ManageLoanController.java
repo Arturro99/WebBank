@@ -22,6 +22,7 @@ public class ManageLoanController implements Serializable {
     @Inject
     LoansLedgerManager loansLedgerManager;
 
+    String type = "nic";
     Client client;
     Loan loan;
     Account account;
@@ -41,10 +42,11 @@ public class ManageLoanController implements Serializable {
 
     public String processLoan() {
         context = FacesContext.getCurrentInstance();
+        type = "loan";
         if (loan.isAvailable()) {
             if (!client.isBlocked()) {
                 takeLoan = true;
-                return "LoanConfirm";
+                return "ResourceConfirm";
             }
             else {
                 message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Client is blocked!", null);
@@ -58,12 +60,13 @@ public class ManageLoanController implements Serializable {
     }
     public String processRent() {
         context = FacesContext.getCurrentInstance();
+        type = "safeBox";
         if (safeBox.isAvailable()) {
             if (!client.isBlocked()) {
                 rentBox = true;
                 message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Safe Box rent", null);
                 context.addMessage(null, message);
-                return "RentBoxConfirm";
+                return "ResourceConfirm";
             }
             else {
                 message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Client is blocked!", null);
@@ -188,5 +191,18 @@ public class ManageLoanController implements Serializable {
         takeLoan = false;
         return "index";
     }
+    public String setType(String type){
+        this.type=type;
+        return "NewResource";
+    }
+    public boolean isLoanType()
+    {
+        return type.equals("loan");
+    }
+    public boolean isSafeBoxType()
+    {
+        return type.equals("safeBox");
+    }
+
 
 }

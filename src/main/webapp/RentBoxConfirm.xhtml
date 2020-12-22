@@ -1,36 +1,36 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-<head>
-    <title>Loan Confirm</title>
-    <f:metadata>
-        <f:viewAction action="#{internationalizationController.onLoad()}"/>
-    </f:metadata>
-</head>
-<ui:composition template="templates/template.xhtml">
-    <ui:define name="content">
-        <f:view>
-            <h:form>
-                Description: <h:outputText value="#{loansController.safeBox.description}" rendered="#{!manageLoanController.rentBox}"/>
-                <h:outputText value="#{manageLoanController.safeBox.description}" rendered="#{manageLoanController.rentBox}"/><br/>
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"-->
+<!--        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">-->
+<!--<html-->
+<!--      xmlns="http://www.w3.org/1999/xhtml"-->
+<!--      xmlns:h="http://xmlns.jcp.org/jsf/html"-->
+<!--      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"-->
+<!--      xmlns:f="http://xmlns.jcp.org/jsf/core">-->
+<!--<head>-->
+<!--    <title>Loan Confirm</title>-->
+<!--    <f:metadata>-->
+<!--        <f:viewAction action="#{internationalizationController.onLoad()}"/>-->
+<!--    </f:metadata>-->
+<!--</head>-->
+<!--<ui:composition template="templates/template.xhtml">-->
+<!--    <ui:define name="content">-->
+<!--        <f:view>-->
+<!--            <h:form>-->
+<!--                Description: <h:outputText value="#{loansController.safeBox.description}" rendered="#{!manageLoanController.rentBox}"/>-->
+<!--                <h:outputText value="#{manageLoanController.safeBox.description}" rendered="#{manageLoanController.rentBox}"/><br/>-->
 
-                Position: <h:outputText value="#{manageLoanController.safeBox.position.row} / #{manageLoanController.safeBox.position.column}" rendered="#{!manageLoanController.rentBox}"/>
-                <h:outputText value="#{manageLoanController.safeBox.position.row} / #{manageLoanController.safeBox.position.column}" rendered="#{manageLoanController.rentBox}"/>
+<!--                Position: <h:outputText value="#{loansController.safeBox.position.row} / #{loansController.safeBox.position.column}" rendered="#{!loa.rentBox}"/>-->
+<!--                <h:outputText value="#{loansController.safeBox.position.row} / #{loansController.safeBox.position.column}" rendered="#{manageLoanController.rentBox}"/>-->
 
-                <br/>
-                <h:outputText value="Client: #{manageLoanController.client.name} #{manageLoanController.client.surname}" rendered="#{manageLoanController.rentBox}"/><br/>
+<!--                <br/>-->
+<!--                <h:outputText value="Client: #{manageLoanController.client.name} #{manageLoanController.client.surname}" rendered="#{manageLoanController.rentBox}"/><br/>-->
 
 
-                <h:commandButton value="Get" action="#{manageLoanController.confirmRent}" rendered="#{!loansController.safeBoxToDeletion and manageLoanController.rentBox}"/><br/>
-                <h:commandButton value="Delete" action="#{loansController.confirmSafeBox}" rendered="#{loansController.safeBoxToDeletion and !manageLoanController.rentBox}"/><br/>
-                <h:commandButton value="Cancel" action="index" immediate="true"/><br/>
-            </h:form>
-        </f:view>
-    </ui:define>
-</ui:composition>
-</html>
+<!--                <h:commandButton value="Get" action="#{manageLoanController.confirmRent}" rendered="#{!loansController.safeBoxToDeletion and manageLoanController.rentBox}"/><br/>-->
+<!--                <h:commandButton value="Delete" action="#{loansController.confirmSafeBox}" rendered="#{loansController.safeBoxToDeletion and !manageLoanController.rentBox}"/><br/>-->
+<!--                <h:commandButton value="Cancel" action="index" immediate="true"/><br/>-->
+<!--            </h:form>-->
+<!--        </f:view>-->
+<!--    </ui:define>-->
+<!--</ui:composition>-->
+<!--</html>-->

@@ -3,11 +3,10 @@ package pl.mrs.webappbank.web;
 import lombok.Data;
 import pl.mrs.webappbank.managers.LoanManager;
 import pl.mrs.webappbank.modelv2.Loan;
+import pl.mrs.webappbank.modelv2.SafeBox;
 
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -15,8 +14,10 @@ import java.io.Serializable;
 @ConversationScoped
 @Named
 @Data
-public class NewLoanController implements Serializable {
+public class NewResourceController implements Serializable {
     Loan newLoan = new Loan();
+    SafeBox newSafeBox = new SafeBox();
+
 
     @Inject
     LoanManager loanManager;
@@ -24,12 +25,17 @@ public class NewLoanController implements Serializable {
     @Inject
     Conversation conversation;
 
-    boolean loanCreated = false;
+    boolean resourceCreated = false;
 
     public String processNewLoan() {
         conversation.begin();
-        loanCreated = true;
-        return "LoanConfirm";
+        resourceCreated = true;
+        return "ResourceConfirm";
+    }
+    public String processNewBox(){
+        conversation.begin();
+        resourceCreated = true;
+        return "ResourceConfirm";
     }
 
     public String confirmLoan() {
@@ -38,8 +44,15 @@ public class NewLoanController implements Serializable {
         return "Loans";
     }
 
+    public String confirmSafeBox(){
+        loanManager.addSafeBox(newSafeBox);
+        conversation.end();
+        return "Loans";
+    }
     public String finishCreation() {
-        loanCreated = false;
+        resourceCreated = false;
         return "index";
     }
+
+
 }

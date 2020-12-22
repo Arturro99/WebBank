@@ -74,8 +74,7 @@
                             <f:actionListener binding="#{clientListController.setEditable(klient)}"/>
                         </h:commandButton>
                         <h:commandButton value="Block" action="#{clientListController.manageClientBlockade(klient)}" rendered="#{!klient.blocked}"/>
-                        <h:commandButton value="Unblock" action="#{clientListController.manageClientBlockade(klient)}" rendered="#{klient.blocked}"/>
-                        <br/>
+                        <h:commandButton value="Unblock" action="#{clientListController.manageClientBlockade(klient)}" rendered="#{klient.blocked}"/>                        <br/>
                     </h:column>
                 </h:dataTable>
                 <h:commandButton value="#{str['cancel']}" action="index" immediate="true"/><br/>
