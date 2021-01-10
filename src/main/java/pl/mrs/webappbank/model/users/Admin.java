@@ -10,12 +10,11 @@ public class Admin {
     private String login;
     private String password;
 
+
     public Admin() {
-        this.pid = UUID.randomUUID();
     }
 
     public Admin(String login, String password) {
-        this.pid = UUID.randomUUID();
         this.login = login;
         this.password = password;
     }

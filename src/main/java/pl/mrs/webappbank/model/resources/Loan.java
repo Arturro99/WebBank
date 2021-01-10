@@ -1,17 +1,20 @@
 package pl.mrs.webappbank.model.resources;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class Loan extends Resource{
+public class Loan extends Resource {
     private int value;
 
     public Loan() {
-        super(null,true);}
+        super(null, true);
+    }
 
     public Loan(String description, int value, boolean available) {
-        super(description,available);
-        this.value= value;
+        super(description, available);
+        this.value = value;
     }
 
 

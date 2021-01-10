@@ -10,19 +10,17 @@ import pl.mrs.webappbank.repositories.AccountRepository;
 import pl.mrs.webappbank.repositories.TransferRepository;
 
 import javax.enterprise.context.ApplicationScoped;
+import java.io.Serializable;
 import java.util.List;
 
 
-@ApplicationScoped
-public class AccountManager implements IAccountManager{
+public class AccountManager implements IAccountManager, Serializable {
 
-    private final AccountRepository accountRepository;
-    private final TransferRepository transferRepository;
+    private final AccountRepository accountRepository = new AccountRepository();
+    private final TransferRepository transferRepository = new TransferRepository();
     private boolean exampleAccounts;
 
     public AccountManager() {
-        accountRepository = new AccountRepository();
-        transferRepository = new TransferRepository();
         exampleAccounts = false;
     }
 
@@ -34,30 +32,27 @@ public class AccountManager implements IAccountManager{
         this.exampleAccounts = exampleAccounts;
     }
 
-    public AccountManager(AccountRepository accountRepository, TransferRepository transferRepository) {
-        this.accountRepository = accountRepository;
-        this.transferRepository = transferRepository;
-    }
+//    public AccountManager(AccountRepository accountRepository, TransferRepository transferRepository) {
+//        this.accountRepository = accountRepository;
+//        this.transferRepository = transferRepository;
+//    }
 
     public void registerCommonAccount(Client client){
-        String newAccountNumber = generateNewAccountNumber();
-        Account newAccount = new CommonAccount(newAccountNumber,0.0);
+        Account newAccount = new CommonAccount(0.0);
         accountRepository.add(newAccount);
         client.addAccount(newAccount);
     }
 
     @Override
     public void registerCurrencyAccount(Client client, Currency currency) {
-        String newAccountNumber = generateNewAccountNumber();
-        Account newAccount = new CurrencyAccount(newAccountNumber,0.0, currency);
+        Account newAccount = new CurrencyAccount(0.0, currency);
         accountRepository.add(newAccount);
         client.addAccount(newAccount);
     }
 
     @Override
     public void registerSavingsAccount(Client client, SavingsType savingsType) {
-        String newAccountNumber = generateNewAccountNumber();
-        Account newAccount = new SavingsAccount(newAccountNumber,0.0, savingsType);
+        Account newAccount = new SavingsAccount(0.0, savingsType);
         accountRepository.add(newAccount);
         client.addAccount(newAccount);
     }
@@ -117,15 +112,7 @@ public class AccountManager implements IAccountManager{
         accountRepository.changeState(accountNumber,amount);
     }
 
-    String generateNewAccountNumber(){
-        String generatedLong = "";
-        do {
-            generatedLong = "";
-            for(int i = 0 ; i < 26; i++)
-                generatedLong += String.valueOf( (int) (Math.random() * 10));
-        }while (accountRepository.find(generatedLong) >= 0);
-        return generatedLong;
-    }
+
 
     public int findAccountInList(List<Account>listOfAccounts,String identifier) {
         int i = 0;

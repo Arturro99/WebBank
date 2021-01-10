@@ -1,57 +1,54 @@
 package pl.mrs.webappbank.managers;
 
 import pl.mrs.webappbank.model.users.Client;
-import pl.mrs.webappbank.repositories.ClientRepository;
+import pl.mrs.webappbank.repositories.PersonRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.io.Serializable;
 import java.util.List;
 
 
-@ApplicationScoped
-public class ClientManager {
-    @Inject
-    private ClientRepository clientRepository;
+public class ClientManager implements Serializable {
+    private final PersonRepository personRepository;
 
-    public ClientManager(ClientRepository clientRepository) {
-//        this.clientRepository = clientRepository;
+    public ClientManager(PersonRepository personRepository) {
+        this.personRepository = personRepository;
     }
 
     public ClientManager() {
-//        clientRepository = new ClientRepository();
+        this.personRepository = new PersonRepository();
     }
 
     public void addClient(Client client) {
-        if (clientRepository.findAll().stream()
+        if (personRepository.findAll().stream()
                 .noneMatch(x -> x.getPid().equals(client.getPid())))
-            clientRepository.add(client);
+            personRepository.add(client);
     }
 
     public void removeClient(Client client) {
-        clientRepository.remove(client);
+        personRepository.remove(client);
     }
 
     public void manageBlockade(Client client) {
         if (isClientBlocked(client)) {
-            clientRepository.unBlockClient(client);
+            personRepository.unBlockClient(client);
         } else {
-            clientRepository.blockClient(client);
+            personRepository.blockClient(client);
         }
     }
 
     public boolean isClientBlocked(Client client) {
-        return clientRepository.findAll().get(clientRepository.find(client.getPid())).isBlocked();
+        Client tmp = (Client) personRepository.findAll().get(personRepository.find(client.getPid()));
+        return tmp.isBlocked();
     }
 
-//    private void connectClientAccount(Client client, Account newAccount) {
-//        clientRepository.assignAccount(client,newAccount);
-//    }
 
     public String getInfo() {
-        return clientRepository.toString();
+        return personRepository.toString();
     }
 
     public List<Client> getAllClients(){
-        return clientRepository.findAll();
+        return personRepository.findAllClients();
     }
 }

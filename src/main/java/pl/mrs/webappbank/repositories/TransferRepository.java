@@ -15,6 +15,7 @@ public class TransferRepository implements IRepository<Transfer, UUID>{
 
     @Override
     public void add(Transfer element) {
+        element.setId(UUID.randomUUID());
         synchronized (transferHistory) {
             transferHistory.add(element);
         }

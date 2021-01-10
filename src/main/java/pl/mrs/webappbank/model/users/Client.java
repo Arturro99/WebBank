@@ -1,6 +1,7 @@
 package pl.mrs.webappbank.model.users;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import pl.mrs.webappbank.model.accounts.Account;
 
 import java.io.Serializable;
@@ -9,38 +10,18 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-public class Client implements Serializable {
-    private UUID pid;
-    private String name;
-    private String surname;
-    private String login;
-    private String password;
+public class Client extends Person implements Serializable {
     private int age;
     private boolean blocked = false;
     List<Account> listOfAccounts = new ArrayList<>();
 
     public Client() {
-        this.pid = UUID.randomUUID();
     }
 
     public Client(String login, String password, String name, String surname, int age) {
-        this.pid = UUID.randomUUID();
-        this.login = login;
-        this.password = password;
-        this.name = name;
-        this.surname = surname;
+        super(name,surname,login,password);
         this.age = age;
-        this.listOfAccounts = new ArrayList<>();
     }
-
-
-//    @Override
-//    public Object clone() {
-//        Client clone = new Client(login, password, name,surname,age);
-//        clone.listOfAccounts = new ArrayList<>(listOfAccounts.size());
-//        clone.listOfAccounts.addAll(listOfAccounts);
-//        return clone;
-//    }
 
     public void addAccount(Account account) {
         listOfAccounts.add(account);
@@ -49,10 +30,12 @@ public class Client implements Serializable {
 
     @Override
     public String toString() {
-        return name +
-                " " + surname +
-                ", login='" + login + '\'' +
-                ", age=" + age;
+        return super.toString() + ", age=" + age;
+    }
+
+    @Override
+    public UUID getPid() {
+        return this.pid;
     }
 
     public boolean isBlocked() {
@@ -61,13 +44,5 @@ public class Client implements Serializable {
 
     public void setBlocked(boolean blocked) {
         this.blocked = blocked;
-    }
-
-    public UUID getPid() {
-        return pid;
-    }
-
-    public String getLogin() {
-        return login;
     }
 }

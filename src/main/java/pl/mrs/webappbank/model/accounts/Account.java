@@ -5,15 +5,17 @@ import lombok.Data;
 @Data
 public abstract class Account {
 
-    protected final String accountNumber;
-    protected double stateOfAccount;
+    protected String accountNumber;
 
-    public Account(String accountNumber, double stateOfAccount) {
-        this.accountNumber = accountNumber;
+    protected double stateOfAccount;
+    public Account(double stateOfAccount) {
+        this.accountNumber = "0000";
         this.stateOfAccount = stateOfAccount;
     }
 
-    public void changeStateOfAccount(double amount) { this.stateOfAccount += amount; }
+    public void changeStateOfAccount(double amount) {
+        this.stateOfAccount += amount;
+    }
 
     @Override
     abstract public String toString();
@@ -23,5 +25,9 @@ public abstract class Account {
 
     public Currency getCurrency(){
         return Currency.PLN;
+    }
+
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
     }
 }

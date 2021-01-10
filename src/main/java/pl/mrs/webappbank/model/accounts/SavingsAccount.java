@@ -3,8 +3,8 @@ package pl.mrs.webappbank.model.accounts;
 public class SavingsAccount extends Account{
     private SavingsType savingsType;
 
-    public SavingsAccount(String accountNumber, double stateOfAccount, SavingsType type) {
-        super(accountNumber, stateOfAccount);
+    public SavingsAccount(double stateOfAccount, SavingsType type) {
+        super(stateOfAccount);
         this.savingsType = type;
     }
 
@@ -19,6 +19,8 @@ public class SavingsAccount extends Account{
 
     @Override
     public Object clone() {
-        return new SavingsAccount(accountNumber,stateOfAccount,savingsType);
+        SavingsAccount clone = new SavingsAccount(stateOfAccount,savingsType);;
+        clone.accountNumber = this.accountNumber;
+        return clone;
     }
 }

@@ -6,16 +6,16 @@ import java.util.UUID;
 
 public class Transfer {
     private Account sender, recipient;
-    private final UUID id;
+    private UUID id;
     //private long from, to;
     private double amount;
 
     public Transfer(Account sender, Account recipient, double amount) {
-        this.id = UUID.randomUUID();
         this.sender = sender;
         this.recipient = recipient;
         this.amount = amount;
     }
+
     private Transfer(UUID id, Account sender, Account recipient, double amount){
         this.id = id;
         this.sender = sender;
@@ -26,8 +26,11 @@ public class Transfer {
     public Object clone() {
         return new Transfer(id, sender,recipient,amount);
     }
-
     public UUID getId() {
         return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 }

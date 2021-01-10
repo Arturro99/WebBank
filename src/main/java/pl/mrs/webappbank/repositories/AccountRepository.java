@@ -14,6 +14,7 @@ public class AccountRepository implements IRepository<Account, String>{
 
     @Override
     public void add(Account element) {
+        element.setAccountNumber(generateNewAccountNumber());
         synchronized (listOfAccounts) {
             listOfAccounts.add(element);
         }
@@ -63,5 +64,14 @@ public class AccountRepository implements IRepository<Account, String>{
         for(Account a : listOfAccounts)
             output.append(a.toString()).append("\n");
         return output.toString();
+    }
+    private String generateNewAccountNumber(){
+        String generatedLong = "";
+        do {
+            generatedLong = "";
+            for(int i = 0 ; i < 26; i++)
+                generatedLong += String.valueOf( (int) (Math.random() * 10));
+        }while (this.find(generatedLong) >= 0);
+        return generatedLong;
     }
 }

@@ -28,8 +28,8 @@ public class LoanRepository implements IRepository<Loan, UUID>{
 
     @Override
     public void add(Loan element) {
+        element.setId(UUID.randomUUID());
         synchronized (loans) {
-            element.setId(UUID.randomUUID());
             loans.add(element);
         }
     }

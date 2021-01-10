@@ -2,8 +2,8 @@ package pl.mrs.webappbank.model.accounts;
 
 public class CurrencyAccount extends Account {
     private Currency currency;
-    public CurrencyAccount(String accountNumber, double stateOfAccount, Currency currency) {
-        super(accountNumber, stateOfAccount);
+    public CurrencyAccount(double stateOfAccount, Currency currency) {
+        super(stateOfAccount);
         this.currency = currency;
     }
 
@@ -29,6 +29,8 @@ public class CurrencyAccount extends Account {
 
     @Override
     public Object clone() {
-        return new CurrencyAccount(accountNumber, stateOfAccount,currency);
+        CurrencyAccount clone = new CurrencyAccount(stateOfAccount,currency);
+        clone.accountNumber = this.accountNumber;
+        return clone;
     }
 }

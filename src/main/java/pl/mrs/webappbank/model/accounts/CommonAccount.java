@@ -1,8 +1,8 @@
 package pl.mrs.webappbank.model.accounts;
 
 public class CommonAccount extends Account {
-    public CommonAccount(String accountNumber, double stateOfAccount) {
-        super(accountNumber, stateOfAccount);
+    public CommonAccount(double stateOfAccount) {
+        super(stateOfAccount);
     }
 
     @Override
@@ -13,7 +13,9 @@ public class CommonAccount extends Account {
 
     @Override
     public Object clone() {
-        return new CommonAccount(accountNumber,stateOfAccount);
+        CommonAccount clone = new CommonAccount(stateOfAccount);
+        clone.accountNumber = this.accountNumber;
+        return clone;
     }
 
 
