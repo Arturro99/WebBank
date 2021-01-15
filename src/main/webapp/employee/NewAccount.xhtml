@@ -14,11 +14,11 @@
 </h:head>
 <!--TODO Zapewnić, by użytkownik nie mógł nacisnąć CREATE, jeśli pola nie są wybrane-->
 <h:body>
-    <ui:composition template="templates/template.xhtml">
+    <ui:composition template="../templates/template.xhtml">
 
         <ui:define name="header">
             <h:link outcome="/index" value="Main Page"/> >>
-            <h:link outcome="/NewAccount" value="New Account"/>
+            <h:link outcome="/employee/NewAccount" value="New Account"/>
         </ui:define>
 
         <ui:define name="content">

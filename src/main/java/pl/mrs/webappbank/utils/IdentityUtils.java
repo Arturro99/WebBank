@@ -33,8 +33,9 @@ public class IdentityUtils {
         request.login(username, password);
     }
 
-    public void logout() throws ServletException {
+    public String logout() throws ServletException {
         request.logout();
+        return "index";
     }
 
     public boolean isAuthenticated() {

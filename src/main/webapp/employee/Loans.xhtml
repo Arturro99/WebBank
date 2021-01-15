@@ -12,11 +12,11 @@
         <f:viewAction action="#{internationalizationController.onLoad()}"/>
     </f:metadata>
 </head>
-<ui:composition template="templates/template.xhtml">
+<ui:composition template="../templates/template.xhtml">
 
     <ui:define name="header">
         <h:link outcome="/index" value="Main Page"/> >>
-        <h:link outcome="/Loans" value="Loans"/>
+        <h:link outcome="/employee/Loans" value="Loans"/>
     </ui:define>
 
 <ui:define name="content">
@@ -52,7 +52,7 @@
         </h:dataTable>
         <h:messages infoClass="info" errorClass="error"/>
     </h:form>
-    Lista pożyczek:
+    Lista skrytek:
     <h:form>
         <h:dataTable border="2" value="#{loansController.allSafeBoxes}" var="safeBox">
             <h:column>

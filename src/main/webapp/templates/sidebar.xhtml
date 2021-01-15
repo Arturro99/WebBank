@@ -26,9 +26,12 @@
 <!--        <p class="sidebar_button">#{internationalizationController.language}</p>-->
   
         <h:button styleClass="sidebar_button" value="🏠" outcome="index"/>
-        <h:button styleClass="sidebar_button" value="#{str['accounts']}" outcome="AccountList"/>
-        <h:button styleClass="sidebar_button" value="#{str['resources']}" outcome="Loans"/>
-        <h:button styleClass="sidebar_button" value="#{str['history']}" outcome="LoansHistory"/>
+        <h:button styleClass="sidebar_button" value="#{str['accounts']}" outcome="AccountList"
+                  rendered="#{identityUtils.request.isUserInRole('EMPLOYEES') or identityUtils.request.isUserInRole('ADMINS')}"/>
+        <h:button styleClass="sidebar_button" value="#{str['resources']}" outcome="Loans"
+                  rendered="#{identityUtils.request.isUserInRole('EMPLOYEES') or identityUtils.request.isUserInRole('ADMINS')}"/>
+        <h:button styleClass="sidebar_button" value="#{str['history']}" outcome="LoansHistory"
+                  rendered="#{identityUtils.request.isUserInRole('EMPLOYEES') or identityUtils.request.isUserInRole('ADMINS')}"/>
     </ui:composition>
 
 </h:body>

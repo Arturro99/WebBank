@@ -10,11 +10,11 @@
         <f:viewAction action="#{internationalizationController.onLoad()}"/>
     </f:metadata>
 </h:head>
-<ui:composition template="templates/template.xhtml">
+<ui:composition template="../templates/template.xhtml">
 
     <ui:define name="header">
         <h:link outcome="/index" value="Main Page"/> >>
-        <h:link outcome="/NewClient" value="New Client"/>
+        <h:link outcome="/admin/NewClient" value="New Client"/>
     </ui:define>
 
     <ui:define name="content">

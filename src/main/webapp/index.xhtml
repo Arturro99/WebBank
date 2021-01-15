@@ -14,16 +14,22 @@
     <ui:composition template="templates/template.xhtml">
         <ui:define name="content">
             <div class="gripContainer">
-                <h:button value="#{str['add_client']} 👱‍♂️👱‍♀️" styleClass="tile" outcome="NewClient"/>
+                <h:button value="#{str['add_client']} 👱‍♂️👱‍♀️" styleClass="tile" outcome="NewClient"
+                          rendered="#{identityUtils.request.isUserInRole('ADMINS')}"/>
                 <h:form>
-                    <h:commandButton value="#{str['add_loan']} 🎁" styleClass="tile" action="#{manageLoanController.setType('loan')}"/>
+                    <h:commandButton value="#{str['add_loan']} 🎁" styleClass="tile" action="#{manageLoanController.setType('loan')}"
+                                     rendered="#{identityUtils.request.isUserInRole('ADMINS')}"/>
                 </h:form>
                 <h:form>
-                    <h:commandButton value="#{str['add_safe_box']} 🔐💾" styleClass="tile" action="#{manageLoanController.setType('safeBox')}"/>
+                    <h:commandButton value="#{str['add_safe_box']} 🔐💾" styleClass="tile" action="#{manageLoanController.setType('safeBox')}"
+                                     rendered="#{identityUtils.request.isUserInRole('ADMINS')}"/>
                 </h:form>
-                <h:button value="#{str['add_account']}📕💰" styleClass="tile" outcome="NewAccount"/>
-                <h:button value="#{str['get']}/#{str['pay_off']} #{str['loan']}🤑👛" styleClass="tile" outcome="TakeLoan"/>
-                <h:button value="#{str['rent']}/#{str['return']} Safe Box 🔑🧰" styleClass="tile" outcome="RentBox"/>
+                <h:button value="#{str['add_account']}📕💰" styleClass="tile" outcome="NewAccount"
+                          rendered="#{identityUtils.request.isUserInRole('EMPLOYEES') or identityUtils.request.isUserInRole('ADMINS')}"/>
+                <h:button value="#{str['get']}/#{str['pay_off']} #{str['loan']}🤑👛" styleClass="tile" outcome="TakeLoan"
+                          rendered="#{identityUtils.request.isUserInRole('CLIENTS') or identityUtils.request.isUserInRole('ADMINS')}"/>
+                <h:button value="#{str['rent']}/#{str['return']} Safe Box 🔑🧰" styleClass="tile" outcome="RentBox"
+                          rendered="#{identityUtils.request.isUserInRole('CLIENTS') or identityUtils.request.isUserInRole('ADMINS')}"/>
             </div>
         </ui:define>
     </ui:composition>
