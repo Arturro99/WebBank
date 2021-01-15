@@ -1,22 +1,43 @@
 package pl.mrs.webappbank.utils;
 
+import lombok.Data;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @ApplicationScoped
 @Named
+@Data
 public class IdentityUtils {
     @Inject
     private HttpServletRequest request;
 
     public String getLogin() {
-        return Optional.ofNullable(request.getUserPrincipal().getName()).orElse("");
+        Principal principal;
+        try {
+            principal = Optional.ofNullable(request.getUserPrincipal()).orElseThrow(NoSuchElementException::new);
+        }
+        catch (NoSuchElementException ex) {
+            return "";
+        }
+        return principal.getName();
     }
 
-    public boolean isInAdminRole() {
-        return request.isUserInRole("ADMINS");
+    public void login(String username, String password) throws ServletException {
+        request.login(username, password);
+    }
+
+    public void logout() throws ServletException {
+        request.logout();
+    }
+
+    public boolean isAuthenticated() {
+        return request.getUserPrincipal() != null;
     }
 }

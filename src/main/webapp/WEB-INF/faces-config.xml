@@ -76,6 +76,11 @@
             <to-view-id>/ResourceConfirm.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>Login</from-outcome>
+            <to-view-id>/auth/Login.html</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
 
     <navigation-rule>

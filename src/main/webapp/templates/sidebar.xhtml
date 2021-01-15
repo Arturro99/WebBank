@@ -20,7 +20,9 @@
     <ui:composition>
          <h:form >
             <h:commandButton styleClass="lang_switch #{internationalizationController.language}" action="#{internationalizationController.changeLanguage()}"/>
-        </h:form>
+        <h:commandButton styleClass="log_in_out" value="Logout" action="#{identityUtils.logout}" rendered="#{identityUtils.authenticated}"/>
+         </h:form>
+        <h:button styleClass="log_in_out" value="Login" outcome="Login" rendered="#{!identityUtils.authenticated}"/>
 <!--        <p class="sidebar_button">#{internationalizationController.language}</p>-->
   
         <h:button styleClass="sidebar_button" value="🏠" outcome="index"/>

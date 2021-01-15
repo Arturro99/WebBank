@@ -20,6 +20,12 @@
     <ui:composition>
         <p class="title">#{str['authors']}: </p>
         <p>Artur Madaj | Arkadiusz Remplewicz | Wojciech Sowa</p>
+        <p align="right" style="margin-right: 25pt ">
+            <h:outputText value="#{str['logged_as']} #{identityUtils.login}, " rendered="#{identityUtils.authenticated}"/>
+            <h:outputText value=" #{str.admin}" rendered="#{identityUtils.request.isUserInRole('ADMINS')}"/>
+            <h:outputText value=" #{str.client}" rendered="#{identityUtils.request.isUserInRole('CLIENTS')}"/>
+            <h:outputText value=" #{str.employee}" rendered="#{identityUtils.request.isUserInRole('EMPLOYEES')}"/>
+        </p>
     </ui:composition>
 </h:body>
 

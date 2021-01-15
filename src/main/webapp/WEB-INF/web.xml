@@ -32,6 +32,9 @@
     <security-role>
         <role-name>CLIENTS</role-name>
     </security-role>
+    <security-role>
+        <role-name>EMPLOYEES</role-name>
+    </security-role>
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Admin pages</web-resource-name>
@@ -55,7 +58,7 @@
         <auth-method>FORM</auth-method>
         <realm-name>file</realm-name>
         <form-login-config>
-            <form-login-page>/auth/login.html</form-login-page>
+            <form-login-page>/auth/Login.html</form-login-page>
             <form-error-page>/auth/error.html</form-error-page>
         </form-login-config>
     </login-config>
