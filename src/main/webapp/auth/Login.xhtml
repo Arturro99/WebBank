@@ -8,10 +8,10 @@
 </head>
 <body>
 Login form
-<form action="j_security_check">
-    *Login: <input type="text" name="j_username"/><br/>
-    *Password: <input type="password" name="j_password"/><br/>
-    <input type="submit" value="OK"/>
-</form>
+<h:form action="j_security_check">
+    *Login: <h:inputText name="j_username" value="#{identityUtils.username}"/><br/>
+    *Password: <h:inputSecret name="j_password" value="#{identityUtils.password}"/><br/>
+    <h:commandButton value="OK" action="#{identityUtils.logIn(identityUtils.username, identityUtils.password)}"/>
+</h:form>
 </body>
 </html>
