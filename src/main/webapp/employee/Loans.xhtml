@@ -40,7 +40,7 @@
             </h:column>
             <h:column>
                 <f:facet name="header">#{str['actions']}</f:facet>
-                <h:commandButton value="#{str['delete']}" action="#{loansController.deleteLoan(loan)}">
+                <h:commandButton value="#{str['delete']}" action="#{loansController.deleteLoan(loan)}" rendered="#{identityUtils.request.isUserInRole('ADMINS')}">
                     <f:param name="loanId" value="#{loan.id}"/>
                 </h:commandButton>
                 <h:commandButton value="#{str['edit']}" action="#{loansController.setEditable(loan)}" immediate="true"/>
@@ -76,7 +76,7 @@
             </h:column>
             <h:column>
                 <f:facet name="header">#{str['actions']}</f:facet>
-                <h:commandButton value="#{str['delete']}" action="#{loansController.deleteSafebox(safeBox)}">
+                <h:commandButton value="#{str['delete']}" action="#{loansController.deleteSafebox(safeBox)}" rendered="#{identityUtils.request.isUserInRole('ADMINS')}">
                     <f:param name="safeBoxId" value="#{safeBox.id}"/>
                 </h:commandButton>
                 <h:commandButton value="#{str['edit']}" action="#{loansController.setEditable(safeBox)}" immediate="true"/>

@@ -84,7 +84,7 @@
                     <h:column>
                         <f:facet name="header">#{str['actions']}</f:facet>
                         <h:commandButton value="#{str['delete']}" action="#{clientListController.deleteClient(klient)}"
-                                         rendered="#{clientListController.matchFilter(klient, konto)}"/>
+                                         rendered="#{clientListController.matchFilter(klient, konto) and identityUtils.request.isUserInRole('ADMINS')}"/>
                         <h:commandButton value="#{str['edit']}" action="#{clientListController.setEditable(klient)}"
                                          immediate="true" rendered="#{clientListController.matchFilter(klient, konto)}"/>
                         <h:commandButton value="#{str['save_changes']}" action="#{clientListController.editClient(klient)}"
