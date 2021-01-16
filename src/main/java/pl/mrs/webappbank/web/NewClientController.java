@@ -4,6 +4,7 @@ import lombok.Data;
 import pl.mrs.webappbank.managers.AccountManager;
 import pl.mrs.webappbank.managers.ClientManager;
 import pl.mrs.webappbank.model.users.Client;
+import pl.mrs.webappbank.model.users.Person;
 
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
@@ -18,7 +19,7 @@ import java.io.Serializable;
 @Data
 public class NewClientController implements Serializable {
 
-    private Client newClient = new Client();
+    private Person newClient = new Client();
 
     @Inject
     ClientManager clientManager;
@@ -49,7 +50,7 @@ public class NewClientController implements Serializable {
             conversation.end();
             return null;
         }
-        if (!ageValidation(newClient.getAge())) {
+        if (!ageValidation(((Client) newClient).getAge())) {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Incorrect age!", null);
             context.addMessage(null, message);
             conversation.end();
@@ -66,8 +67,8 @@ public class NewClientController implements Serializable {
 
     public String confirmClient() {
         if (newClient.getLogin() == null) throw new IllegalArgumentException("Nie można przesłać pustego formularza.");
-        clientManager.addClient(newClient);
-        accountManager.registerCommonAccount(newClient);
+        clientManager.addClient((Client)newClient);
+        accountManager.registerCommonAccount((Client) newClient);
         conversation.end();
 
         return "index";

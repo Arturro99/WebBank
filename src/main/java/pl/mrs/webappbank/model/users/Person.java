@@ -1,5 +1,6 @@
 package pl.mrs.webappbank.model.users;
 
+import lombok.Data;
 import pl.mrs.webappbank.model.accounts.Account;
 
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 // todo move  pid initialization to the repository
+@Data
 public abstract class Person {
 
     protected UUID pid;
