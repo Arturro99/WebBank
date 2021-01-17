@@ -8,8 +8,9 @@ import javax.inject.Inject;
 import java.io.Serializable;
 import java.util.List;
 
-
+@ApplicationScoped
 public class ClientManager implements Serializable {
+
     private final PersonRepository personRepository;
 
     public ClientManager(PersonRepository personRepository) {

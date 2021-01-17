@@ -13,15 +13,17 @@ import javax.enterprise.context.ApplicationScoped;
 import java.io.Serializable;
 import java.util.List;
 
-
+@ApplicationScoped
 public class AccountManager implements IAccountManager, Serializable {
 
-    private final AccountRepository accountRepository = new AccountRepository();
-    private final TransferRepository transferRepository = new TransferRepository();
+    private AccountRepository accountRepository;
+    private TransferRepository transferRepository;
     private boolean exampleAccounts;
 
     public AccountManager() {
         exampleAccounts = false;
+        accountRepository = new AccountRepository();
+        transferRepository = new TransferRepository();
     }
 
     public boolean isExampleAccounts() {

@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="#{internationalizationController.language}"
-        xmlns="http://www.w3.org/1999/xhtml"
+      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
@@ -34,32 +34,39 @@
                 <h:dataTable border="2" value="#{clientListController.allClients}" var="klient">
                     <h:column>
                         <f:facet name="header">#{str['pid']}</f:facet>
-                        <h:outputText value="#{klient.pid}" rendered="#{clientListController.matchFilter(klient, null)}"/> <br/>
+                        <h:outputText value="#{klient.pid}"
+                                      rendered="#{clientListController.matchFilter(klient, null)}"/> <br/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">#{str['login']}</f:facet>
-                        <h:outputText value="#{klient.login}" rendered="#{clientListController.matchFilter(klient, null)}"/> <br/>
+                        <h:outputText value="#{klient.login}"
+                                      rendered="#{clientListController.matchFilter(klient, null)}"/> <br/>
                         <h:inputText value="#{klient.login}" rendered="#{clientListController.getEditable(klient)}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">#{str['name']}</f:facet>
-                        <h:outputText value="#{klient.name}" rendered="#{clientListController.matchFilter(klient, null)}"/> <br/>
+                        <h:outputText value="#{klient.name}"
+                                      rendered="#{clientListController.matchFilter(klient, null)}"/> <br/>
                         <h:inputText value="#{klient.name}" rendered="#{clientListController.getEditable(klient)}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">#{str['surname']}</f:facet>
-                        <h:outputText value="#{klient.surname}" rendered="#{clientListController.matchFilter(klient, null)}"/> <br/>
+                        <h:outputText value="#{klient.surname}"
+                                      rendered="#{clientListController.matchFilter(klient, null)}"/> <br/>
                         <h:inputText value="#{klient.surname}" rendered="#{clientListController.getEditable(klient)}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">#{str['age']}</f:facet>
-                        <h:outputText value="#{klient.age}" rendered="#{clientListController.matchFilter(klient, null)}"/> <br/>
+                        <h:outputText value="#{klient.age}"
+                                      rendered="#{clientListController.matchFilter(klient, null)}"/> <br/>
                         <h:inputText value="#{klient.age}" rendered="#{clientListController.getEditable(klient)}"/>
                     </h:column>
                     <h:column>
                         <f:facet name="header">Status</f:facet>
-                        <h:outputText value="Active" rendered="#{!klient.blocked and clientListController.matchFilter(klient, null)}"/>
-                        <h:outputText value="Blocked" rendered="#{klient.blocked and clientListController.matchFilter(klient, null)}"/>
+                        <h:outputText value="Active"
+                                      rendered="#{!klient.blocked and clientListController.matchFilter(klient, null)}"/>
+                        <h:outputText value="Blocked"
+                                      rendered="#{klient.blocked and clientListController.matchFilter(klient, null)}"/>
                         <br/>
                     </h:column>
                     <h:column>
@@ -67,17 +74,20 @@
                         <h:dataTable border="2" value="#{clientListController.getAccountsByClient(klient)}" var="konto">
                             <h:column>
                                 <f:facet name="header">#{str['account_number']}</f:facet>
-                                <h:outputText value="#{konto.accountNumber}" rendered="#{clientListController.matchFilter(klient, konto)}"/>
+                                <h:outputText value="#{konto.accountNumber}"
+                                              rendered="#{clientListController.matchFilter(klient, konto)}"/>
                             </h:column>
                             <h:column>
                                 <f:facet name="header">#{str['state']}</f:facet>
-                                <h:outputText value="#{konto.stateOfAccount}" rendered="#{clientListController.matchFilter(klient, konto)}"/>
-                                <h:outputText value="#{konto.currency}" rendered="#{clientListController.matchFilter(klient, konto)}"/>
+                                <h:outputText value="#{konto.stateOfAccount}"
+                                              rendered="#{clientListController.matchFilter(klient, konto)}"/>
+                                <h:outputText value="#{konto.currency}"
+                                              rendered="#{clientListController.matchFilter(klient, konto)}"/>
                             </h:column>
                             <h:column>
                                 <h:commandButton value="#{str['delete_account']}"
                                                  action="#{clientListController.deleteAccount(klient, konto)}"
-                                                 rendered="#{clientListController.matchFilter(klient, konto)}"/>
+                                                 rendered="#{clientListController.matchFilter(klient, konto) and identityUtils.request.isUserInRole('ADMINS')}"/>
                             </h:column>
                         </h:dataTable>
                     </h:column>
@@ -86,8 +96,10 @@
                         <h:commandButton value="#{str['delete']}" action="#{clientListController.deleteClient(klient)}"
                                          rendered="#{clientListController.matchFilter(klient, konto) and identityUtils.request.isUserInRole('ADMINS')}"/>
                         <h:commandButton value="#{str['edit']}" action="#{clientListController.setEditable(klient)}"
-                                         immediate="true" rendered="#{clientListController.matchFilter(klient, konto)}"/>
-                        <h:commandButton value="#{str['save_changes']}" action="#{clientListController.editClient(klient)}"
+                                         immediate="true"
+                                         rendered="#{clientListController.matchFilter(klient, konto)}"/>
+                        <h:commandButton value="#{str['save_changes']}"
+                                         action="#{clientListController.editClient(klient)}"
                                          rendered="#{clientListController.getEditable(klient) and clientListController.matchFilter(klient, konto)}">
                             <f:actionListener binding="#{clientListController.setEditable(klient)}"/>
                         </h:commandButton>
