@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class PersonRepository implements IRepository<Person,UUID> {
+public class PersonRepository implements IRepository<Person, UUID> {
     private final List<Person> people;
 
 
@@ -32,10 +32,11 @@ public class PersonRepository implements IRepository<Person,UUID> {
             people.remove(person);
         }
     }
-    public void assignAccount(Client client, Account newAccount){
+
+    public void assignAccount(Client client, Account newAccount) {
         synchronized (people) {
             Client tmp = (Client) people.get(find(client.getPid()));
-                    tmp.addAccount(newAccount);
+            tmp.addAccount(newAccount);
         }
     }
 
@@ -43,11 +44,12 @@ public class PersonRepository implements IRepository<Person,UUID> {
     public List<Person> findAll() {
         return new ArrayList<>(people);
     }
-    public List<Client> findAllClients(){
+
+    public List<Client> findAllClients() {
         ArrayList<Client> result = new ArrayList<>();
-        for(Person p : people){
-            if(p.getClass() == Client.class)
-                result.add((Client)p);
+        for (Person p : people) {
+            if (p.getClass() == Client.class)
+                result.add((Client) p);
         }
         return result;
     }
@@ -63,11 +65,55 @@ public class PersonRepository implements IRepository<Person,UUID> {
     @Override
     public String toString() {
         StringBuilder output = new StringBuilder();
-        for(Person c : people)
+        for (Person c : people)
             output.append(c.toString()).append("\n");
         return output.toString();
     }
 
-    public void blockClient(Client client) { client.setBlocked(true); }
-    public void unBlockClient(Client client) { client.setBlocked(false); }
+    public void blockClient(Client client) {
+        client.setBlocked(true);
+    }
+
+    public void unBlockClient(Client client) {
+        client.setBlocked(false);
+    }
+
+
+    private boolean passwordValidation(String password) {
+        return password.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}");
+    }
+
+    private boolean loginValidation(String login) {
+        return findAllClients().stream()
+                .map(Client::getLogin)
+                .noneMatch(x -> x.equals(login));
+    }
+
+    private boolean ageValidation(int age) {
+        return age <= 150 && age > 0;
+    }
+
+    private boolean nameValidation(String name) {
+        return name.matches("(?=.*[a-zA-Z]).{2,}");
+    }
+
+    public String clientValidation(Person client) {
+        String message = "";
+        if(!nameValidation(client.getName())) {
+            message += "Incorrect name or surname! ";
+        }
+
+        if(!loginValidation(client.getLogin())) {
+            message += "Login already exists! ";
+        }
+
+        if(!passwordValidation(client.getPassword())) {
+            message += "Password does not match criteria! ";
+        }
+
+        if(!ageValidation(client.getAge())) {
+            message += "Incorrect age! ";
+        }
+        return message;
+    }
 }

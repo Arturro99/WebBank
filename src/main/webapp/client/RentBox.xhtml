@@ -54,7 +54,10 @@
                     </h:column>
                     <h:column>
                         <f:facet name="header">#{str['actions']}</f:facet>
-                        <h:commandButton value="#{str['select']}" action="#{manageLoanController.setClient(klient)}"/><br/>
+                        <h:commandButton value="#{str['select']}" action="#{manageLoanController.setClient(klient)}"
+                                         rendered="#{identityUtils.username.equals(klient.login)
+                                or identityUtils.request.isUserInRole('ADMINS') or identityUtils.request.isUserInRole('EMPLOYEES')}"
+                        /><br/>
                     </h:column>
                 </h:dataTable>
             </h:form>

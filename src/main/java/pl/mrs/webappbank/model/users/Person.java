@@ -16,6 +16,7 @@ public abstract class Person {
     protected String surname;
     protected String login;
     protected String password;
+    protected int age;
 
     public Person() {
     }

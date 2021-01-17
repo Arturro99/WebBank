@@ -27,6 +27,10 @@ public class ClientManager implements Serializable {
             personRepository.add(client);
     }
 
+    public String validateClientData(Client client) {
+        return personRepository.clientValidation(client);
+    }
+
     public void removeClient(Client client) {
         personRepository.remove(client);
     }

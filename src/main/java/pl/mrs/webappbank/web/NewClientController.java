@@ -38,26 +38,10 @@ public class NewClientController implements Serializable {
         message = new FacesMessage();
         context = FacesContext.getCurrentInstance();
         conversation.begin();
-        if (!passwordValidation(newClient.getPassword())) {
-            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Password does not match criteria!", null);
-            context.addMessage(null, message);
-            conversation.end();
-            return null;
-        }
-        if (!loginValidation(newClient.getLogin())) {
-            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login already exists!", null);
-            context.addMessage(null, message);
-            conversation.end();
-            return null;
-        }
-        if (!ageValidation(((Client) newClient).getAge())) {
-            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Incorrect age!", null);
-            context.addMessage(null, message);
-            conversation.end();
-            return null;
-        }
-        if (!nameValidation(newClient.getName()) || !nameValidation(newClient.getSurname())) {
-            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Incorrect name or surname!", null);
+        String messageString = clientManager.validateClientData((Client) newClient);
+
+        if (!messageString.isEmpty()) {
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, messageString, null);
             context.addMessage(null, message);
             conversation.end();
             return null;
@@ -74,18 +58,4 @@ public class NewClientController implements Serializable {
         return "index";
     }
 
-    private boolean passwordValidation(String password) {
-        return password.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}");
-    }
-    private boolean loginValidation(String login) {
-        return clientManager.getAllClients().stream()
-                .map(Client::getLogin)
-                .noneMatch(x -> x.equals(login));
-    }
-    private boolean ageValidation(int age) {
-        return age <= 150 && age > 0;
-    }
-    private boolean nameValidation(String name) {
-        return name.matches("(?=.*[a-zA-Z]).{2,}");
-    }
 }
