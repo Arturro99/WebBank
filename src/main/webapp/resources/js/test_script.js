@@ -39,13 +39,14 @@ function getHello() {
 }
 
 function newLoanValidation(){
-    var description = document.getElementById('newLoan_description');
-    var value = document.getElementById('newLoan_value');
+    var form = document.getElementById('newLoanForm')
+    var description = document.getElementById(form.id +':newLoan_description');
+    var value = document.getElementById(form.id +':newLoan_value');
     var message = "";
-    if(description.innerText.length === 0) {
+    if(description.value.length === 0) {
         message += "Description is empty!\n";
     }
-    if(parseFloat(value.innerText) <= 0) {
+    if(parseFloat(value.value) <= 0 || value.value.length === 0) {
         message += "Loan must be grater than 0!";
     }
     if(message.length > 0) {
@@ -56,23 +57,23 @@ function newLoanValidation(){
 }
 
 function newSafeBoxValidation(){
-    var description = document.getElementById('newSafeBox_description');
-    var column = document.getElementById('newSafeBox_column');
-    var row = document.getElementById('newSafeBox_row');
+    var form = document.getElementById('newLoanForm')
+    var description = document.getElementById(form.id +':newSafeBox_description');
+    var column = document.getElementById(form.id +':newSafeBox_column');
+    var row = document.getElementById(form.id +':newSafeBox_row');
     var message = "";
-    if(description.innerText.length === 0) {
+    if(description.value.length === 0) {
         message += "Description is empty!\n";
     }
-    if(parseInt(column.innerText) < 0) {
-        message += "Column number must be positive";
+    if(parseInt(column.value) < 0 || column.value.length === 0) {
+        message += "Column number must be positive\n";
     }
-    if(parseInt(row.innerText) < 0) {
+    if(parseInt(row.value) < 0 || row.value.length === 0) {
         message += "Row number must be positive";
     }
     if(message.length > 0) {
         alert(message);
         return false;
     }
-    alert("DOBRZE");
     return true;
 }
