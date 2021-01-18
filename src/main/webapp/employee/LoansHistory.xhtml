@@ -21,7 +21,7 @@
     <ui:define name="content">
         #{str['search_by']}:
         <h:form>
-            <h:selectOneMenu value="#{manageLoanController.filteringTypeHistory}">
+            <h:selectOneMenu value="#{manageLoanController.filteringTypeHistory}" id="filtering">
                 <f:selectItem itemValue="aNum" itemLabel="#{str['account_number']}"/>
                 <f:selectItem itemValue="rID" itemLabel="#{str['resource_id']}"/>
                 <f:selectItem itemValue="rDesc" itemLabel="#{str['resource_description']}"/>
@@ -33,7 +33,7 @@
             <h:messages errorClass="error"/>
         </h:form>
         <h2>Loans history</h2>
-        <h:dataTable value="#{manageLoanController.allLedgers}" var="loanLedger" border="2">
+        <h:dataTable value="#{manageLoanController.allLedgers}" var="loanLedger" border="2" id="historyTable">
             <h:column>
                 <f:facet name="header">#{str['ledger']} ID</f:facet>
                 <b><h:outputFormat value="#{loanLedger.uuid}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/> </b>

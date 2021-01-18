@@ -77,3 +77,12 @@ function newSafeBoxValidation(){
     }
     return true;
 }
+
+function refreshTable() {
+    $(document).ready(function () {
+        $(document.getElementById('filtering')).on('change', function() {
+            var value = (this).value;
+
+        });
+    });
+}

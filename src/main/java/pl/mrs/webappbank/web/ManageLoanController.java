@@ -188,7 +188,13 @@ public class ManageLoanController implements Serializable {
                 }
                 break;
             case "cLog":
-                return loansLedgerManager.clientWithLogin(filterHistory);
+                if(event.getClass().equals(SafeBoxRent.class)) {
+                    safeBoxRent = (SafeBoxRent) event;
+                if (safeBoxRent.getClient().getLogin().contains(filterHistory)) {
+                    return true;
+                }
+                }
+                break;
         }
         return false;
     }
