@@ -24,19 +24,20 @@
             #{str['new']} #{str['resource']}
 
             <h:form>
-                *#{str['description']} <h:inputText value="#{newResourceController.newLoan.description}" rendered="#{manageLoanController.isLoanType()}" required="#{manageLoanController.isLoanType()}"/><br/>
-                <h:inputText value="#{newResourceController.newSafeBox.description}" rendered="#{manageLoanController.isSafeBoxType()}" required="#{manageLoanController.isSafeBoxType()}"/><br/>
+                *#{str['description']}
+                <h:inputText id="newLoan_description" value="#{newResourceController.newLoan.description}" rendered="#{manageLoanController.isLoanType()}" required="#{manageLoanController.isLoanType()}"/><br/>
+                <h:inputText id="newSafeBox_description" value="#{newResourceController.newSafeBox.description}" rendered="#{manageLoanController.isSafeBoxType()}" required="#{manageLoanController.isSafeBoxType()}"/><br/>
                 <h:outputText value="*#{str['value']}: " rendered="#{manageLoanController.isLoanType()}"/>
-                <h:inputText value="#{newResourceController.newLoan.value}" required="#{manageLoanController.isLoanType()}" rendered="#{manageLoanController.isLoanType()}"/><br/>
+                <h:inputText id="newLoan_value" value="#{newResourceController.newLoan.value}" required="#{manageLoanController.isLoanType()}" rendered="#{manageLoanController.isLoanType()}"/><br/>
                 <h:outputText value="#{str['position']}" rendered="#{manageLoanController.isSafeBoxType()}"/>
                 <br/>
                 <h:outputText value="#{str['row']}: " rendered="#{manageLoanController.isSafeBoxType()}"/>
-                <h:inputText value="#{newResourceController.newSafeBox.position.row}" required="#{manageLoanController.isSafeBoxType()}" rendered="#{manageLoanController.isSafeBoxType()}"/>
+                <h:inputText id="newSafeBox_row" value="#{newResourceController.newSafeBox.position.row}" required="#{manageLoanController.isSafeBoxType()}" rendered="#{manageLoanController.isSafeBoxType()}"/>
                 <br/>
                 <h:outputText value="#{str['column']}: " rendered="#{manageLoanController.isSafeBoxType()}"/>
-                <h:inputText value="#{newResourceController.newSafeBox.position.column}" required="#{manageLoanController.isSafeBoxType()}" rendered="#{manageLoanController.isSafeBoxType()}"/><br/>
-                <h:commandButton value="#{str['add_loan']}" action="#{newResourceController.processNewLoan()}" rendered="#{manageLoanController.isLoanType()}"/><br/>
-                <h:commandButton value="#{str['add_safe_box']}" action="#{newResourceController.processNewBox()}" rendered="#{manageLoanController.isSafeBoxType()}"/><br/>
+                <h:inputText id="newSafeBox_column" value="#{newResourceController.newSafeBox.position.column}" required="#{manageLoanController.isSafeBoxType()}" rendered="#{manageLoanController.isSafeBoxType()}"/><br/>
+                <h:commandButton onclick="return newLoanValidation()" value="#{str['add_loan']}" action="#{newResourceController.processNewLoan()}" rendered="#{manageLoanController.isLoanType()}"/><br/>
+                <h:commandButton onclick="return newSafeBoxValidation()" value="#{str['add_safe_box']}" action="#{newResourceController.processNewBox()}" rendered="#{manageLoanController.isSafeBoxType()}"/><br/>
                 <h:messages errorClass="error"/>
             </h:form>
 
