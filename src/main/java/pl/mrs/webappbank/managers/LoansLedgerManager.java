@@ -6,7 +6,7 @@ import pl.mrs.webappbank.model.accounts.Account;
 import pl.mrs.webappbank.model.resources.Loan;
 import pl.mrs.webappbank.model.resources.SafeBox;
 import pl.mrs.webappbank.model.users.Client;
-import pl.mrs.webappbank.repositories.LoansLedgerRepository;
+import pl.mrs.webappbank.repositories.EventRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
@@ -15,9 +15,9 @@ import java.util.List;
 @ApplicationScoped
 @Named
 public class LoansLedgerManager {
-    private final LoansLedgerRepository loansLedgerRepository;
+    private final EventRepository loansLedgerRepository;
     public LoansLedgerManager() {
-        this.loansLedgerRepository = new LoansLedgerRepository();
+        this.loansLedgerRepository = new EventRepository();
     }
 
     public boolean takeLoan(Loan loan, Account account, Client client) {

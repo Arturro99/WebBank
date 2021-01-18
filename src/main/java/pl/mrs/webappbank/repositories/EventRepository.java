@@ -5,6 +5,7 @@ import pl.mrs.webappbank.model.events.LoansLedger;
 import pl.mrs.webappbank.model.events.SafeBoxRent;
 import pl.mrs.webappbank.model.accounts.Account;
 import pl.mrs.webappbank.model.resources.Loan;
+import pl.mrs.webappbank.model.resources.Resource;
 import pl.mrs.webappbank.model.users.Client;
 
 import java.util.ArrayList;
@@ -12,101 +13,102 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class LoansLedgerRepository implements IRepository<Event, UUID> {
-    final private List<LoansLedger> ledgers;
-    final private List<SafeBoxRent> safeBoxesRents;
+public class EventRepository implements IRepository<Event, UUID> {
+    final private List<Event> events;
+//    final private List<LoansLedger> ledgers;
+//    final private List<SafeBoxRent> safeBoxesRents;
 
-    public LoansLedgerRepository() {
-
-        this.ledgers = new ArrayList<>();
-        this.safeBoxesRents = new ArrayList<>();
+    public EventRepository() {
+        this.events = new ArrayList<>();
+//        this.ledgers = new ArrayList<>();
+//        this.safeBoxesRents = new ArrayList<>();
     }
 
     @Override
     public void add(Event element) {
         element.setUuid(UUID.randomUUID());
         if (element.getClass().equals(SafeBoxRent.class))
-            safeBoxesRents.add((SafeBoxRent) element);
+            events.add((SafeBoxRent) element);
         else
-            ledgers.add((LoansLedger) element);
+            events.add((LoansLedger) element);
     }
 
     @Override
     public void remove(Event element) {
-
-        if (element.getClass().equals(SafeBoxRent.class)) {
-            synchronized (safeBoxesRents) {
-                safeBoxesRents.remove(element);
-            }
-        } else {
-            synchronized (ledgers) {
-                ledgers.remove(element);
-            }
+        synchronized (events) {
+            events.remove(element);
         }
     }
 
     @Override
     public List<Event> findAll() {
-        List<Event> events;
-        synchronized (ledgers) {
-            events = new ArrayList<>(ledgers);
-            events.addAll(safeBoxesRents);
-        }
         return events;
     }
 
     public List<SafeBoxRent> findAllRents() {
-        synchronized (safeBoxesRents) {
-            return new ArrayList<>(safeBoxesRents);
+        synchronized (events) {
+            return (events.stream()
+                    .filter(e -> e.getClass().equals(SafeBoxRent.class))
+                    .map(x -> (SafeBoxRent) x)
+                    .collect(Collectors.toList()));
         }
     }
 
     public List<LoansLedger> findAllLedgers() {
-        synchronized (ledgers) {
-            return new ArrayList<>(ledgers);
+        synchronized (events) {
+            return (events.stream()
+                    .filter(e -> e.getClass().equals(LoansLedger.class))
+                    .map(x -> (LoansLedger) x)
+                    .collect(Collectors.toList()));
         }
     }
 
     @Override
     public int find(UUID identifier) {
-        int index = -1;
-        index = ledgers.indexOf(ledgers.stream()
+        return events.indexOf(events.stream()
                 .filter(x -> x.getUuid().equals(identifier))
                 .findAny()
                 .orElse(null));
-        if (index < 0) {
-            index = safeBoxesRents.indexOf(safeBoxesRents.stream()
-                    .filter(x -> x.getUuid().equals(identifier))
-                    .findAny()
-                    .orElse(null));
-        }
-        return index;
     }
 
     public LoansLedger findLedgerByLoan(Loan loan) {
-        return ledgers.stream()
+        return events.stream()
+                .filter(x -> x.getClass().equals(LoansLedger.class))
                 .filter(x -> x.getResource().getId().equals(loan.getId()))
+                .map(x -> (LoansLedger) x)
                 .findFirst()
                 .get();
     }
 
     public List<LoansLedger> findLedgerByAccount(Account account) {
-        return ledgers.stream()
+        return events.stream()
+                .filter(x -> x.getClass().equals(LoansLedger.class))
+                .map(x -> (LoansLedger) x)
                 .filter(x -> x.getAccount().getAccountNumber().equals(account.getAccountNumber()))
                 .filter(LoansLedger::isActive)
                 .collect(Collectors.toList());
     }
 
     public void payLoan(LoansLedger loanLedger) {
-        synchronized (ledgers) {
+        synchronized (events) {
             loanLedger.endEvent();
         }
     }
 
     public List<SafeBoxRent> findRentByClient(Client c) {
-        return safeBoxesRents.stream()
+        return events.stream()
+                .filter(x -> x.getClass().equals(SafeBoxRent.class))
+                .map(x -> (SafeBoxRent) x)
                 .filter(x -> x.getClient().getPid().equals(c.getPid()))
                 .filter(SafeBoxRent::isActive)
                 .collect(Collectors.toList());
+    }
+
+
+    public Event getByResourceId(UUID uuid) {
+        return events.stream()
+                .filter(x -> x.getResource().getId().equals(uuid))
+                .findFirst()
+                .orElse(null);
     }
 }

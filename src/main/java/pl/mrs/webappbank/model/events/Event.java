@@ -1,10 +1,12 @@
 package pl.mrs.webappbank.model.events;
 
+import lombok.Data;
 import pl.mrs.webappbank.model.resources.Resource;
 
 import java.util.Date;
 import java.util.UUID;
 
+@Data
 public abstract class Event {
     protected UUID uuid;
     protected Date startDate;
