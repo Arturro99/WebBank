@@ -4,7 +4,7 @@ import lombok.Data;
 import pl.mrs.webappbank.exceptions.NonexistentAccountException;
 import pl.mrs.webappbank.managers.AccountManager;
 import pl.mrs.webappbank.managers.ClientManager;
-import pl.mrs.webappbank.managers.LoansLedgerManager;
+import pl.mrs.webappbank.managers.EventManager;
 import pl.mrs.webappbank.model.accounts.Currency;
 import pl.mrs.webappbank.model.events.LoansLedger;
 import pl.mrs.webappbank.model.accounts.Account;
@@ -44,7 +44,7 @@ public class ClientListController implements Serializable {
     AccountManager accountManager;
 
     @Inject
-    LoansLedgerManager loansLedgerManager;
+    EventManager loansLedgerManager;
 
     public ClientListController() {
 

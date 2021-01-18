@@ -2,7 +2,7 @@ package pl.mrs.webappbank.web;
 
 import lombok.Data;
 import pl.mrs.webappbank.managers.LoanManager;
-import pl.mrs.webappbank.managers.LoansLedgerManager;
+import pl.mrs.webappbank.managers.EventManager;
 import pl.mrs.webappbank.model.events.Event;
 import pl.mrs.webappbank.model.events.LoansLedger;
 import pl.mrs.webappbank.model.events.SafeBoxRent;
@@ -26,7 +26,7 @@ import java.util.List;
 public class ManageLoanController implements Serializable {
 
     @Inject
-    LoansLedgerManager loansLedgerManager;
+    EventManager loansLedgerManager;
     @Inject
     LoanManager loanManager;
 
@@ -188,13 +188,7 @@ public class ManageLoanController implements Serializable {
                 }
                 break;
             case "cLog":
-                if(event.getClass().equals(SafeBoxRent.class)) {
-                    safeBoxRent = (SafeBoxRent) event;
-                if (safeBoxRent.getClient().getLogin().contains(filterHistory)) {
-                    return true;
-                }
-                }
-                break;
+                return loansLedgerManager.clientWithLogin(filterHistory);
         }
         return false;
     }

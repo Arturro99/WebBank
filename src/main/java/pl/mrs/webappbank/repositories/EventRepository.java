@@ -10,6 +10,7 @@ import pl.mrs.webappbank.model.users.Client;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -105,10 +106,40 @@ public class EventRepository implements IRepository<Event, UUID> {
     }
 
 
-    public Event getByResourceId(UUID uuid) {
+    public List<Event> getByResourceId(UUID uuid) {
         return events.stream()
-                .filter(x -> x.getResource().getId().equals(uuid))
-                .findFirst()
-                .orElse(null);
+                .filter(x -> x.getResource().getId().toString().toLowerCase().contains(uuid.toString()))
+                .collect(Collectors.toList());
     }
+
+    public List<Event> getByResourceDescription(String desc) {
+        return events.stream()
+                .filter(x -> x.getResource().getDescription().toLowerCase().contains(desc.toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Event> getByAccountNumber(String num) {
+        return events.stream()
+                .filter(x -> x.getClass().equals(LoansLedger.class))
+                .map(x -> (LoansLedger) x)
+                .filter(x -> x.getAccount().getAccountNumber().contains(num))
+                .collect(Collectors.toList());
+    }
+
+    public List<Event> getByClientId(String id) {
+        return events.stream()
+                .filter(x -> x.getClass().equals(SafeBoxRent.class))
+                .map(x -> (SafeBoxRent) x)
+                .filter(x -> x.getClient().getPid().toString().toLowerCase().contains(id.toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
+    public List<Event> getByClientLogin(String login) {
+        return events.stream()
+                .filter(x -> x.getClass().equals(SafeBoxRent.class))
+                .map(x -> (SafeBoxRent) x)
+                .filter(x -> x.getClient().getLogin().toLowerCase().contains(login.toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
 }

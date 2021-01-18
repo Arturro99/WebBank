@@ -2,7 +2,7 @@ package pl.mrs.webappbank.web;
 
 import lombok.Data;
 import pl.mrs.webappbank.managers.LoanManager;
-import pl.mrs.webappbank.managers.LoansLedgerManager;
+import pl.mrs.webappbank.managers.EventManager;
 import pl.mrs.webappbank.model.resources.Loan;
 import pl.mrs.webappbank.model.resources.Resource;
 import pl.mrs.webappbank.model.resources.SafeBox;
@@ -29,7 +29,7 @@ public class LoansController implements Serializable {
     LoanManager loanManager;
 
     @Inject
-    LoansLedgerManager loansLedgerManager;
+    EventManager loansLedgerManager;
 
 //    @Inject
 //    Conversation conversation;
