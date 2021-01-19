@@ -20,16 +20,16 @@
 
     <ui:define name="content">
         #{str['search_by']}:
-        <h:form>
-            <h:selectOneMenu value="#{manageLoanController.filteringTypeHistory}" id="filtering">
+        <h:form id="filterForm">
+            <h:selectOneMenu value="#{manageLoanController.filteringTypeHistory}" id="filtering" onchange="refreshTable()">
                 <f:selectItem itemValue="aNum" itemLabel="#{str['account_number']}"/>
                 <f:selectItem itemValue="rID" itemLabel="#{str['resource_id']}"/>
                 <f:selectItem itemValue="rDesc" itemLabel="#{str['resource_description']}"/>
                 <f:selectItem itemValue="cLog" itemLabel="#{str['client_login']}"/>
                 <f:selectItem itemValue="cID" itemLabel="#{str['client_id']}"/>
             </h:selectOneMenu>
-            <h:inputText value="#{manageLoanController.filterHistory}"/>
-            <h:commandButton value="#{str['apply']}" action="#{manageLoanController.applyFilter}"/><br/>
+            <h:inputText id="filterinPattern" value="#{manageLoanController.filterHistory}" onkeyup="refreshTable()"/>
+<!--            <h:commandButton value="#{str['apply']}"  /><br/>-->
             <h:messages errorClass="error"/>
         </h:form>
         <h2>Loans history</h2>
@@ -60,7 +60,7 @@
             </h:column>
         </h:dataTable>
         <h2>Box Rents history</h2>
-        <h:dataTable value="#{manageLoanController.allBoxRents}" var="boxRent" border="2">
+        <h:dataTable value="#{manageLoanController.allBoxRents}" var="boxRent" border="2" id="historyTable2">
             <h:column>
                 <f:facet name="header">#{str['rent']} ID</f:facet>
                 <b><h:outputFormat value="#{boxRent.uuid}" rendered="#{manageLoanController.matchFilter(boxRent)}"/> </b>

@@ -16,6 +16,13 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -23,7 +30,7 @@ import java.util.stream.Collectors;
 @SessionScoped
 @Named
 @Data
-public class ClientListController implements Serializable {
+public class ClientListController extends HttpServlet implements Serializable {
 
     private List<Client> currentClients;
     private List<Account> currentAccounts;
