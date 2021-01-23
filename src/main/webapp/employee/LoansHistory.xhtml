@@ -21,75 +21,54 @@
     <ui:define name="content">
         #{str['search_by']}:
         <h:form id="filterForm">
-            <h:selectOneMenu value="#{manageLoanController.filteringTypeHistory}" id="filtering" onchange="refreshTable()">
-                <f:selectItem itemValue="aNum" itemLabel="#{str['account_number']}"/>
+            <h:selectOneMenu value="#{manageLoanController.filteringTypeHistory}" id="filtering" onchange="filterTable()">
                 <f:selectItem itemValue="rID" itemLabel="#{str['resource_id']}"/>
                 <f:selectItem itemValue="rDesc" itemLabel="#{str['resource_description']}"/>
                 <f:selectItem itemValue="cLog" itemLabel="#{str['client_login']}"/>
-                <f:selectItem itemValue="cID" itemLabel="#{str['client_id']}"/>
             </h:selectOneMenu>
-            <h:inputText id="filterinPattern" value="#{manageLoanController.filterHistory}" onkeyup="refreshTable()"/>
-<!--            <h:commandButton value="#{str['apply']}"  /><br/>-->
+            <h:inputText id="filterinPattern" value="#{manageLoanController.filterHistory}" onkeyup="filterTable()"/>
             <h:messages errorClass="error"/>
         </h:form>
         <h2>Loans history</h2>
-        <h:dataTable value="#{manageLoanController.allLedgers}" var="loanLedger" border="2" id="historyTable">
+        <h:dataTable value="#{manageLoanController.allEvents}" var="event" border="2" id="historyTable">
             <h:column>
-                <f:facet name="header">#{str['ledger']} ID</f:facet>
-                <b><h:outputFormat value="#{loanLedger.uuid}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/> </b>
+                <f:facet name="header">#{str['event']} ID</f:facet>
+                <b><h:outputFormat value="#{event.uuid}" rendered="#{manageLoanController.matchFilter(event)}"/> </b>
             </h:column>
             <h:column>
-                <f:facet name="header">#{str['loan']} ID</f:facet>
-                <b><h:outputFormat value="#{loanLedger.loan.id}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/></b>
+                <f:facet name="header">#{str['resource']} ID</f:facet>
+                <b><h:outputFormat value="#{event.resource.id}" rendered="#{manageLoanController.matchFilter(event)}"/></b>
             </h:column>
             <h:column>
-                <f:facet name="header">#{str['loan']} #{str['description']}</f:facet>
-                <h:outputFormat value="#{loanLedger.loan.description}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/>
+                <f:facet name="header">#{str['event']} #{str['description']}</f:facet>
+                <h:outputFormat value="#{event.resource.description}" rendered="#{manageLoanController.matchFilter(event)}"/>
             </h:column>
             <h:column>
-                <f:facet name="header">#{str['account_number']}</f:facet>
-                <b><h:outputFormat value="#{loanLedger.account.accountNumber}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/> </b>
+                <f:facet name="header">#{str['login']}</f:facet>
+                <b><h:outputFormat value="#{event.client.login}" rendered="#{manageLoanController.matchFilter(event)}"/> </b>
             </h:column>
             <h:column>
                 <f:facet name="header">#{str['start_date']}</f:facet>
-                <i><h:outputFormat value="#{loanLedger.startDate}" rendered="#{manageLoanController.matchFilter(loanLedger)}"/> </i>
+                <i><h:outputFormat value="#{event.startDate}" rendered="#{manageLoanController.matchFilter(event)}"/> </i>
             </h:column>
             <h:column>
                 <f:facet name="header">#{str['end_date']}</f:facet>
-                <h:outputFormat value="#{loanLedger.endDate}" rendered="#{!loanLedger.active and manageLoanController.matchFilter(loanLedger)}"/>
+                <h:outputFormat value="#{event.endDate}" rendered="#{!event.active and manageLoanController.matchFilter(event)}"/>
             </h:column>
         </h:dataTable>
-        <h2>Box Rents history</h2>
-        <h:dataTable value="#{manageLoanController.allBoxRents}" var="boxRent" border="2" id="historyTable2">
-            <h:column>
-                <f:facet name="header">#{str['rent']} ID</f:facet>
-                <b><h:outputFormat value="#{boxRent.uuid}" rendered="#{manageLoanController.matchFilter(boxRent)}"/> </b>
-            </h:column>
-            <h:column>
-                <f:facet name="header">#{str['safe_box']} ID</f:facet>
-                <b><h:outputFormat value="#{boxRent.safeBox.id}" rendered="#{manageLoanController.matchFilter(boxRent)}"/></b>
-            </h:column>
-            <h:column>
-                <f:facet name="header">>#{str['safe_box']} >#{str['description']}</f:facet>
-                <h:outputFormat value="#{boxRent.safeBox.description}" rendered="#{manageLoanController.matchFilter(boxRent)}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">>#{str['client_id']}</f:facet>
-                <b><h:outputFormat value="#{boxRent.client.pid}" rendered="#{manageLoanController.matchFilter(boxRent)}"/> </b>
-            </h:column>
-            <h:column>
-                <f:facet name="header">>#{str['client_login']}</f:facet>
-                <h:outputFormat value="#{boxRent.client.login}" rendered="#{manageLoanController.matchFilter(boxRent)}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">>#{str['start_date']}</f:facet>
-                <i><h:outputFormat value="#{boxRent.startDate}" rendered="#{manageLoanController.matchFilter(boxRent)}"/> </i>
-            </h:column>
-            <h:column>
-                <f:facet name="header">>#{str['end_date']}</f:facet>
-                <h:outputFormat value="#{boxRent.endDate}" rendered="#{!loanLedger.active and manageLoanController.matchFilter(boxRent)}"/>
-            </h:column>
-        </h:dataTable>
+        <h:form id="pagingForm">
+            Events on page:
+            <h:selectOneMenu value="#{clientListController.filteringType}" id="pageSize">
+                <f:selectItem itemValue="1" itemLabel="1"/>
+                <f:selectItem itemValue="2" itemLabel="2"/>
+                <f:selectItem itemValue="3" itemLabel="3"/>
+                <f:selectItem itemValue="4" itemLabel="4"/>
+                <f:selectItem itemValue="5" itemLabel="5"/>
+            </h:selectOneMenu>
+            Page No: <h:inputText value="3" id="pageNo"/>
+        </h:form>
+        <button onclick="paging()">
+            Apply</button>
     </ui:define>
 </ui:composition>
 </html>

@@ -45,4 +45,9 @@ public class Client extends Person implements Serializable {
     public void setBlocked(boolean blocked) {
         this.blocked = blocked;
     }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

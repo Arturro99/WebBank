@@ -92,6 +92,9 @@ public class ManageLoanController implements Serializable {
     public List<SafeBoxRent> getAllBoxRents() {
         return loansLedgerManager.getAllBoxRents();
     }
+    public List<Event> getAllEvents() {
+        return loansLedgerManager.getAll();
+    }
 
     public String confirmLoan() {
 

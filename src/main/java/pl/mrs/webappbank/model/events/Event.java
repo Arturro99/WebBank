@@ -2,6 +2,7 @@ package pl.mrs.webappbank.model.events;
 
 import lombok.Data;
 import pl.mrs.webappbank.model.resources.Resource;
+import pl.mrs.webappbank.model.users.Client;
 
 import java.util.Date;
 import java.util.UUID;
@@ -12,6 +13,7 @@ public abstract class Event {
     protected Date startDate;
     protected Date endDate;
     protected boolean active;
+    protected Client client;
     protected Resource resource;
 
     public Resource getResource() {

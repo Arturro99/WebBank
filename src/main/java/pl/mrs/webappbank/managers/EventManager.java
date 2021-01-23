@@ -25,7 +25,7 @@ public class EventManager {
     public boolean takeLoan(Loan loan, Account account, Client client) {
         if (loan.isAvailable() && !client.isBlocked()) {
             loan.setAvailable(false);
-            LoansLedger ledger = new LoansLedger(account, loan);
+            LoansLedger ledger = new LoansLedger(account, loan, client);
             eventRepository.add(ledger);
             account.setStateOfAccount(account.getStateOfAccount() + loan.getValue());
             return true;
@@ -88,5 +88,9 @@ public class EventManager {
 
     public List<Event> getEventsByClientLogin(String login) {
         return eventRepository.getByClientLogin(login);
+    }
+
+    public List<Event> getAll() {
+        return eventRepository.findAll();
     }
 }

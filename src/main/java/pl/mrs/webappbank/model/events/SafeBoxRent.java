@@ -6,7 +6,6 @@ import pl.mrs.webappbank.model.resources.SafeBox;
 
 @Data
 public class SafeBoxRent extends Event{
-    private Client client;
 
     public SafeBoxRent(Client client, SafeBox safeBox) {
         this.client = client;
