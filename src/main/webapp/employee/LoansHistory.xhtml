@@ -49,11 +49,11 @@
             </h:column>
             <h:column>
                 <f:facet name="header">#{str['start_date']}</f:facet>
-                <i><h:outputFormat value="#{event.startDate}" rendered="#{manageLoanController.matchFilter(event)}"/> </i>
+                <i><h:outputFormat value="#{event.startDate.toString}" rendered="#{manageLoanController.matchFilter(event)}"/> </i>
             </h:column>
             <h:column>
                 <f:facet name="header">#{str['end_date']}</f:facet>
-                <h:outputFormat value="#{event.endDate}" rendered="#{!event.active and manageLoanController.matchFilter(event)}"/>
+                <h:outputFormat value="#{event.endDate.toString}" rendered="#{!event.active and manageLoanController.matchFilter(event)}"/>
             </h:column>
         </h:dataTable>
         <h:form id="pagingForm">
