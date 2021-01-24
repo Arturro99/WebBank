@@ -80,7 +80,7 @@ public class FilteringPagingServlet extends HttpServlet {
 
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         filteredEvents = loansLedgerManager.getAll();
         filterEvents(req);
@@ -130,8 +130,6 @@ public class FilteringPagingServlet extends HttpServlet {
 
     public List<Event> getByClientLogin(String login) {
         return loansLedgerManager.getAll().stream()
-                .filter(x -> x.getClass().equals(SafeBoxRent.class))
-                .map(x -> (SafeBoxRent) x)
                 .filter(x -> x.getClient().getLogin().toLowerCase().contains(login.toLowerCase()))
                 .collect(Collectors.toList());
     }

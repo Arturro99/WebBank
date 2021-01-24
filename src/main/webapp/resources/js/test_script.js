@@ -57,11 +57,9 @@ function newSafeBoxValidation() {
 }
 
 function refreshTable(events) {
-    console.log(events);
     var table = document.getElementById("historyTable");
     var newTable = document.createElement('table');
     newTable.appendChild(table.getElementsByTagName("tr")[0]);
-    console.log(newTable.innerHTML);
     for (var i = 0; i < events.length; i++) {
         var evt = events[i];
         var tr = document.createElement('tr');
@@ -78,10 +76,13 @@ function refreshTable(events) {
         var text4 = document.createTextNode(evt.client.login);
         td4.appendChild(text4);
         var td5 = document.createElement('td');
-        var text5 = document.createTextNode(evt.startDate);
+        var text5 = document.createTextNode(evt.startDate.toString());
         td5.appendChild(text5);
         var td6 = document.createElement('td');
-        var text6 = document.createTextNode(evt.endDate);
+        var text6 = document.createTextNode('');
+        if(evt.endDate != null) {
+            text6 = document.createTextNode(evt.endDate.toString());
+        }
         td6.appendChild(text6);
         tr.appendChild(td1);
         tr.appendChild(td2);
@@ -95,7 +96,6 @@ function refreshTable(events) {
 }
 
 function filterTable() {
-    console.log('filtering');
     var xhttp = new XMLHttpRequest();
     var url = "Filtering";
     var column = document.getElementById("filterForm:filtering").value;
@@ -110,49 +110,6 @@ function filterTable() {
     xhttp.open("GET", url, true);
     xhttp.send();
 }
-
-// if (loans) {
-//     var table = document.getElementById("historyTable");
-//     var tr = table.getElementsByTagName("tr");
-//     // console.log('txtValue: ', txtValue);
-//     // console.log('filter: ', filter);
-//
-//     for (i = 0; i < tr.length; i++) {
-//         var td = tr[i].getElementsByTagName("td")[column];
-//         if (td) {
-//             txtValue = td.textContent || td.innerText;
-//             // console.log('td.textContent: ', td.textContent);
-//             // console.log('td.innerText: ', td.innerText);
-//             if (txtValue.toUpperCase().indexOf(filter) > -1) {
-//                 tr[i].style.display = "";
-//             } else {
-//                 tr[i].style.display = "none";
-//             }
-//         }
-//     }
-
-
-// if (safeBoxes) {
-//     var table = document.getElementById("historyTable2");
-//     var tr = table.getElementsByTagName("tr");
-//     // console.log('txtValue: ', txtValue);
-//     // console.log('filter: ', filter);
-//
-//     for (i = 0; i < tr.length; i++) {
-//         var td = tr[i].getElementsByTagName("td")[column];
-//         if (td) {
-//             pattern = td.textContent || td.innerText;
-//             console.log('td.textContent: ', td.textContent);
-//             console.log('td.innerText: ', td.innerText);
-//             if (pattern.toUpperCase().indexOf(filter) > -1) {
-//                 tr[i].style.display = "";
-//             } else {
-//                 tr[i].style.display = "none";
-//             }
-//         }
-//     }
-// }
-// }
 
 function paging() {
     var url = "Paging";

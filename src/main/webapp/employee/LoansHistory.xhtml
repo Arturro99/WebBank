@@ -49,23 +49,23 @@
             </h:column>
             <h:column>
                 <f:facet name="header">#{str['start_date']}</f:facet>
-                <i><h:outputFormat value="#{event.startDate.toString}" rendered="#{manageLoanController.matchFilter(event)}"/> </i>
+                <i><h:outputFormat value="#{event.startDate.toString()}" rendered="#{manageLoanController.matchFilter(event)}"/> </i>
             </h:column>
             <h:column>
                 <f:facet name="header">#{str['end_date']}</f:facet>
-                <h:outputFormat value="#{event.endDate.toString}" rendered="#{!event.active and manageLoanController.matchFilter(event)}"/>
+                <h:outputFormat value="#{event.endDate.toString()}" rendered="#{!event.active and manageLoanController.matchFilter(event)}"/>
             </h:column>
         </h:dataTable>
         <h:form id="pagingForm">
             Events on page:
-            <h:selectOneMenu value="#{clientListController.filteringType}" id="pageSize">
+            <h:selectOneMenu value="5" id="pageSize">
                 <f:selectItem itemValue="1" itemLabel="1"/>
                 <f:selectItem itemValue="2" itemLabel="2"/>
                 <f:selectItem itemValue="3" itemLabel="3"/>
                 <f:selectItem itemValue="4" itemLabel="4"/>
                 <f:selectItem itemValue="5" itemLabel="5"/>
             </h:selectOneMenu>
-            Page No: <h:inputText value="3" id="pageNo"/>
+            Page No: <h:inputText value="1" id="pageNo"/>
         </h:form>
         <button onclick="paging()">
             Apply</button>
