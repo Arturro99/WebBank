@@ -1,7 +1,7 @@
 package pl.mrs.webappbank.web;
 
 import lombok.Data;
-import pl.mrs.webappbank.managers.LoanManager;
+import pl.mrs.webappbank.managers.ResourceManager;
 import pl.mrs.webappbank.model.resources.Loan;
 import pl.mrs.webappbank.model.resources.SafeBox;
 
@@ -20,7 +20,7 @@ public class NewResourceController implements Serializable {
 
 
     @Inject
-    LoanManager loanManager;
+    ResourceManager resourceManager;
 
     @Inject
     Conversation conversation;
@@ -39,13 +39,13 @@ public class NewResourceController implements Serializable {
     }
 
     public String confirmLoan() {
-        loanManager.addLoan(newLoan);
+        resourceManager.add(newLoan);
         conversation.end();
         return "Loans";
     }
 
     public String confirmSafeBox(){
-        loanManager.addSafeBox(newSafeBox);
+        resourceManager.add(newSafeBox);
         conversation.end();
         return "Loans";
     }

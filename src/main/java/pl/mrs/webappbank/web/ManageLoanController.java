@@ -1,8 +1,8 @@
 package pl.mrs.webappbank.web;
 
 import lombok.Data;
-import pl.mrs.webappbank.managers.LoanManager;
 import pl.mrs.webappbank.managers.EventManager;
+import pl.mrs.webappbank.managers.ResourceManager;
 import pl.mrs.webappbank.model.events.Event;
 import pl.mrs.webappbank.model.events.LoansLedger;
 import pl.mrs.webappbank.model.events.SafeBoxRent;
@@ -28,7 +28,7 @@ public class ManageLoanController implements Serializable {
     @Inject
     EventManager loansLedgerManager;
     @Inject
-    LoanManager loanManager;
+    ResourceManager resourceManager;
 
     String type = "nic";
     Client client;
@@ -98,14 +98,14 @@ public class ManageLoanController implements Serializable {
 
     public String confirmLoan() {
 
-        if(loanManager.getAllLoans().contains(loan))
+        if(resourceManager.getAllResources().contains(loan))
             loansLedgerManager.takeLoan(loan, account, client);
         takeLoan = false;
         type = "nic";
         return "TakeLoan";
     }
     public String confirmRent() {
-        if(loanManager.getAllSafeBoxes().contains(safeBox))
+        if(resourceManager.getAllResources().contains(safeBox))
             loansLedgerManager.rentBox(safeBox, client);
         rentBox = false;
         type = "nic";

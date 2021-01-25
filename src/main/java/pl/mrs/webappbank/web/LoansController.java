@@ -1,7 +1,7 @@
 package pl.mrs.webappbank.web;
 
 import lombok.Data;
-import pl.mrs.webappbank.managers.LoanManager;
+import pl.mrs.webappbank.managers.ResourceManager;
 import pl.mrs.webappbank.managers.EventManager;
 import pl.mrs.webappbank.model.resources.Loan;
 import pl.mrs.webappbank.model.resources.Resource;
@@ -26,7 +26,7 @@ public class LoansController implements Serializable {
     private String type = "nic";
 
     @Inject
-    LoanManager loanManager;
+    ResourceManager resourceManager;
 
     @Inject
     EventManager loansLedgerManager;
@@ -43,7 +43,7 @@ public class LoansController implements Serializable {
     boolean safeBoxToDeletion;
 
     public String confirmDeletion() {
-        loanManager.removeLoan(loan);
+        resourceManager.removeResource(loan);
         toDeletion = false;
         initController();
         type="nic";
@@ -51,8 +51,8 @@ public class LoansController implements Serializable {
     }
 
     public List<Loan> getAllLoans() {
-        //currentLoans = loanManager.getAllLoans();
-        //currentSafeBoxes = loanManager.getAllSafeBoxes();
+        //currentLoans = resourceManager.getAllLoans();
+        //currentSafeBoxes = resourceManager.getAllSafeBoxes();
         return currentLoans;
     }
 
@@ -72,7 +72,7 @@ public class LoansController implements Serializable {
 
     public void editLoan(Loan loan) {
         try {
-            loanManager.editLoan(loan);
+            resourceManager.editResource(loan);
         }
         catch (IndexOutOfBoundsException ex) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Loan has been already deleted", null);
@@ -86,7 +86,7 @@ public class LoansController implements Serializable {
     }
     public void editSafeBox(SafeBox safeBox){
         try {
-            loanManager.editSafeBox(safeBox);
+            resourceManager.editResource(safeBox);
         }
         catch (IndexOutOfBoundsException ex) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "SafeBox has been already deleted", null);
@@ -97,7 +97,7 @@ public class LoansController implements Serializable {
     }
     public String confirmSafeBox() {
         if (safeBoxToDeletion) {
-            loanManager.removeSavebox(safeBox);
+            resourceManager.removeResource(safeBox);
             type = "nic";
             initController();
         }
@@ -110,8 +110,8 @@ public class LoansController implements Serializable {
     }
 
     public List<SafeBox> getAllSafeBoxes() {
-        //currentLoans = loanManager.getAllLoans();
-        //currentSafeBoxes = loanManager.getAllSafeBoxes();
+        //currentLoans = resourceManager.getAllLoans();
+        //currentSafeBoxes = resourceManager.getAllSafeBoxes();
         return currentSafeBoxes;
     }
 
@@ -152,8 +152,8 @@ public class LoansController implements Serializable {
 
     @PostConstruct
     public void initController() {
-        currentLoans = loanManager.getAllLoans();
-        currentSafeBoxes = loanManager.getAllSafeBoxes();
+//        currentLoans = resourceManager.getAllResources();
+//        currentSafeBoxes = resourceManager.getAllResources();
         editedLoan = new HashMap<>();
     }
 
