@@ -19,6 +19,6 @@ public class RepositoryException extends WebApplicationException {
     }
 
     public static RepositoryException ValidationError(String message) {
-        return new RepositoryException(message, ???);
+        return new RepositoryException(message, Response.Status.BAD_REQUEST);
     }
 }
