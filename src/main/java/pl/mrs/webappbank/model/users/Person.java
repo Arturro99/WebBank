@@ -2,7 +2,9 @@ package pl.mrs.webappbank.model.users;
 
 import lombok.Data;
 import pl.mrs.webappbank.model.accounts.Account;
+import pl.mrs.webappbank.restapi.adapters.SerializeStringToEmptyAdapter;
 
+import javax.json.bind.annotation.JsonbTypeAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -41,6 +43,7 @@ public abstract class Person {
         this.pid = id;
     }
 
+    @JsonbTypeAdapter(SerializeStringToEmptyAdapter.class)
     public String getPassword(){
         return this.password;
     }

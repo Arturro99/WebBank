@@ -27,9 +27,9 @@ public class ResourceRepository implements IRepository<Resource, UUID> {
         resources.add(loan3);
         resources.add(loan4);
 
-        SafeBox box1 = new SafeBox("Duża Skrytka",true, 1, 1);
-        SafeBox box2 = new SafeBox("Mała Skrytka",true, 2, 3);
-        SafeBox box3 = new SafeBox("Średnia Skrytka",true, 1, 2);
+        SafeBox box1 = new SafeBox("Duża Skrytka", true, 1, 1);
+        SafeBox box2 = new SafeBox("Mała Skrytka", true, 2, 3);
+        SafeBox box3 = new SafeBox("Średnia Skrytka", true, 1, 2);
         box1.setId(UUID.randomUUID());
         box2.setId(UUID.randomUUID());
         box3.setId(UUID.randomUUID());
@@ -42,7 +42,20 @@ public class ResourceRepository implements IRepository<Resource, UUID> {
     public void add(Resource element) {
         synchronized (resources) {
             element.setId(UUID.randomUUID());
-            resources.add(element);
+            if (resources.stream()
+                    .noneMatch(x -> x.getId().equals(element.getId()))) {
+                if (element instanceof SafeBox &&
+                        resources.stream()
+                                .filter(x -> x instanceof SafeBox)
+                                .noneMatch(
+                                        x -> ((SafeBox) x).getPosition().equals(((SafeBox) element).getPosition()))) {
+                    resources.add(element);
+                    return;
+                }
+                resources.add(element);
+            } else {
+                throw RepositoryException.NotFound(element.toString());
+            }
         }
     }
 
@@ -63,6 +76,6 @@ public class ResourceRepository implements IRepository<Resource, UUID> {
         return resources.indexOf(resources.stream()
                 .filter(r -> r.getId().equals(identifier))
                 .findAny()
-                .orElse(null));
+                .orElseThrow(() -> RepositoryException.NotFound(identifier.toString())));
     }
 }

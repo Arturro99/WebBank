@@ -23,17 +23,8 @@ public class ResourceManager {
     }
 
     public void add(Resource resource) {
-        if (resourceRepository.findAll().stream()
-                .noneMatch(x -> x.getId().equals(resource.getId()))) {
-            if (resource instanceof SafeBox &&
-                    resourceRepository.findAll().stream()
-                            .filter(x -> x instanceof SafeBox)
-                            .noneMatch(x -> ((SafeBox) x).getPosition().equals(((SafeBox) resource).getPosition()))) {
-                resourceRepository.add(resource);
-                return;
-            }
             resourceRepository.add(resource);
-        }
+
     }
 
     public void editResource(Resource resource) {
