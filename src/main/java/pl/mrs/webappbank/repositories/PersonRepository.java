@@ -40,14 +40,14 @@ public class PersonRepository implements IRepository<Person, UUID> {
         }
     }
 
-    public void updateClient(UUID pid, Client element) {
-        Client updatedClient = findClientByID(pid);
+    public void updateClient(String login, Client element) {
+        Client updatedClient = (Client)findClientByLogin(login);
         if(null != element.getName())
             updatedClient.setName(element.getName());
         if(null != element.getSurname())
             updatedClient.setSurname(element.getSurname());
-        if(null != element.getLogin())
-            updatedClient.setLogin(element.getLogin());
+//        if(null != element.getLogin())
+//            updatedClient.setLogin(element.getLogin());
         if(0 != element.getAge())
             updatedClient.setAge(element.getAge());
         if(null != element.getPassword())

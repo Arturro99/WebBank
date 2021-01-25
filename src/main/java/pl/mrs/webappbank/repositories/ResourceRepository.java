@@ -1,6 +1,7 @@
 package pl.mrs.webappbank.repositories;
 
 import pl.mrs.webappbank.model.resources.Loan;
+import pl.mrs.webappbank.model.resources.Position;
 import pl.mrs.webappbank.model.resources.Resource;
 import pl.mrs.webappbank.model.resources.SafeBox;
 
@@ -27,9 +28,9 @@ public class ResourceRepository implements IRepository<Resource, UUID> {
         resources.add(loan3);
         resources.add(loan4);
 
-        SafeBox box1 = new SafeBox("Duża Skrytka",true, 1, 1);
-        SafeBox box2 = new SafeBox("Mała Skrytka",true, 2, 3);
-        SafeBox box3 = new SafeBox("Średnia Skrytka",true, 1, 2);
+        SafeBox box1 = new SafeBox("Duża Skrytka",true, new Position(1, 1));
+        SafeBox box2 = new SafeBox("Mała Skrytka",true, new Position(2, 3));
+        SafeBox box3 = new SafeBox("Średnia Skrytka",true, new Position(1, 2));
         box1.setId(UUID.randomUUID());
         box2.setId(UUID.randomUUID());
         box3.setId(UUID.randomUUID());

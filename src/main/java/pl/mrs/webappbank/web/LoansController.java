@@ -72,7 +72,7 @@ public class LoansController implements Serializable {
 
     public void editLoan(Loan loan) {
         try {
-            resourceManager.editResource(loan);
+            resourceManager.editResource(loan.getId().toString(), loan);
         }
         catch (IndexOutOfBoundsException ex) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Loan has been already deleted", null);
@@ -86,7 +86,7 @@ public class LoansController implements Serializable {
     }
     public void editSafeBox(SafeBox safeBox){
         try {
-            resourceManager.editResource(safeBox);
+            resourceManager.editResource(safeBox.getId().toString(), safeBox);
         }
         catch (IndexOutOfBoundsException ex) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "SafeBox has been already deleted", null);

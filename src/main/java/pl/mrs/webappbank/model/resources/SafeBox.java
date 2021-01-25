@@ -3,9 +3,9 @@ package pl.mrs.webappbank.model.resources;
 public class SafeBox extends Resource {
     Position position;
 
-    public SafeBox(String description, boolean available,int row, int column) {
+    public SafeBox(String description, boolean available,Position position) {
         super(description,available);
-        this.position = new Position(row,column);
+        this.position = position;
     }
     public SafeBox(){
         super(null,true);

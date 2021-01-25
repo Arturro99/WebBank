@@ -36,14 +36,14 @@ public class ResourceManager {
         }
     }
 
-    public void editResource(Resource resource) {
+    public void editResource(String id, Resource resource) {
         if (resource instanceof SafeBox) {
-            ((SafeBox)resourceRepository.findAll().get(resourceRepository.find(resource.getId()))).setPosition(((SafeBox)resource).getPosition());
+            ((SafeBox)resourceRepository.findAll().get(resourceRepository.find(UUID.fromString(id)))).setPosition(((SafeBox)resource).getPosition());
         }
         else {
-            ((Loan)resourceRepository.findAll().get(resourceRepository.find(resource.getId()))).setValue(((Loan)resource).getValue());
+            ((Loan)resourceRepository.findAll().get(resourceRepository.find(UUID.fromString(id)))).setValue(((Loan)resource).getValue());
         }
-        resourceRepository.findAll().get(resourceRepository.find(resource.getId())).setDescription(resource.getDescription());
+        resourceRepository.findAll().get(resourceRepository.find(UUID.fromString(id))).setDescription(resource.getDescription());
     }
 
     public void removeResource(Resource resource) {

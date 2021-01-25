@@ -47,14 +47,14 @@ public class ResourceService {
     @Path("/editLoan/{uuid}")
     @Consumes({MediaType.APPLICATION_JSON})
     public void editResource(@PathParam("uuid") String id, Loan loan) {
-        resourceManager.editResource(resourceManager.findById(id));
+        resourceManager.editResource(id, loan);
     }
 
     @POST
     @Path("/editBox/{uuid}")
     @Consumes({MediaType.APPLICATION_JSON})
     public void editResource(@PathParam("uuid") String id, SafeBox safeBox) {
-        resourceManager.editResource(resourceManager.findById(id));
+        resourceManager.editResource(id, safeBox);
     }
 
     @DELETE

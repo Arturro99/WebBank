@@ -13,7 +13,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @ApplicationScoped
-@Path("model.client")
 public class ClientManager implements Serializable {
 
     private final PersonRepository personRepository;
@@ -33,8 +32,7 @@ public class ClientManager implements Serializable {
         addClient(c3);
     }
 
-    @POST
-    @Consumes({MediaType.APPLICATION_JSON})
+
     public void addClient(Client client) {
         Logger.getGlobal().log(Level.SEVERE, "SUSU");
             personRepository.add(client);
@@ -48,18 +46,10 @@ public class ClientManager implements Serializable {
         personRepository.remove(client);
     }
 
-    @POST
-    @Path("{uuid}")
-    @Consumes({MediaType.APPLICATION_JSON})
-    public void updateClient(@PathParam("uuid") String uuid, Client client) {
-        personRepository.updateClient(UUID.fromString(uuid), client);
+    public void updateClient(String login, Client client) {
+        personRepository.updateClient(login, client);
     }
 
-    @DELETE
-    @Path("{login}")
-    public void removeByLogin(@PathParam("login") String login) {
-        removeClient(findByLogin(login));
-    }
 
     public void manageBlockade(Client client) {
         if (isClientBlocked(client)) {
@@ -79,16 +69,13 @@ public class ClientManager implements Serializable {
         return personRepository.toString();
     }
 
-    @GET
-    @Produces({MediaType.APPLICATION_JSON})
+
     public List<Client> getAllClients() {
         return personRepository.findAllClients();
     }
 
-    @GET
-    @Path("{login}")
-    @Produces({MediaType.APPLICATION_JSON})
-    public synchronized Client findByLogin(@PathParam("login") String login) {
+
+    public synchronized Client findByLogin(String login) {
         return (Client) personRepository.findClientByLogin(login);
     }
 }
