@@ -21,11 +21,13 @@ public class PersonRepository implements IRepository<Person, UUID> {
     @Override
     public void add(Person element) {
         element.setId(UUID.randomUUID());
+        if(!clientValidation(element).equals("")) {
+            throw RepositoryException.ValidationError(element.toString());
+        }
         synchronized (people) {
             if (people.stream().noneMatch(x -> x.getLogin().equals(element.getLogin()))) {
                 people.add(element);
-            }
-            else {
+            } else {
                 throw RepositoryException.Conflict(element.toString());
             }
         }
@@ -36,6 +38,23 @@ public class PersonRepository implements IRepository<Person, UUID> {
         synchronized (people) {
             people.remove(person);
         }
+    }
+
+    public void updateClient(UUID pid, Client element) {
+        Client updatedClient = findClientByID(pid);
+        if(null != element.getName())
+            updatedClient.setName(element.getName());
+        if(null != element.getSurname())
+            updatedClient.setSurname(element.getSurname());
+        if(null != element.getLogin())
+            updatedClient.setLogin(element.getLogin());
+        if(0 != element.getAge())
+            updatedClient.setAge(element.getAge());
+        if(null != element.getPassword())
+            updatedClient.setPassword(element.getPassword());
+        if(null != element.getListOfAccounts())
+            updatedClient.setListOfAccounts(element.getListOfAccounts());
+        updatedClient.setBlocked(element.isBlocked());
     }
 
     public void assignAccount(Client client, Account newAccount) {
@@ -66,15 +85,24 @@ public class PersonRepository implements IRepository<Person, UUID> {
                 .map(people::indexOf)
                 .findFirst().orElse(-5);
     }
-
-    public synchronized Person findByLogin(String login) {
+    public synchronized Client findClientByID(UUID identifier) {
         Optional<Person> found = people.stream().filter(
-                x -> x.getLogin().equals(login)
+                x -> x.getPid().equals(identifier) && x.getClass().equals(Client.class)
         ).findFirst();
-        if(found.isPresent()){
-            return found.get();
+        if (found.isPresent()) {
+            return (Client)found.get();
+        } else {
+            throw RepositoryException.NotFound(identifier.toString());
         }
-        else {
+    }
+
+    public synchronized Person findClientByLogin(String login) {
+        Optional<Person> found = people.stream().filter(
+                x -> x.getLogin().equals(login) && x.getClass().equals(Client.class)
+        ).findFirst();
+        if (found.isPresent()) {
+            return found.get();
+        } else {
             throw RepositoryException.NotFound(login);
         }
     }
@@ -100,7 +128,7 @@ public class PersonRepository implements IRepository<Person, UUID> {
         return password.matches("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}");
     }
 
-    private boolean loginValidation(String login) {
+    private synchronized boolean loginValidation(String login) {
         return findAllClients().stream()
                 .map(Client::getLogin)
                 .noneMatch(x -> x.equals(login));

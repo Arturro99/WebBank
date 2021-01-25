@@ -11,7 +11,6 @@ import java.util.UUID;
 
 @Data
 public class Client extends Person implements Serializable {
-    private int age;
     private boolean blocked = false;
     List<Account> listOfAccounts = new ArrayList<>();
 

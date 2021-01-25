@@ -1,5 +1,7 @@
 package pl.mrs.webappbank.repositories;
 
+import pl.mrs.webappbank.model.users.Person;
+
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
@@ -14,5 +16,9 @@ public class RepositoryException extends WebApplicationException {
 
     public static RepositoryException Conflict(String message) {
         return new RepositoryException(message, Response.Status.CONFLICT);
+    }
+
+    public static RepositoryException ValidationError(String message) {
+        return new RepositoryException(message, ???);
     }
 }

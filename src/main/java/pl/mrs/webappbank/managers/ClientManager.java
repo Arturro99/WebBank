@@ -1,15 +1,14 @@
 package pl.mrs.webappbank.managers;
 
 import pl.mrs.webappbank.model.users.Client;
-import pl.mrs.webappbank.model.users.Person;
 import pl.mrs.webappbank.repositories.PersonRepository;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
 @ApplicationScoped
 @Path("model.client")
@@ -46,6 +45,19 @@ public class ClientManager implements Serializable {
         personRepository.remove(client);
     }
 
+    @POST
+    @Path("{uuid}")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public void updateClient(@PathParam("uuid") String uuid, Client client) {
+        personRepository.updateClient(UUID.fromString(uuid), client);
+    }
+
+    @DELETE
+    @Path("{login}")
+    public void removeByLogin(@PathParam("login") String login) {
+        removeClient(findByLogin(login));
+    }
+
     public void manageBlockade(Client client) {
         if (isClientBlocked(client)) {
             personRepository.unBlockClient(client);
@@ -72,7 +84,8 @@ public class ClientManager implements Serializable {
 
     @GET
     @Path("{login}")
-    public synchronized Person findByLogin(@PathParam("login") String login) {
-        return personRepository.findByLogin(login);
+    @Produces({MediaType.APPLICATION_JSON})
+    public synchronized Client findByLogin(@PathParam("login") String login) {
+        return (Client) personRepository.findClientByLogin(login);
     }
 }
