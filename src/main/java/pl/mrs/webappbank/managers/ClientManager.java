@@ -9,6 +9,8 @@ import javax.ws.rs.core.MediaType;
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @ApplicationScoped
 @Path("model.client")
@@ -23,9 +25,9 @@ public class ClientManager implements Serializable {
     public ClientManager() {
         this.personRepository = new PersonRepository();
         //Sample data
-        Client c1 = new Client("destroyer11111", "1234", "Jan","Błaszczyk",18);
-        Client c2 = new Client("qwerty", "567", "Ziomson","PL",12);
-        Client c3 = new Client("azerty", "666", "Janusz","Pawlak",8);
+        Client c1 = new Client("destroyer11111", "Arrrr55555", "Jan","Błaszczyk",18);
+        Client c2 = new Client("qwerty", "Adsasfdsf37", "Ziomson","PL",12);
+        Client c3 = new Client("azerty", "Adasdas3435", "Janusz","Pawlak",8);
         addClient(c1);
         addClient(c2);
         addClient(c3);
@@ -34,6 +36,7 @@ public class ClientManager implements Serializable {
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     public void addClient(Client client) {
+        Logger.getGlobal().log(Level.SEVERE, "SUSU");
             personRepository.add(client);
     }
 
