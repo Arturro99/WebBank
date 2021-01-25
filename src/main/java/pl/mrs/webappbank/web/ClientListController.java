@@ -119,7 +119,7 @@ public class ClientListController extends HttpServlet implements Serializable {
 
     @PostConstruct
     public void initController() {
-        addExampleAccounts();
+//        addExampleAccounts();
         clientAccounts = new HashMap<>();
         currentClients = clientManager.getAllClients();
         currentAccounts = accountManager.getAllAccounts();
@@ -137,27 +137,27 @@ public class ClientListController extends HttpServlet implements Serializable {
         filter = "";
         filteringType = "";
     }
-    public void addExampleAccounts(){
-        if(accountManager.isExampleAccounts())
-            return;
-        Client c1 = new Client("destroyer11111", "1234", "Jan","Błaszczyk",18);
-        Client c2 = new Client("qwerty", "567", "Ziomson","PL",12);
-        Client c3 = new Client("azerty", "666", "Janusz","Pawlak",8);
-        clientManager.addClient(c1);
-        clientManager.addClient(c2);
-        clientManager.addClient(c3);
-
-        accountManager.registerCommonAccount(clientManager.getAllClients().get(0));
-        accountManager.registerCommonAccount(clientManager.getAllClients().get(1));
-        accountManager.registerCurrencyAccount(clientManager.getAllClients().get(1),Currency.EUR);
-        accountManager.registerCommonAccount(clientManager.getAllClients().get(2));
-
-        accountManager.payInto(accountManager.getAllAccounts().get(0).getAccountNumber(),9990);
-        accountManager.payInto(accountManager.getAllAccounts().get(1).getAccountNumber(),90);
-        accountManager.payInto(accountManager.getAllAccounts().get(2).getAccountNumber(),94990);
-        accountManager.payInto(accountManager.getAllAccounts().get(2).getAccountNumber(),850);
-        accountManager.setExampleAccounts(true);
-    }
+//    public void addExampleAccounts(){
+//        if(accountManager.isExampleAccounts())
+//            return;
+//        Client c1 = new Client("destroyer11111", "1234", "Jan","Błaszczyk",18);
+//        Client c2 = new Client("qwerty", "567", "Ziomson","PL",12);
+//        Client c3 = new Client("azerty", "666", "Janusz","Pawlak",8);
+//        clientManager.addClient(c1);
+//        clientManager.addClient(c2);
+//        clientManager.addClient(c3);
+//
+//        accountManager.registerCommonAccount(clientManager.getAllClients().get(0));
+//        accountManager.registerCommonAccount(clientManager.getAllClients().get(1));
+//        accountManager.registerCurrencyAccount(clientManager.getAllClients().get(1),Currency.EUR);
+//        accountManager.registerCommonAccount(clientManager.getAllClients().get(2));
+//
+//        accountManager.payInto(accountManager.getAllAccounts().get(0).getAccountNumber(),9990);
+//        accountManager.payInto(accountManager.getAllAccounts().get(1).getAccountNumber(),90);
+//        accountManager.payInto(accountManager.getAllAccounts().get(2).getAccountNumber(),94990);
+//        accountManager.payInto(accountManager.getAllAccounts().get(2).getAccountNumber(),850);
+//        accountManager.setExampleAccounts(true);
+//    }
 
     private boolean clientHasLoan(Client c) {
         return c.getListOfAccounts().stream()

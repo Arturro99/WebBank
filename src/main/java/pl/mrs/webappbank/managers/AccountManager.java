@@ -10,6 +10,7 @@ import pl.mrs.webappbank.repositories.AccountRepository;
 import pl.mrs.webappbank.repositories.TransferRepository;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import java.io.Serializable;
 import java.util.List;
 
@@ -20,10 +21,24 @@ public class AccountManager implements IAccountManager, Serializable {
     private TransferRepository transferRepository;
     private boolean exampleAccounts;
 
+    @Inject
+    private ClientManager clientManager;
+
     public AccountManager() {
         exampleAccounts = false;
         accountRepository = new AccountRepository();
         transferRepository = new TransferRepository();
+
+        //Sample data
+        registerCommonAccount(clientManager.getAllClients().get(0));
+        registerCommonAccount(clientManager.getAllClients().get(1));
+        registerCurrencyAccount(clientManager.getAllClients().get(1),Currency.EUR);
+        registerCommonAccount(clientManager.getAllClients().get(2));
+
+        payInto(getAllAccounts().get(0).getAccountNumber(),9990);
+        payInto(getAllAccounts().get(1).getAccountNumber(),90);
+        payInto(getAllAccounts().get(2).getAccountNumber(),94990);
+        payInto(getAllAccounts().get(2).getAccountNumber(),850);
     }
 
     public boolean isExampleAccounts() {

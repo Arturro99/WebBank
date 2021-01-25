@@ -28,7 +28,7 @@ public class AccountRepository implements IRepository<Account, String>{
     }
 
     @Override
-    public List<Account> findAll(){
+    public synchronized List<Account> findAll(){
         ArrayList<Account> clone = new ArrayList<Account>(listOfAccounts.size());
         for (Account item : listOfAccounts) {
             clone.add((Account) item.clone());
@@ -37,7 +37,7 @@ public class AccountRepository implements IRepository<Account, String>{
     }
 
     @Override
-    public int find(String identifier) {
+    public synchronized int find(String identifier) {
         int i = 0;
         for(Account item : listOfAccounts){
             if(item.getAccountNumber().equals(identifier))
@@ -59,7 +59,7 @@ public class AccountRepository implements IRepository<Account, String>{
     }
 
     @Override
-    public String toString() {
+    public synchronized String toString() {
         StringBuilder output = new StringBuilder();
         for(Account a : listOfAccounts)
             output.append(a.toString()).append("\n");

@@ -4,9 +4,9 @@ import pl.mrs.webappbank.model.accounts.*;
 import pl.mrs.webappbank.model.users.Client;
 import pl.mrs.webappbank.model.users.Person;
 
-import javax.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public class PersonRepository implements IRepository<Person, UUID> {
@@ -22,7 +22,12 @@ public class PersonRepository implements IRepository<Person, UUID> {
     public void add(Person element) {
         element.setId(UUID.randomUUID());
         synchronized (people) {
-            people.add(element);
+            if (people.stream().noneMatch(x -> x.getLogin().equals(element.getLogin()))) {
+                people.add(element);
+            }
+            else {
+                throw RepositoryException.Conflict(element.toString());
+            }
         }
     }
 
@@ -41,11 +46,11 @@ public class PersonRepository implements IRepository<Person, UUID> {
     }
 
     @Override
-    public List<Person> findAll() {
+    public synchronized List<Person> findAll() {
         return new ArrayList<>(people);
     }
 
-    public List<Client> findAllClients() {
+    public synchronized List<Client> findAllClients() {
         ArrayList<Client> result = new ArrayList<>();
         for (Person p : people) {
             if (p.getClass() == Client.class)
@@ -55,26 +60,38 @@ public class PersonRepository implements IRepository<Person, UUID> {
     }
 
     @Override
-    public int find(UUID identifier) {
+    public synchronized int find(UUID identifier) {
         return people.stream()
                 .filter(x -> x.getPid().equals(identifier))
                 .map(people::indexOf)
                 .findFirst().orElse(-5);
     }
 
+    public synchronized Person findByLogin(String login) {
+        Optional<Person> found = people.stream().filter(
+                x -> x.getLogin().equals(login)
+        ).findFirst();
+        if(found.isPresent()){
+            return found.get();
+        }
+        else {
+            throw RepositoryException.NotFound(login);
+        }
+    }
+
     @Override
-    public String toString() {
+    public synchronized String toString() {
         StringBuilder output = new StringBuilder();
         for (Person c : people)
             output.append(c.toString()).append("\n");
         return output.toString();
     }
 
-    public void blockClient(Client client) {
+    public synchronized void blockClient(Client client) {
         client.setBlocked(true);
     }
 
-    public void unBlockClient(Client client) {
+    public synchronized void unBlockClient(Client client) {
         client.setBlocked(false);
     }
 
@@ -99,19 +116,19 @@ public class PersonRepository implements IRepository<Person, UUID> {
 
     public String clientValidation(Person client) {
         String message = "";
-        if(!nameValidation(client.getName())) {
+        if (!nameValidation(client.getName())) {
             message += "Incorrect name or surname! ";
         }
 
-        if(!loginValidation(client.getLogin())) {
+        if (!loginValidation(client.getLogin())) {
             message += "Login already exists! ";
         }
 
-        if(!passwordValidation(client.getPassword())) {
+        if (!passwordValidation(client.getPassword())) {
             message += "Password does not match criteria! ";
         }
 
-        if(!ageValidation(client.getAge())) {
+        if (!ageValidation(client.getAge())) {
             message += "Incorrect age! ";
         }
         return message;
