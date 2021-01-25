@@ -43,7 +43,20 @@ public class ResourceRepository implements IRepository<Resource, UUID> {
     public void add(Resource element) {
         synchronized (resources) {
             element.setId(UUID.randomUUID());
-            resources.add(element);
+            if (resources.stream()
+                    .noneMatch(x -> x.getId().equals(element.getId()))) {
+                if (element instanceof SafeBox &&
+                        resources.stream()
+                                .filter(x -> x instanceof SafeBox)
+                                .noneMatch(
+                                        x -> ((SafeBox) x).getPosition().equals(((SafeBox) element).getPosition()))) {
+                    resources.add(element);
+                    return;
+                }
+                resources.add(element);
+            } else {
+                throw RepositoryException.NotFound(element.toString());
+            }
         }
     }
 
@@ -64,6 +77,6 @@ public class ResourceRepository implements IRepository<Resource, UUID> {
         return resources.indexOf(resources.stream()
                 .filter(r -> r.getId().equals(identifier))
                 .findAny()
-                .orElse(null));
+                .orElseThrow(() -> RepositoryException.NotFound(identifier.toString())));
     }
 }
