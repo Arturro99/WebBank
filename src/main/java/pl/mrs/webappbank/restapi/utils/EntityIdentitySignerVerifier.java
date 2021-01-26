@@ -2,7 +2,10 @@ package pl.mrs.webappbank.restapi.utils;
 
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
+import com.nimbusds.jose.crypto.MACVerifier;
 import pl.mrs.webappbank.model.SignableEntity;
+
+import java.text.ParseException;
 
 public class EntityIdentitySignerVerifier {
 
@@ -18,5 +21,26 @@ public class EntityIdentitySignerVerifier {
             return "ETag generation failure";
         }
         return jwsObject.serialize();
+    }
+
+    public static boolean verifySignature(String eTagValue) {
+        try {
+            JWSObject jwsObject = JWSObject.parse(eTagValue);
+            JWSVerifier verifier = new MACVerifier(SECRET);
+            return jwsObject.verify(verifier);
+        }
+        catch (JOSEException | ParseException ex) {
+            return false;
+        }
+    }
+    public static boolean verifyIntegration(String eTagValue, SignableEntity entity) {
+        try {
+            String payloadFromETag = JWSObject.parse(eTagValue).getPayload().toString();
+            String payloadFromEntity = entity.getSignablePayload();
+            return verifySignature(eTagValue) && payloadFromEntity.equals(payloadFromETag);
+        }
+        catch (ParseException ex) {
+            return false;
+        }
     }
 }

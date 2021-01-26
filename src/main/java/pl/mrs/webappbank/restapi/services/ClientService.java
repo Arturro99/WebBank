@@ -6,9 +6,12 @@ import pl.mrs.webappbank.model.resources.Loan;
 import pl.mrs.webappbank.model.resources.Resource;
 import pl.mrs.webappbank.model.resources.SafeBox;
 import pl.mrs.webappbank.model.users.Client;
+import pl.mrs.webappbank.restapi.filters.SignatureVerifierFilterBinding;
 import pl.mrs.webappbank.restapi.utils.EntityIdentitySignerVerifier;
+import pl.mrs.webappbank.restapi.utils.EntityIntegrationException;
 
 import javax.inject.Inject;
+import javax.persistence.Entity;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
@@ -48,7 +51,11 @@ public class ClientService {
     @POST
     @Path("{login}")
     @Consumes({MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("login") String login, @HeaderParam("If-Match") @NotNull @NotEmpty String tag, Client client) {
+    @SignatureVerifierFilterBinding
+    public void edit(@PathParam("login") String login, @HeaderParam("If-Match") @NotNull @NotEmpty String tag, Client client) throws Exception {
+        if(!EntityIdentitySignerVerifier.verifyIntegration(tag,client)) {
+            throw EntityIntegrationException.integrityBroken(client.toString());
+        }
         clientManager.updateClient(login, client);
     }
 

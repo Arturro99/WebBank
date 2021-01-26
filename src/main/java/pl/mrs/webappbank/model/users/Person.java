@@ -65,6 +65,8 @@ public abstract class Person implements SignableEntity {
     @Override
     @JsonbTransient
     public String getSignablePayload() {
-        return login.toString();
+        if(null == pid)
+            return "";
+        return pid.toString();
     }
 }
