@@ -144,4 +144,7 @@ public class AccountManager implements IAccountManager, Serializable {
     public List<Account> getAllAccounts(){
         return accountRepository.findAll();
     }
+//    public Account findAccountById(String uuid){
+//        return accountRepository.find(uuid);
+//    }
 }

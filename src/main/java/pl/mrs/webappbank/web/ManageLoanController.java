@@ -106,7 +106,7 @@ public class ManageLoanController implements Serializable {
     }
     public String confirmRent() {
         if(resourceManager.getAllResources().contains(safeBox))
-            loansLedgerManager.rentBox(safeBox, client);
+            loansLedgerManager.rentBox(safeBox.getId().toString(), client);
         rentBox = false;
         type = "nic";
         return "RentBox";
@@ -114,7 +114,7 @@ public class ManageLoanController implements Serializable {
 
     public String payLoan(Account acc, Loan l) {
         if (acc.getStateOfAccount() >= l.getValue()) {
-            loansLedgerManager.payLoan(l, acc);
+            loansLedgerManager.returnResource(l, acc);
             return "TakeLoan";
         }
         else {
@@ -125,12 +125,7 @@ public class ManageLoanController implements Serializable {
         }
     }
     public String returnBox(Client c, SafeBox b){
-        getRentByClient(c).stream()
-                .filter(x -> x.getResource().getId().equals(b.getId()))
-                .forEach(x -> {
-                    x.endEvent();
-                    x.getResource().setAvailable(true);
-                });
+        loansLedgerManager.returnResource(b, null);
         return "RentBox";
     }
 

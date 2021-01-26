@@ -24,10 +24,10 @@ public class ClientManager implements Serializable {
     public ClientManager() {
         this.personRepository = new PersonRepository();
         //Sample data
-        Client c1 = new Client("destroyer11111", "1234", "Jan","Błaszczyk",18);
-        Client c2 = new Client("qwerty", "567", "Ziomson","PL",12);
-        Client c3 = new Client("azerty", "666", "Janusz","Pawlak",8);
-        Person a1 = new Admin("admin", "admin");
+        Client c1 = new Client("destroyer11111", "Proba1234", "Jan","Błaszczyk",18);
+        Client c2 = new Client("qwerty", "Proba567", "Ziomson","PL",12);
+        Client c3 = new Client("azerty", "Proba666", "Janusz","Pawlak",8);
+        Person a1 = new Admin("admin", "Proba666");
         addClient(c1);
         addClient(c2);
         addClient(c3);
@@ -78,5 +78,8 @@ public class ClientManager implements Serializable {
 
     public synchronized Client findByLogin(String login) {
         return (Client) personRepository.findClientByLogin(login);
+    }
+    public synchronized Client findById(String uuid) {
+        return personRepository.findClientByID(UUID.fromString(uuid));
     }
 }

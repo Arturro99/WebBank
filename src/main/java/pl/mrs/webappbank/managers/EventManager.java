@@ -5,6 +5,7 @@ import pl.mrs.webappbank.model.events.LoansLedger;
 import pl.mrs.webappbank.model.events.SafeBoxRent;
 import pl.mrs.webappbank.model.accounts.Account;
 import pl.mrs.webappbank.model.resources.Loan;
+import pl.mrs.webappbank.model.resources.Resource;
 import pl.mrs.webappbank.model.resources.SafeBox;
 import pl.mrs.webappbank.model.users.Client;
 import pl.mrs.webappbank.repositories.EventRepository;
@@ -32,7 +33,8 @@ public class EventManager {
         }
         return false;
     }
-    public boolean rentBox(SafeBox safeBox, Client client){
+    public boolean rentBox(String uuid, Client client){
+        SafeBox safeBox = eventRepository.getByResourceId(UUID.fromString(uuid));
         if(safeBox.isAvailable() && !client.isBlocked()){
             safeBox.setAvailable(false);
             SafeBoxRent rent = new SafeBoxRent(client, safeBox);
@@ -42,16 +44,17 @@ public class EventManager {
         return false;
     }
 
-    public boolean payLoan(Loan loan, Account account) {
-        if (!loan.isAvailable()) {
+    public boolean returnResource(Resource resource, Account account) {
+        if (!resource.isAvailable()) {
             getLedgersByAccount(account).stream()
-                    .filter(x -> x.getLoan().getId().equals(loan.getId()))
+                    .filter(x -> x.getResource().getId().equals(resource.getId()))
                     .forEach(x -> {
                         x.endEvent();
-                        x.getLoan().setAvailable(true);
+                        x.getResource().setAvailable(true);
                     });
-            eventRepository.payLoan(eventRepository.findLedgerByLoan(loan));
-            account.setStateOfAccount(account.getStateOfAccount() - loan.getValue());
+            if (resource instanceof Loan) {
+                account.setStateOfAccount(account.getStateOfAccount() - ((Loan) resource).getValue());
+            }
             return true;
         }
         return false;
@@ -70,8 +73,8 @@ public class EventManager {
         return eventRepository.findAllRents();
     }
 
-    public List<Event> getEventsByResourceId(UUID uuid) {
-        return eventRepository.getByResourceId(uuid);
+    public List<Event> getEventsByResourceId(String uuid) {
+        return eventRepository.getByResourceId(UUID.fromString(uuid));
     }
 
     public List<Event> getEventsByResourceDescription(String desc) {
@@ -88,6 +91,10 @@ public class EventManager {
 
     public List<Event> getEventsByClientLogin(String login) {
         return eventRepository.getByClientLogin(login);
+    }
+
+    public Event getEventById(String id) {
+
     }
 
     public List<Event> getAll() {

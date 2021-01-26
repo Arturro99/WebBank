@@ -90,11 +90,11 @@ public class EventRepository implements IRepository<Event, UUID> {
                 .collect(Collectors.toList());
     }
 
-    public void payLoan(LoansLedger loanLedger) {
-        synchronized (events) {
-            loanLedger.endEvent();
-        }
-    }
+//    public void payLoan(LoansLedger loanLedger) {
+//        synchronized (events) {
+//            loanLedger.endEvent();
+//        }
+//    }
 
     public List<SafeBoxRent> findRentByClient(Client c) {
         return events.stream()

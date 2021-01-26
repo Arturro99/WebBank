@@ -4,6 +4,7 @@ import pl.mrs.webappbank.model.accounts.Account;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class AccountRepository implements IRepository<Account, String>{
     protected final ArrayList<Account> listOfAccounts;
@@ -74,4 +75,10 @@ public class AccountRepository implements IRepository<Account, String>{
         }while (this.find(generatedLong) >= 0);
         return generatedLong;
     }
+
+//    public Account findById(UUID uuid) {
+//        return listOfAccounts.stream()
+//                .filter(a -> a.ge)
+//                .findFirst()
+//    }
 }
