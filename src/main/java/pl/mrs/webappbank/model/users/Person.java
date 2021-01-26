@@ -1,9 +1,11 @@
 package pl.mrs.webappbank.model.users;
 
 import lombok.Data;
+import pl.mrs.webappbank.model.SignableEntity;
 import pl.mrs.webappbank.model.accounts.Account;
 import pl.mrs.webappbank.restapi.adapters.SerializeStringToEmptyAdapter;
 
+import javax.json.bind.annotation.JsonbTransient;
 import javax.json.bind.annotation.JsonbTypeAdapter;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,7 @@ import java.util.UUID;
 
 // todo move  pid initialization to the repository
 @Data
-public abstract class Person {
+public abstract class Person implements SignableEntity {
 
     protected UUID pid;
     protected String name;
@@ -58,5 +60,11 @@ public abstract class Person {
 
     public String getSurname() {
         return this.surname;
+    }
+
+    @Override
+    @JsonbTransient
+    public String getSignablePayload() {
+        return login.toString();
     }
 }
