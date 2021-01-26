@@ -25,7 +25,7 @@ public class JWTGeneratorVerifier {
                     .expirationTime(new Date(new Date().getTime() + JWT_TIMEOUT))
                     .build();
             SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256),claimsSet);
-            signedJWT.sign(new MACSigner(SECRET));
+            signedJWT.sign(signer);
             return signedJWT.serialize();
         } catch (JOSEException ex) {
             return "JWT failure";

@@ -18,6 +18,9 @@ import javax.ws.rs.core.Response;
 @Path("authenticate")
 public class AuthenticationService {
 
+    public AuthenticationService() {
+    }
+
     @Inject
     private IdentityStoreHandler identityStoreHandler;
 
@@ -37,9 +40,12 @@ public class AuthenticationService {
         }
     }
 
-    private class LoginData {
+    public static class LoginData {
         private String login;
         private String password;
+
+        public LoginData() {
+        }
 
         public void setLogin(String login) {
             this.login = login;
