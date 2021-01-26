@@ -21,6 +21,15 @@ public abstract class Person implements SignableEntity {
     protected String login;
     protected String password;
     protected int age;
+    private boolean blocked;
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
+
+    public boolean isBlocked() {
+        return blocked;
+    }
 
     public Person() {
     }
@@ -69,4 +78,6 @@ public abstract class Person implements SignableEntity {
             return "";
         return pid.toString();
     }
+
+    public abstract String[] getAccessLevel();
 }

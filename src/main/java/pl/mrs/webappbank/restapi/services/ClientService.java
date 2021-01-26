@@ -6,7 +6,10 @@ import pl.mrs.webappbank.model.resources.Loan;
 import pl.mrs.webappbank.model.resources.Resource;
 import pl.mrs.webappbank.model.resources.SafeBox;
 import pl.mrs.webappbank.model.users.Client;
+import pl.mrs.webappbank.model.users.Person;
 import pl.mrs.webappbank.restapi.filters.SignatureVerifierFilterBinding;
+import pl.mrs.webappbank.restapi.seurity.CustomIdentityStore;
+import pl.mrs.webappbank.restapi.seurity.CustomJWTAuthenticationMechanism;
 import pl.mrs.webappbank.restapi.utils.EntityIdentitySignerVerifier;
 import pl.mrs.webappbank.restapi.utils.EntityIntegrationException;
 
@@ -15,8 +18,10 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
 import java.util.List;
 
 @Path("model.client")
@@ -24,6 +29,13 @@ public class ClientService {
 
     @Inject
     ClientManager clientManager;
+
+    @Inject
+    CustomIdentityStore customIdentityStore;
+
+    @Inject
+    SecurityContext securityContext;
+
 
     @GET
     @Path("{login}")
@@ -63,5 +75,11 @@ public class ClientService {
     @Path("{login}")
     public void remove(@PathParam("login") String login) {
         clientManager.removeClient(clientManager.findByLogin(login));
+    }
+    @GET
+    @Path("whoami")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Person whoAmI(@Context SecurityContext securityContext){
+        return clientManager.findByLogin(securityContext.getUserPrincipal().getName());
     }
 }

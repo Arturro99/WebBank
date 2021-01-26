@@ -15,6 +15,12 @@ public class Admin extends Person {
         return pid;
     }
 
+
+    @Override
+    public String[] getAccessLevel() {
+        return new String[]{"Clients", "Employees","Administrators"};
+    }
+
     public Admin(String login, String password) {
         this.age = 99;
         this.name = "ADMIN";

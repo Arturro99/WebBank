@@ -9,6 +9,6 @@ public class EntityIntegrationException  extends WebApplicationException {
     }
 
     public static Exception integrityBroken(String message) {
-        return new EntityIntegrationException(message, Response.Status.CONFLICT);
+        return new EntityIntegrationException(message, Response.Status.PRECONDITION_FAILED);
     }
 }

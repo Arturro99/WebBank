@@ -161,4 +161,13 @@ public class PersonRepository implements IRepository<Person, UUID> {
         }
         return message;
     }
+
+    public Person findByLoginPasswordActive(String login, String password) {
+        Optional<Person> foundPerson = people.stream().filter(x ->
+                x.getLogin().equals(login)
+                        && x.getPassword().equals(password)
+                        && !x.isBlocked()
+                        ).findFirst();
+        return foundPerson.orElse(null);
+    }
 }
