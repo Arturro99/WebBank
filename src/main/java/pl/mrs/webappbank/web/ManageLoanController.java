@@ -106,7 +106,7 @@ public class ManageLoanController implements Serializable {
     }
     public String confirmRent() {
         if(resourceManager.getAllResources().contains(safeBox))
-            loansLedgerManager.rentBox(safeBox.getId().toString(), client);
+            loansLedgerManager.rentBox(safeBox, client);
         rentBox = false;
         type = "nic";
         return "RentBox";

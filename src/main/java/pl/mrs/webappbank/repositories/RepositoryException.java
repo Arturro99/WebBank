@@ -21,4 +21,8 @@ public class RepositoryException extends WebApplicationException {
     public static RepositoryException ValidationError(String message) {
         return new RepositoryException(message, Response.Status.BAD_REQUEST);
     }
+
+    public static RepositoryException Blocked(String message) {
+        return new RepositoryException(message, Response.Status.FORBIDDEN);
+    }
 }

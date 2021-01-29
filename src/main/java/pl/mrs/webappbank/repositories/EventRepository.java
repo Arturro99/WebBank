@@ -27,11 +27,18 @@ public class EventRepository implements IRepository<Event, UUID> {
 
     @Override
     public void add(Event element) {
-        element.setUuid(UUID.randomUUID());
-        if (element.getClass().equals(SafeBoxRent.class))
-            events.add((SafeBoxRent) element);
+        if(element.getResource().isAvailable() && !element.getClient().isBlocked()) {
+            element.getResource().setAvailable(false);
+            element.setUuid(UUID.randomUUID());
+            if (element.getClass().equals(SafeBoxRent.class))
+                events.add((SafeBoxRent) element);
+            else
+                events.add((LoansLedger) element);
+        }
+        else if (element.getClient().isBlocked())
+            throw RepositoryException.Blocked("Client is blocked");
         else
-            events.add((LoansLedger) element);
+            throw RepositoryException.Conflict("Resource already rented");
     }
 
     @Override
@@ -70,6 +77,13 @@ public class EventRepository implements IRepository<Event, UUID> {
                 .filter(x -> x.getUuid().equals(identifier))
                 .findAny()
                 .orElse(null));
+    }
+
+    public Event get(UUID identifier) {
+        return events.stream()
+                .filter(x -> x.getUuid().toString().equals(identifier.toString()))
+                .findAny()
+                .orElseThrow(() -> RepositoryException.NotFound("Account not found"));
     }
 
     public LoansLedger findLedgerByLoan(Loan loan) {

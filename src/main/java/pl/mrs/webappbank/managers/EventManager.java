@@ -9,6 +9,7 @@ import pl.mrs.webappbank.model.resources.Resource;
 import pl.mrs.webappbank.model.resources.SafeBox;
 import pl.mrs.webappbank.model.users.Client;
 import pl.mrs.webappbank.repositories.EventRepository;
+import pl.mrs.webappbank.repositories.RepositoryException;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
@@ -33,18 +34,16 @@ public class EventManager {
         }
         return false;
     }
-    public boolean rentBox(String uuid, Client client){
-        SafeBox safeBox = eventRepository.getByResourceId(UUID.fromString(uuid));
-        if(safeBox.isAvailable() && !client.isBlocked()){
-            safeBox.setAvailable(false);
-            SafeBoxRent rent = new SafeBoxRent(client, safeBox);
-            eventRepository.add(rent);
-            return true;
-        }
-        return false;
+    public boolean rentBox(SafeBox safeBox, Client client){
+        SafeBoxRent rent = new SafeBoxRent(client, safeBox);
+        eventRepository.add(rent);
+        return true;
     }
 
     public boolean returnResource(Resource resource, Account account) {
+        if (resource == null) {
+            throw RepositoryException.NotFound("Resource not found");
+        }
         if (!resource.isAvailable()) {
             getLedgersByAccount(account).stream()
                     .filter(x -> x.getResource().getId().equals(resource.getId()))
@@ -57,7 +56,7 @@ public class EventManager {
             }
             return true;
         }
-        return false;
+        throw RepositoryException.Conflict("Resource not rented");
     }
 
     public List<LoansLedger> getAllLedgers() { return eventRepository.findAllLedgers(); }
@@ -94,7 +93,7 @@ public class EventManager {
     }
 
     public Event getEventById(String id) {
-
+        return eventRepository.get(UUID.fromString(id));
     }
 
     public List<Event> getAll() {
