@@ -5,7 +5,9 @@ import pl.mrs.webappbank.model.users.Client;
 import pl.mrs.webappbank.model.users.Person;
 import pl.mrs.webappbank.repositories.PersonRepository;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.Serializable;
@@ -14,6 +16,9 @@ import java.util.UUID;
 
 @ApplicationScoped
 public class ClientManager implements Serializable {
+
+    @Inject
+    AccountManager accountManager;
 
     private final PersonRepository personRepository;
 
@@ -32,6 +37,11 @@ public class ClientManager implements Serializable {
         addClient(c2);
         addClient(c3);
         personRepository.add(a1);
+    }
+
+    @PostConstruct
+    void initAccounts() {
+        accountManager.init(getAllClients());
     }
 
 

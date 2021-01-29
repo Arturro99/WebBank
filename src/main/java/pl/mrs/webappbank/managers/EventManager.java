@@ -25,14 +25,9 @@ public class EventManager {
     }
 
     public boolean takeLoan(Loan loan, Account account, Client client) {
-        if (loan.isAvailable() && !client.isBlocked()) {
-            loan.setAvailable(false);
-            LoansLedger ledger = new LoansLedger(account, loan, client);
-            eventRepository.add(ledger);
-            account.setStateOfAccount(account.getStateOfAccount() + loan.getValue());
-            return true;
-        }
-        return false;
+        LoansLedger ledger = new LoansLedger(account, loan, client);
+        eventRepository.add(ledger);
+        return true;
     }
     public boolean rentBox(SafeBox safeBox, Client client){
         SafeBoxRent rent = new SafeBoxRent(client, safeBox);
@@ -41,22 +36,8 @@ public class EventManager {
     }
 
     public boolean returnResource(Resource resource, Account account) {
-        if (resource == null) {
-            throw RepositoryException.NotFound("Resource not found");
-        }
-        if (!resource.isAvailable()) {
-            getLedgersByAccount(account).stream()
-                    .filter(x -> x.getResource().getId().equals(resource.getId()))
-                    .forEach(x -> {
-                        x.endEvent();
-                        x.getResource().setAvailable(true);
-                    });
-            if (resource instanceof Loan) {
-                account.setStateOfAccount(account.getStateOfAccount() - ((Loan) resource).getValue());
-            }
-            return true;
-        }
-        throw RepositoryException.Conflict("Resource not rented");
+        eventRepository.endEvent(resource, account);
+        return true;
     }
 
     public List<LoansLedger> getAllLedgers() { return eventRepository.findAllLedgers(); }

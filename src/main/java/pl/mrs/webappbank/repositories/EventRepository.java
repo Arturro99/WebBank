@@ -6,6 +6,7 @@ import pl.mrs.webappbank.model.events.SafeBoxRent;
 import pl.mrs.webappbank.model.accounts.Account;
 import pl.mrs.webappbank.model.resources.Loan;
 import pl.mrs.webappbank.model.resources.Resource;
+import pl.mrs.webappbank.model.resources.SafeBox;
 import pl.mrs.webappbank.model.users.Client;
 
 import java.util.ArrayList;
@@ -30,15 +31,45 @@ public class EventRepository implements IRepository<Event, UUID> {
         if(element.getResource().isAvailable() && !element.getClient().isBlocked()) {
             element.getResource().setAvailable(false);
             element.setUuid(UUID.randomUUID());
-            if (element.getClass().equals(SafeBoxRent.class))
-                events.add((SafeBoxRent) element);
-            else
-                events.add((LoansLedger) element);
+            if (element.getResource() instanceof Loan) {
+                Loan loan = (Loan) element.getResource();
+                Account acc =  ((LoansLedger)element).getAccount();
+                acc.setStateOfAccount(acc.getStateOfAccount() + loan.getValue());
+            }
+            events.add(element);
         }
         else if (element.getClient().isBlocked())
             throw RepositoryException.Blocked("Client is blocked");
         else
             throw RepositoryException.Conflict("Resource already rented");
+    }
+
+    public void endEvent(Resource resource, Account account) {
+        if (resource == null) {
+            throw RepositoryException.NotFound("Resource not found");
+        }
+        if (!resource.isAvailable()) {
+            if (account != null) {
+                LoansLedger ledger =  findLedgerByAccount(account).stream()
+                        .filter(x -> x.getResource().getId().equals(resource.getId()))
+                        .findFirst()
+                        .orElseThrow(() -> RepositoryException.NotFound("Loan not found"));
+                ledger.endEvent();
+                ledger.getResource().setAvailable(true);
+                account.setStateOfAccount(account.getStateOfAccount() - ((Loan) resource).getValue());
+            }
+            else {
+                SafeBoxRent rent =  findAllRents().stream()
+                        .filter(x -> x.getResource().getId().toString().equals(resource.getId().toString()))
+                        .findFirst()
+                        .orElseThrow(() -> RepositoryException.NotFound("Box not found"));
+                rent.endEvent();
+                rent.getResource().setAvailable(true);
+            }
+        }
+        else {
+            throw RepositoryException.Conflict("Resource not rented");
+        }
     }
 
     @Override

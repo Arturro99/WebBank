@@ -16,6 +16,7 @@ public class AccountRepository implements IRepository<Account, String>{
     @Override
     public void add(Account element) {
         element.setAccountNumber(generateNewAccountNumber());
+        element.setUuid(UUID.randomUUID());
         synchronized (listOfAccounts) {
             listOfAccounts.add(element);
         }
@@ -47,6 +48,14 @@ public class AccountRepository implements IRepository<Account, String>{
         }
         return -1;
     }
+
+    public Account get(UUID uuid) {
+        return listOfAccounts.stream()
+                .filter(x -> x.getUuid().toString().equals(uuid.toString()))
+                .findFirst()
+                .orElseThrow(() -> RepositoryException.NotFound("Account not found"));
+    }
+
     public void transfer(String senderAccountNumber, String recipientAccountnumber, double amount){
         synchronized (listOfAccounts) {
             listOfAccounts.get(find(senderAccountNumber)).changeStateOfAccount(-amount);

@@ -2,9 +2,12 @@ package pl.mrs.webappbank.model.accounts;
 
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public abstract class Account {
 
+    private UUID uuid;
     protected String accountNumber;
 
     protected double stateOfAccount;

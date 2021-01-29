@@ -9,10 +9,14 @@ import pl.mrs.webappbank.model.accounts.*;
 import pl.mrs.webappbank.repositories.AccountRepository;
 import pl.mrs.webappbank.repositories.TransferRepository;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @ApplicationScoped
 public class AccountManager implements IAccountManager, Serializable {
@@ -28,12 +32,14 @@ public class AccountManager implements IAccountManager, Serializable {
         exampleAccounts = false;
         accountRepository = new AccountRepository();
         transferRepository = new TransferRepository();
+    }
 
+    void init(List<Client> list) {
         //Sample data
-        registerCommonAccount(clientManager.getAllClients().get(0));
-        registerCommonAccount(clientManager.getAllClients().get(1));
-        registerCurrencyAccount(clientManager.getAllClients().get(1),Currency.EUR);
-        registerCommonAccount(clientManager.getAllClients().get(2));
+        registerCommonAccount(list.get(0));
+        registerCommonAccount(list.get(1));
+        registerCurrencyAccount(list.get(1),Currency.EUR);
+        registerCommonAccount(list.get(2));
 
         payInto(getAllAccounts().get(0).getAccountNumber(),9990);
         payInto(getAllAccounts().get(1).getAccountNumber(),90);
@@ -53,6 +59,10 @@ public class AccountManager implements IAccountManager, Serializable {
 //        this.accountRepository = accountRepository;
 //        this.transferRepository = transferRepository;
 //    }
+
+    public Account findById(String uuid) {
+        return accountRepository.get(UUID.fromString(uuid));
+    }
 
     public void registerCommonAccount(Client client){
         Account newAccount = new CommonAccount(0.0);

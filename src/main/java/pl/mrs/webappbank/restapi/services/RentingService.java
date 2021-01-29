@@ -5,6 +5,7 @@ import pl.mrs.webappbank.managers.ClientManager;
 import pl.mrs.webappbank.managers.EventManager;
 import pl.mrs.webappbank.managers.ResourceManager;
 import pl.mrs.webappbank.model.events.Event;
+import pl.mrs.webappbank.model.events.LoansLedger;
 import pl.mrs.webappbank.model.resources.Loan;
 import pl.mrs.webappbank.model.resources.SafeBox;
 
@@ -24,6 +25,9 @@ public class RentingService {
 
     @Inject
     ResourceManager resourceManager;
+
+    @Inject
+    AccountManager accountManager;
 
     @GET
     @Path("/rentByClient/{uuid}")
@@ -52,8 +56,20 @@ public class RentingService {
     }
 
     @POST
-    @Path("/returnBox/{uuid}")
-    public void returnBox(@PathParam("uuid") String boxId) {
-        eventManager.returnResource(resourceManager.findById(boxId), null);
+    @Path("/takeLoan/{clientUuid}/{accountUuid}/{loanUuid}")
+    public void rentBox(@PathParam("clientUuid") String clientId, @PathParam("accountUuid") String accountId, @PathParam("loanUuid")  String loanId) {
+        eventManager.takeLoan((Loan) resourceManager.findById(loanId), accountManager.findById(accountId), clientManager.findById(clientId));
+    }
+
+    @POST
+    @Path("/returnBox/{eventUuid}")
+    public void returnBox(@PathParam("eventUuid") String eventId) {
+        eventManager.returnResource(eventManager.getEventById(eventId).getResource(), null);
+    }
+
+    @POST
+    @Path("/payLoan/{eventUuid}")
+    public void payLoan(@PathParam("eventUuid") String eventId) {
+        eventManager.returnResource(eventManager.getEventById(eventId).getResource(), ((LoansLedger)(eventManager.getEventById(eventId))).getAccount());
     }
 }
