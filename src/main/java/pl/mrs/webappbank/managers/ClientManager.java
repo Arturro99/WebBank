@@ -23,13 +23,7 @@ public class ClientManager implements Serializable {
 
     public ClientManager() {
         this.personRepository = new PersonRepository();
-        //Sample data
-        Client c1 = new Client("destroyer11111", "Aa12341234", "Jan","Błaszczyk",18);
-        Client c2 = new Client("qwerty", "Aa123asda34", "Ziomson","Pl",12);
-        Client c3 = new Client("azerty", "Aa123412ds4", "Janusz","Pawlak",8);
-        addClient(c1);
-        addClient(c2);
-        addClient(c3);
+
     }
 
 

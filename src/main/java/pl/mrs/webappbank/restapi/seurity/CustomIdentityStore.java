@@ -1,5 +1,6 @@
 package pl.mrs.webappbank.restapi.seurity;
 
+import pl.mrs.webappbank.managers.ClientManager;
 import pl.mrs.webappbank.model.users.Person;
 import pl.mrs.webappbank.repositories.PersonRepository;
 

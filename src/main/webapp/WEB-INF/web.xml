@@ -26,15 +26,26 @@
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
 
-<!--    <security-role>-->
-<!--        <role-name>ADMINS</role-name>-->
-<!--    </security-role>-->
-<!--    <security-role>-->
-<!--        <role-name>CLIENTS</role-name>-->
-<!--    </security-role>-->
-<!--    <security-role>-->
-<!--        <role-name>EMPLOYEES</role-name>-->
-<!--    </security-role>-->
+    <security-role>
+        <role-name>ADMINS</role-name>
+    </security-role>
+    <security-role>
+        <role-name>CLIENTS</role-name>
+    </security-role>
+    <security-role>
+        <role-name>EMPLOYEES</role-name>
+    </security-role>
+    
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>PublicResource</web-resource-name>
+            <url-pattern>/authenticate</url-pattern>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
 
 <!--    <security-constraint>-->
 <!--        <web-resource-collection>-->

@@ -15,7 +15,13 @@ public class PersonRepository implements IRepository<Person, UUID> {
 
     public PersonRepository() {
         people = new ArrayList<>();
-
+        //Sample data
+        Client c1 = new Client("destroyer11111", "Aa12341234", "Jan","Błaszczyk",18);
+        Client c2 = new Client("qwerty", "Aa123asda34", "Ziomson","Pl",12);
+        Client c3 = new Client("azerty", "Aa123412ds4", "Janusz","Pawlak",8);
+        add(c1);
+        add(c2);
+        add(c3);
     }
 
     @Override
