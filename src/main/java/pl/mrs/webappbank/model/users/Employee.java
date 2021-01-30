@@ -20,4 +20,9 @@ public class Employee extends Person {
     public UUID getPid() {
         return this.pid;
     }
+
+    @Override
+    public String[] getAccessLevel() {
+        return new String[]{"Clients", "Employees"};
+    }
 }

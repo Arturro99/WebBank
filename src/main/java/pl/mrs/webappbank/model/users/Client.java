@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Data
 public class Client extends Person implements Serializable {
-    private boolean blocked = false;
+
     List<Account> listOfAccounts = new ArrayList<>();
 
     public Client() {
@@ -37,12 +37,9 @@ public class Client extends Person implements Serializable {
         return this.pid;
     }
 
-    public boolean isBlocked() {
-        return blocked;
-    }
-
-    public void setBlocked(boolean blocked) {
-        this.blocked = blocked;
+    @Override
+    public String[] getAccessLevel() {
+        return new String[]{"Clients"};
     }
 
     @Override

@@ -5,9 +5,7 @@ import pl.mrs.webappbank.model.users.Client;
 import pl.mrs.webappbank.model.users.Person;
 import pl.mrs.webappbank.repositories.PersonRepository;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.Serializable;
