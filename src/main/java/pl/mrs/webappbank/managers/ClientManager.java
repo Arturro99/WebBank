@@ -44,8 +44,8 @@ public class ClientManager implements Serializable {
         return personRepository.clientValidation(client);
     }
 
-    public void removeClient(Client client) {
-        personRepository.remove(client);
+    public void removeClient(Person person) {
+        personRepository.remove(person);
     }
 
     public void updateClient(String login, Client client) {
@@ -77,8 +77,8 @@ public class ClientManager implements Serializable {
     }
 
 
-    public synchronized Client findByLogin(String login) {
-        return (Client) personRepository.findClientByLogin(login);
+    public synchronized Person findByLogin(String login) {
+        return personRepository.findClientByLogin(login);
     }
     public synchronized Client findById(String uuid) {
         return personRepository.findClientByID(UUID.fromString(uuid));

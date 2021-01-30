@@ -1,5 +1,8 @@
 package pl.mrs.webappbank.restapi.seurity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.security.enterprise.credential.Credential;
@@ -40,27 +43,10 @@ public class AuthenticationService {
         }
     }
 
+    @Data
+    @NoArgsConstructor
     public static class LoginData {
         private String login;
         private String password;
-
-        public LoginData() {
-        }
-
-        public void setLogin(String login) {
-            this.login = login;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-        public String getLogin() {
-            return login;
-        }
-
-        public String getPassword() {
-            return password;
-        }
     }
 }

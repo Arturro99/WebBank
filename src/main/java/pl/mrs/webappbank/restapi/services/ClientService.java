@@ -41,10 +41,10 @@ public class ClientService {
     @Path("{login}")
     @Produces({MediaType.APPLICATION_JSON})
     public Response get(@PathParam("login") String login) {
-        Client client = clientManager.findByLogin(login);
+        Person person = clientManager.findByLogin(login);
         return Response.ok()
-                .entity(client)
-                .tag(EntityIdentitySignerVerifier.calculateSignature(client))
+                .entity(person)
+                .tag(EntityIdentitySignerVerifier.calculateSignature(person))
                 .build();
     }
 
@@ -74,7 +74,7 @@ public class ClientService {
     @DELETE
     @Path("{login}")
     public void remove(@PathParam("login") String login) {
-        clientManager.removeClient(clientManager.findByLogin(login));
+        clientManager.removeClient((Person) clientManager.findByLogin(login));
     }
 //    @GET
 //    @Path("whoami")

@@ -1,8 +1,11 @@
 package pl.mrs.webappbank.model.resources;
 
+import pl.mrs.webappbank.model.SignableEntity;
+
+import javax.json.bind.annotation.JsonbTransient;
 import java.util.UUID;
 
-public abstract class Resource {
+public abstract class Resource implements SignableEntity {
     protected UUID id;
     protected String description;
     protected boolean available;
@@ -35,5 +38,13 @@ public abstract class Resource {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    @JsonbTransient
+    public String getSignablePayload() {
+        if(null == id)
+            return "";
+        return id.toString();
     }
 }

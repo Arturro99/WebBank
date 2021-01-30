@@ -4,10 +4,16 @@ import pl.mrs.webappbank.managers.ResourceManager;
 import pl.mrs.webappbank.model.resources.Loan;
 import pl.mrs.webappbank.model.resources.Resource;
 import pl.mrs.webappbank.model.resources.SafeBox;
+import pl.mrs.webappbank.restapi.filters.SignatureVerifierFilterBinding;
+import pl.mrs.webappbank.restapi.utils.EntityIdentitySignerVerifier;
+import pl.mrs.webappbank.restapi.utils.EntityIntegrationException;
 
 import javax.inject.Inject;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Path("model.resource")
@@ -19,8 +25,12 @@ public class ResourceService {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Resource get(@PathParam("id") String id) {
-        return resourceManager.findById(id);
+    public Response get(@PathParam("id") String id) {
+        Resource res = resourceManager.findById(id);
+        return Response.ok()
+                .entity(res)
+                .tag(EntityIdentitySignerVerifier.calculateSignature(res))
+                .build();
     }
 
     @GET
@@ -43,17 +53,25 @@ public class ResourceService {
         resourceManager.add(box);
     }
 
-    @POST
+    @PUT
     @Path("/editLoan/{uuid}")
     @Consumes({MediaType.APPLICATION_JSON})
-    public void editResource(@PathParam("uuid") String id, Loan loan) {
+    @SignatureVerifierFilterBinding
+    public void editResource(@PathParam("uuid") String id, @HeaderParam("If-Match") @NotNull @NotEmpty String tag, Loan loan) throws Exception {
+        if(!EntityIdentitySignerVerifier.verifyIntegration(tag,loan)) {
+            throw EntityIntegrationException.integrityBroken(loan.toString());
+        }
         resourceManager.editResource(id, loan);
     }
 
-    @POST
+    @PUT
     @Path("/editBox/{uuid}")
     @Consumes({MediaType.APPLICATION_JSON})
-    public void editResource(@PathParam("uuid") String id, SafeBox safeBox) {
+    @SignatureVerifierFilterBinding
+    public void editResource(@PathParam("uuid") String id, @HeaderParam("If-Match") @NotNull @NotEmpty String tag, SafeBox safeBox) throws Exception {
+        if(!EntityIdentitySignerVerifier.verifyIntegration(tag,safeBox)) {
+            throw EntityIntegrationException.integrityBroken(safeBox.toString());
+        }
         resourceManager.editResource(id, safeBox);
     }
 

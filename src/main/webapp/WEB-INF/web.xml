@@ -35,7 +35,7 @@
     <security-role>
         <role-name>EMPLOYEES</role-name>
     </security-role>
-    
+
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>PublicResource</web-resource-name>
@@ -47,46 +47,53 @@
         </user-data-constraint>
     </security-constraint>
 
-<!--    <security-constraint>-->
-<!--        <web-resource-collection>-->
-<!--            <web-resource-name>Admin pages</web-resource-name>-->
-<!--            <url-pattern>/admin/*</url-pattern>-->
-<!--            <url-pattern>/employee/*</url-pattern>-->
-<!--            <url-pattern>/client/*</url-pattern>-->
-<!--        </web-resource-collection>-->
-<!--        <auth-constraint>-->
-<!--            <role-name>ADMINS</role-name>-->
-<!--        </auth-constraint>-->
-<!--    </security-constraint>-->
-<!--    <security-constraint>-->
-<!--        <web-resource-collection>-->
-<!--            <web-resource-name>Employee pages</web-resource-name>-->
-<!--            <url-pattern>/employee/*</url-pattern>-->
-<!--        </web-resource-collection>-->
-<!--        <auth-constraint>-->
-<!--            <role-name>EMPLOYEES</role-name>-->
-<!--        </auth-constraint>-->
-<!--    </security-constraint>-->
-<!--    <security-constraint>-->
-<!--        <web-resource-collection>-->
-<!--            <web-resource-name>Client pages</web-resource-name>-->
-<!--            <url-pattern>/client/*</url-pattern>-->
-<!--        </web-resource-collection>-->
-<!--        <auth-constraint>-->
-<!--            <role-name>CLIENTS</role-name>-->
-<!--        </auth-constraint>-->
-<!--    </security-constraint>-->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Admin pages</web-resource-name>
+            <url-pattern>/admin/*</url-pattern>
+            <url-pattern>/employee/*</url-pattern>
+            <url-pattern>/client/*</url-pattern>
+            <http-method>POST</http-method>
+            <http-method>GET</http-method>
+            <http-method>PUT</http-method>
+            <http-method>DELETE</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>ADMINS</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Employee pages</web-resource-name>
+            <url-pattern>/employee/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>EMPLOYEES</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Client pages</web-resource-name>
+            <url-pattern>/model.client/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>CLIENTS</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
 
 
-<!--    <security-constraint>-->
-<!--        <web-resource-collection>-->
-<!--            <web-resource-name>Restricted pages</web-resource-name>-->
-<!--            <url-pattern>/*</url-pattern>-->
-<!--        </web-resource-collection>-->
-<!--        <user-data-constraint>-->
-<!--            <transport-guarantee>CONFIDENTIAL</transport-guarantee>-->
-<!--        </user-data-constraint>-->
-<!--    </security-constraint>-->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Restricted pages</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
 
 <!--    <login-config>-->
 <!--        <auth-method>FORM</auth-method>-->

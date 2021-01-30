@@ -21,10 +21,10 @@ public class PersonRepository implements IRepository<Person, UUID> {
         Client c2 = new Client("qwerty", "Aa123asda34", "Ziomson","Pl",12);
         Client c3 = new Client("azerty", "Aa123412ds4", "Janusz","Pawlak",8);
         Person a1 = new Admin("admin", "Proba666");
+        add(a1);
         add(c1);
         add(c2);
         add(c3);
-        add(a1);
     }
 
     @Override
@@ -106,9 +106,9 @@ public class PersonRepository implements IRepository<Person, UUID> {
     }
 
     public synchronized Person findClientByLogin(String login) {
-        Optional<Person> found = people.stream().filter(
-                x -> x.getLogin().equals(login) && x.getClass().equals(Client.class)
-        ).findFirst();
+        Optional<Person> found = people.stream()
+                .filter(x -> x.getLogin().equals(login))
+                .findFirst();
         if (found.isPresent()) {
             return found.get();
         } else {

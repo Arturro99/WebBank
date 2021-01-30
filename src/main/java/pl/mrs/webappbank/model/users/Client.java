@@ -39,7 +39,7 @@ public class Client extends Person implements Serializable {
 
     @Override
     public String[] getAccessLevel() {
-        return new String[]{"Clients"};
+        return new String[]{"CLIENTS"};
     }
 
     @Override
