@@ -5,7 +5,9 @@ import pl.mrs.webappbank.model.users.Client;
 import pl.mrs.webappbank.model.users.Person;
 import pl.mrs.webappbank.repositories.PersonRepository;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.Serializable;
@@ -26,15 +28,6 @@ public class ClientManager implements Serializable {
 
     public ClientManager() {
         this.personRepository = new PersonRepository();
-        //Sample data
-        Client c1 = new Client("destroyer11111", "Proba1234", "Jan","Błaszczyk",18);
-        Client c2 = new Client("qwerty", "Proba567", "Ziomson","PL",12);
-        Client c3 = new Client("azerty", "Proba666", "Janusz","Pawlak",8);
-        Person a1 = new Admin("admin", "Proba666");
-        addClient(c1);
-        addClient(c2);
-        addClient(c3);
-        personRepository.add(a1);
     }
 
     @PostConstruct

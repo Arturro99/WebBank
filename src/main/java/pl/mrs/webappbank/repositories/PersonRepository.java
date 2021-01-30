@@ -1,6 +1,7 @@
 package pl.mrs.webappbank.repositories;
 
 import pl.mrs.webappbank.model.accounts.*;
+import pl.mrs.webappbank.model.users.Admin;
 import pl.mrs.webappbank.model.users.Client;
 import pl.mrs.webappbank.model.users.Person;
 
@@ -19,9 +20,11 @@ public class PersonRepository implements IRepository<Person, UUID> {
         Client c1 = new Client("destroyer11111", "Aa12341234", "Jan","Błaszczyk",18);
         Client c2 = new Client("qwerty", "Aa123asda34", "Ziomson","Pl",12);
         Client c3 = new Client("azerty", "Aa123412ds4", "Janusz","Pawlak",8);
+        Person a1 = new Admin("admin", "Proba666");
         add(c1);
         add(c2);
         add(c3);
+        add(a1);
     }
 
     @Override
@@ -58,7 +61,7 @@ public class PersonRepository implements IRepository<Person, UUID> {
             updatedClient.setAge(element.getAge());
         if(null != element.getPassword())
             updatedClient.setPassword(element.getPassword());
-        if(null != element.getListOfAccounts())
+        if(!element.getListOfAccounts().isEmpty())
             updatedClient.setListOfAccounts(element.getListOfAccounts());
         updatedClient.setBlocked(element.isBlocked());
     }

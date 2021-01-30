@@ -60,7 +60,7 @@ public class ClientService {
         clientManager.addClient(client);
     }
 
-    @POST
+    @PUT
     @Path("{login}")
     @Consumes({MediaType.APPLICATION_JSON})
     @SignatureVerifierFilterBinding
