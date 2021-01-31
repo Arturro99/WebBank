@@ -1,11 +1,13 @@
 package pl.mrs.webappbank.model.accounts;
 
 import lombok.Data;
+import pl.mrs.webappbank.model.SignableEntity;
 
+import javax.json.bind.annotation.JsonbTransient;
 import java.util.UUID;
 
 @Data
-public abstract class Account {
+public abstract class Account implements SignableEntity {
 
     private UUID uuid;
     protected String accountNumber;
@@ -32,5 +34,13 @@ public abstract class Account {
 
     public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
+    }
+
+    @Override
+    @JsonbTransient
+    public String getSignablePayload() {
+        if(null == uuid)
+            return "";
+        return uuid.toString();
     }
 }
