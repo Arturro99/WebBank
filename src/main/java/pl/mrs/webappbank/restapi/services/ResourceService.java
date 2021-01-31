@@ -9,6 +9,7 @@ import pl.mrs.webappbank.restapi.utils.EntityIdentitySignerVerifier;
 import pl.mrs.webappbank.restapi.utils.EntityIntegrationException;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
@@ -42,7 +43,7 @@ public class ResourceService {
     @POST
     @Path("/addLoan")
     @Consumes({MediaType.APPLICATION_JSON})
-    public void add(Loan loan) {
+    public void add(@Valid Loan loan) {
         resourceManager.add(loan);
     }
 
@@ -57,7 +58,7 @@ public class ResourceService {
     @Path("/editLoan/{uuid}")
     @Consumes({MediaType.APPLICATION_JSON})
     @SignatureVerifierFilterBinding
-    public void editResource(@PathParam("uuid") String id, @HeaderParam("If-Match") @NotNull @NotEmpty String tag, Loan loan) throws Exception {
+    public void editResource(@PathParam("uuid") String id, @HeaderParam("If-Match") @NotNull @NotEmpty String tag, @Valid Loan loan) throws Exception {
         if(!EntityIdentitySignerVerifier.verifyIntegration(tag,loan)) {
             throw EntityIntegrationException.integrityBroken(loan.toString());
         }

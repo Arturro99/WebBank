@@ -5,6 +5,7 @@ import pl.mrs.webappbank.model.users.Admin;
 import pl.mrs.webappbank.model.users.Client;
 import pl.mrs.webappbank.model.users.Person;
 
+import javax.enterprise.context.ApplicationScoped;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

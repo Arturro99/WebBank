@@ -16,12 +16,12 @@ import java.util.Set;
 public class CustomIdentityStore implements IdentityStore {
 
     @Inject
-    private PersonRepository personRepository;
+    private ClientManager clientManager;
     @Override
     public CredentialValidationResult validate(Credential credential) {
         if(credential instanceof UsernamePasswordCredential) {
             UsernamePasswordCredential usernamePasswordCredential = (UsernamePasswordCredential) credential;
-            Person person = personRepository.findByLoginPasswordActive(usernamePasswordCredential.getCaller(),usernamePasswordCredential.getPasswordAsString());
+            Person person = clientManager.findByLoginPasswordActive(usernamePasswordCredential.getCaller(),usernamePasswordCredential.getPasswordAsString());
             if(null != person) {
                 return new CredentialValidationResult(person.getLogin(), new HashSet<>(Arrays.asList(person.getAccessLevel())));
             }
