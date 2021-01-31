@@ -17,11 +17,8 @@ import java.util.UUID;
 public abstract class Person implements SignableEntity {
 
     protected UUID pid;
-    @NotEmpty
     protected String name;
-    @NotEmpty
     protected String surname;
-    @NotEmpty
     protected String login;
     @Pattern(regexp="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}", message = "Not satisfied password")
     protected String password;
