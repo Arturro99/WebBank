@@ -54,6 +54,7 @@
             <url-pattern>/admin/*</url-pattern>
             <url-pattern>/employee/*</url-pattern>
             <url-pattern>/restapi/model.client/*</url-pattern>
+            <url-pattern>/restapi/model.account/*</url-pattern>
             <http-method>POST</http-method>
             <http-method>GET</http-method>
             <http-method>PUT</http-method>
