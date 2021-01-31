@@ -7,7 +7,7 @@ import javax.json.bind.adapter.JsonbAdapter;
 public class SerializeStringToEmptyAdapter implements JsonbAdapter<String, JsonValue> {
     @Override
     public JsonValue adaptToJson(String s) throws Exception {
-        return Json.createValue(s.hashCode());
+        return Json.createValue("############");
     }
 
     @Override
