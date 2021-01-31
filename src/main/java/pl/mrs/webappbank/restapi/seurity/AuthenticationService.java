@@ -9,11 +9,9 @@ import javax.security.enterprise.credential.Credential;
 import javax.security.enterprise.credential.UsernamePasswordCredential;
 import javax.security.enterprise.identitystore.CredentialValidationResult;
 import javax.security.enterprise.identitystore.IdentityStoreHandler;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -41,6 +39,18 @@ public class AuthenticationService {
         } else {
             return Response.status(Response.Status.UNAUTHORIZED).build();
         }
+    }
+
+    @POST
+    @Path("/refresh")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.TEXT_PLAIN})
+    public Response refreshToken(@HeaderParam("Authentication") @NotNull @NotEmpty String auth) {
+        String jwtSerializedToken = auth.substring(("Bearer".length())).trim();
+        return Response.accepted()
+                .type("application/jwt")
+                .entity(JWTGeneratorVerifier.refreshJWT(jwtSerializedToken))
+                .build();
     }
 
     @Data
