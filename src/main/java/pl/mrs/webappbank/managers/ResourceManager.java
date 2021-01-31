@@ -35,6 +35,7 @@ public class ResourceManager {
             ((Loan)resourceRepository.findAll().get(resourceRepository.find(UUID.fromString(id)))).setValue(((Loan)resource).getValue());
         }
         resourceRepository.findAll().get(resourceRepository.find(UUID.fromString(id))).setDescription(resource.getDescription());
+        resourceRepository.findAll().get(resourceRepository.find(UUID.fromString(id))).setAvailable(resource.isAvailable());
     }
 
     public void removeResource(Resource resource) {
