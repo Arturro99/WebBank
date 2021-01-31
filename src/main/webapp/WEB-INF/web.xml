@@ -74,14 +74,26 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Client pages</web-resource-name>
-            <url-pattern>/model.client/*</url-pattern>
+            <url-pattern>/restapi/model.client/*</url-pattern>
         </web-resource-collection>
         <auth-constraint>
-            <role-name>CLIENTS</role-name>
+            <role-name>ADMINS</role-name>
         </auth-constraint>
         <user-data-constraint>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
+    </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Identity Check</web-resource-name>
+            <url-pattern>/restapi/model.client/whoami</url-pattern>
+            <http-method>GET</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>ADMINS</role-name>
+            <role-name>EMPLOYEES</role-name>
+            <role-name>CLIENTS</role-name>
+        </auth-constraint>
     </security-constraint>
 
 

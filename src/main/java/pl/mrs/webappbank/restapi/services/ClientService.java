@@ -76,10 +76,10 @@ public class ClientService {
     public void remove(@PathParam("login") String login) {
         clientManager.removeClient((Person) clientManager.findByLogin(login));
     }
-//    @GET
-//    @Path("whoami")
-//    @Produces({MediaType.APPLICATION_JSON})
-//    public Person whoAmI(@Context SecurityContext securityContext){
-//        return clientManager.findByLogin(securityContext.getUserPrincipal().getName());
-//    }
+    @GET
+    @Path("whoami")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Person whoAmI(@Context SecurityContext securityContext){
+        return clientManager.findByLogin(securityContext.getUserPrincipal().getName());
+    }
 }

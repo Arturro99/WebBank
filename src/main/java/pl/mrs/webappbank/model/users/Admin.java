@@ -18,7 +18,7 @@ public class Admin extends Person {
 
     @Override
     public String[] getAccessLevel() {
-        return new String[]{"Clients", "Employees","Admins"};
+        return new String[]{"CLIENTS", "EMPLOYEES","ADMINS"};
     }
 
     public Admin(String login, String password) {
