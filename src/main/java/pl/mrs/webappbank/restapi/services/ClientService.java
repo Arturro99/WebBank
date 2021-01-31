@@ -65,7 +65,7 @@ public class ClientService {
     @Path("{login}")
     @Consumes({MediaType.APPLICATION_JSON})
     @SignatureVerifierFilterBinding
-    public void edit(@PathParam("login") String login, @HeaderParam("If-Match") @NotNull @NotEmpty String tag, @Valid Client client) throws Exception {
+    public void edit(@PathParam("login") String login, @HeaderParam("If-Match") @NotNull @NotEmpty String tag,@Valid Client client) throws Exception {
         if(!EntityIdentitySignerVerifier.verifyIntegration(tag,client)) {
             throw EntityIntegrationException.integrityBroken(client.toString());
         }
