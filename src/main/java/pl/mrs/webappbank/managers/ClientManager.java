@@ -83,4 +83,7 @@ public class ClientManager implements Serializable {
     public synchronized Client findById(String uuid) {
         return personRepository.findClientByID(UUID.fromString(uuid));
     }
+    public Person findByLoginPasswordActive(String login, String password) {
+        return personRepository.findByLoginPasswordActive(login,password);
+    }
 }
