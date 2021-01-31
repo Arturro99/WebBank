@@ -29,10 +29,10 @@ public class EventManager {
         eventRepository.add(ledger);
         return true;
     }
-    public boolean rentBox(SafeBox safeBox, Client client){
+    public Event rentBox(SafeBox safeBox, Client client){
         SafeBoxRent rent = new SafeBoxRent(client, safeBox);
         eventRepository.add(rent);
-        return true;
+        return rent;
     }
 
     public boolean returnResource(Resource resource, Account account) {

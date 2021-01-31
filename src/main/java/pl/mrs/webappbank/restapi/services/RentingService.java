@@ -51,8 +51,9 @@ public class RentingService {
 
     @POST
     @Path("/rentBox/{clientUuid}/{boxUuid}")
-    public void rentBox(@PathParam("clientUuid") String clientId, @PathParam("boxUuid")  String boxId) {
-        eventManager.rentBox((SafeBox)resourceManager.findById(boxId), clientManager.findById(clientId));
+    @Produces({MediaType.APPLICATION_JSON})
+    public Event rentBox(@PathParam("clientUuid") String clientId, @PathParam("boxUuid")  String boxId) {
+        return eventManager.rentBox((SafeBox)resourceManager.findById(boxId), clientManager.findById(clientId));
     }
 
     @POST
