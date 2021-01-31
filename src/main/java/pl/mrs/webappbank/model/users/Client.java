@@ -22,6 +22,11 @@ public class Client extends Person implements Serializable {
         this.age = age;
     }
 
+    public Client(String login, String password, String name, String surname, int age, boolean blocked) {
+        super(name,surname,login,password, blocked);
+        this.age = age;
+    }
+
     public void addAccount(Account account) {
         listOfAccounts.add(account);
     }

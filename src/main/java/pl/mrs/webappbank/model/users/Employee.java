@@ -23,6 +23,6 @@ public class Employee extends Person {
 
     @Override
     public String[] getAccessLevel() {
-        return new String[]{"Clients", "Employees"};
+        return new String[]{"CLIENTS", "EMPLOYEES"};
     }
 }

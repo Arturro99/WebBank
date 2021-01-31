@@ -7,19 +7,26 @@ import pl.mrs.webappbank.restapi.adapters.SerializeStringToEmptyAdapter;
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.json.bind.annotation.JsonbTypeAdapter;
+import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-// todo move  pid initialization to the repository
+
 @Data
 public abstract class Person implements SignableEntity {
 
     protected UUID pid;
+    @NotEmpty
     protected String name;
+    @NotEmpty
     protected String surname;
+    @NotEmpty
     protected String login;
+    @Pattern(regexp="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}", message = "Not satisfied password")
     protected String password;
+    @Positive
+    @Max(value = 100)
     protected int age;
     private boolean blocked;
 
@@ -41,6 +48,14 @@ public abstract class Person implements SignableEntity {
         this.password = password;
     }
 
+    public Person(String name, String surname, String login, String password, boolean blocked) {
+        this.name = name;
+        this.surname = surname;
+        this.login = login;
+        this.password = password;
+        this.blocked = blocked;
+    }
+
     @Override
     public String toString() {
         return name +
@@ -54,7 +69,7 @@ public abstract class Person implements SignableEntity {
         this.pid = id;
     }
 
-    @JsonbTypeAdapter(SerializeStringToEmptyAdapter.class)
+    //@JsonbTypeAdapter(SerializeStringToEmptyAdapter.class)
     public String getPassword(){
         return this.password;
     }

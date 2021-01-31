@@ -3,10 +3,12 @@ package pl.mrs.webappbank.model.resources;
 import pl.mrs.webappbank.model.SignableEntity;
 
 import javax.json.bind.annotation.JsonbTransient;
+import javax.validation.constraints.NotEmpty;
 import java.util.UUID;
 
 public abstract class Resource implements SignableEntity {
     protected UUID id;
+    @NotEmpty
     protected String description;
     protected boolean available;
 

@@ -39,7 +39,8 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>PublicResource</web-resource-name>
-            <url-pattern>/authenticate</url-pattern>
+            <url-pattern>/restapi/authenticate</url-pattern>
+            <url-pattern>/model.client/whoami</url-pattern>
             <http-method>POST</http-method>
         </web-resource-collection>
         <user-data-constraint>
@@ -52,7 +53,7 @@
             <web-resource-name>Admin pages</web-resource-name>
             <url-pattern>/admin/*</url-pattern>
             <url-pattern>/employee/*</url-pattern>
-            <url-pattern>/client/*</url-pattern>
+            <url-pattern>/restapi/model.client/*</url-pattern>
             <http-method>POST</http-method>
             <http-method>GET</http-method>
             <http-method>PUT</http-method>
