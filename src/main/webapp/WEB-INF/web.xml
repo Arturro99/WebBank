@@ -40,6 +40,7 @@
         <web-resource-collection>
             <web-resource-name>PublicResource</web-resource-name>
             <url-pattern>/restapi/authenticate</url-pattern>
+            <url-pattern>/restapi/authenticate/refresh</url-pattern>
             <url-pattern>/model.client/whoami</url-pattern>
             <http-method>POST</http-method>
         </web-resource-collection>

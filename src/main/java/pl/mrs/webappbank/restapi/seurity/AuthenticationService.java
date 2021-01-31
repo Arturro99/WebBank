@@ -45,7 +45,7 @@ public class AuthenticationService {
     @Path("/refresh")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.TEXT_PLAIN})
-    public Response refreshToken(@HeaderParam("Authentication") @NotNull @NotEmpty String auth) {
+    public Response refreshToken(@HeaderParam("Authorization") @NotNull @NotEmpty String auth) {
         String jwtSerializedToken = auth.substring(("Bearer".length())).trim();
         return Response.accepted()
                 .type("application/jwt")
