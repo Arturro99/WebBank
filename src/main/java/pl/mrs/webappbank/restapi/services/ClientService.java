@@ -79,7 +79,11 @@ public class ClientService {
     @GET
     @Path("whoami")
     @Produces({MediaType.APPLICATION_JSON})
-    public Person whoAmI(@Context SecurityContext securityContext){
-        return clientManager.findByLogin(securityContext.getUserPrincipal().getName());
+    public Response whoAmI(@Context SecurityContext securityContext){
+        Person person = clientManager.findByLogin(securityContext.getUserPrincipal().getName());
+        return Response.ok()
+                .entity(person)
+                .tag(EntityIdentitySignerVerifier.calculateSignature(person))
+                .build();
     }
 }

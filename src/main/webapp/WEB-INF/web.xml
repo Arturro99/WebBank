@@ -89,12 +89,18 @@
             <url-pattern>/restapi/model.client/whoami</url-pattern>
             <http-method>GET</http-method>
         </web-resource-collection>
+        <web-resource-collection>
+            <web-resource-name>Person Edit</web-resource-name>
+            <url-pattern>/restapi/model.client/*</url-pattern>
+            <http-method>PUT</http-method>
+        </web-resource-collection>
         <auth-constraint>
             <role-name>ADMINS</role-name>
             <role-name>EMPLOYEES</role-name>
             <role-name>CLIENTS</role-name>
         </auth-constraint>
     </security-constraint>
+
 
 
     <security-constraint>
