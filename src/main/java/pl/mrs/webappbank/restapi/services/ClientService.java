@@ -74,7 +74,7 @@ public class ClientService {
     @DELETE
     @Path("{login}")
     public void remove(@PathParam("login") String login) {
-        clientManager.removeClient((Person) clientManager.findByLogin(login));
+        clientManager.removeClient(clientManager.findByLogin(login));
     }
     @GET
     @Path("whoami")
