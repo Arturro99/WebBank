@@ -4,6 +4,7 @@ import pl.mrs.webappbank.model.SignableEntity;
 
 import javax.json.bind.annotation.JsonbTransient;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import java.util.UUID;
 
 public abstract class Resource implements SignableEntity {
