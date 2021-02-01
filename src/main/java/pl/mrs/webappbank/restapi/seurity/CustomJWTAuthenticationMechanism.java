@@ -30,6 +30,13 @@ public class CustomJWTAuthenticationMechanism implements HttpAuthenticationMecha
         if(httpServletRequest.getRequestURL().toString().endsWith("/restapi/authenticate")) {
             return httpMessageContext.doNothing();
         }
+
+        ///for SPA
+        if(httpServletRequest.getRequestURL().toString().contains("/restapi/model.client")) {
+            return httpMessageContext.doNothing();
+        }
+        ///end for SPA
+
         String authorizationHeader = httpServletRequest.getHeader(AUTHORIZATION_HEADER);
         if(null == authorizationHeader || !authorizationHeader.startsWith(BEARER)) {
             return httpMessageContext.responseUnauthorized();

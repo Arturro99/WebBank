@@ -66,6 +66,8 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
+
+
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Employee pages</web-resource-name>
@@ -78,6 +80,8 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
+
+
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Client pages</web-resource-name>
@@ -92,6 +96,8 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
+
+
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Identity Check</web-resource-name>

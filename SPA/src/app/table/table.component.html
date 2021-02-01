@@ -1,0 +1,18 @@
+<table>
+  <tr>
+    <th>UUID</th>
+    <th>name</th>
+    <th>surname</th>
+    <th>login</th>
+    <th>age</th>
+    <th>blocked</th>
+  </tr>
+  <tr *ngFor="let user of users">
+    <td>{{user.pid}}</td>
+    <td>{{user.name}}</td>
+    <td>{{user.surname}}</td>
+    <td>{{user.login}}</td>
+    <td>{{user.age}}</td>
+    <td>{{user.blocked}}</td>
+  </tr>
+</table>

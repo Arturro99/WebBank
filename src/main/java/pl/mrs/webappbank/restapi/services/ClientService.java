@@ -49,6 +49,12 @@ public class ClientService {
                 .build();
     }
 
+//    @GET
+//    @Produces({MediaType.APPLICATION_JSON})
+//    public List<Client> getAll() {
+//        return clientManager.getAllClients();
+//    }
+
     @GET
     @Produces({MediaType.APPLICATION_JSON})
     public List<Client> getAll() {
@@ -69,6 +75,14 @@ public class ClientService {
         if(!EntityIdentitySignerVerifier.verifyIntegration(tag,client)) {
             throw EntityIntegrationException.integrityBroken(client.toString());
         }
+        clientManager.updateClient(login, client);
+    }
+
+
+    @PUT
+    @Path("/forspa/{login}")
+    @Consumes({MediaType.APPLICATION_JSON})
+    public void editSpa(@PathParam("login") String login, @Valid Client client) throws Exception {
         clientManager.updateClient(login, client);
     }
 
