@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { User } from '../model/user';
+import { UsersService } from '../users.service';
 
 @Component({
   selector: 'app-table',
@@ -16,10 +17,11 @@ export class TableComponent {
     blocked: false,
   };
 
-  @Input()
   users: User[] = [];
 
-  constructor() { }
+  constructor(private usersService: UsersService) { }
 
-
+  refreshUsers(): void {
+    this.usersService.getUsers().subscribe((response: User[]) => { this.users = response; }  );
+  }
 }
