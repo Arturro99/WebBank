@@ -40,7 +40,6 @@
         <web-resource-collection>
             <web-resource-name>PublicResource</web-resource-name>
             <url-pattern>/restapi/authenticate</url-pattern>
-            <url-pattern>/restapi/authenticate/refresh</url-pattern>
             <url-pattern>/model.client/whoami</url-pattern>
             <http-method>POST</http-method>
         </web-resource-collection>
@@ -56,6 +55,7 @@
             <url-pattern>/employee/*</url-pattern>
             <url-pattern>/restapi/model.client/*</url-pattern>
             <url-pattern>/restapi/model.account/*</url-pattern>
+            <url-pattern>/restapi/authenticate/refresh</url-pattern>
             <http-method>POST</http-method>
             <http-method>GET</http-method>
             <http-method>PUT</http-method>
@@ -84,6 +84,7 @@
         <web-resource-collection>
             <web-resource-name>Client pages</web-resource-name>
             <url-pattern>/restapi/model.rent/*</url-pattern>
+            <url-pattern>/restapi/authenticate/refresh</url-pattern>
             <http-method>POST</http-method>
         </web-resource-collection>
         <auth-constraint>

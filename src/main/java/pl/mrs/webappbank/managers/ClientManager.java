@@ -86,4 +86,8 @@ public class ClientManager implements Serializable {
     public Person findByLoginPasswordActive(String login, String password) {
         return personRepository.findByLoginPasswordActive(login,password);
     }
+
+    public Person findByLoginActive(String login) {
+        return personRepository.findByLoginActive(login);
+    }
 }

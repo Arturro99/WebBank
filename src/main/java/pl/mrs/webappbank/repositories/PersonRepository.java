@@ -179,4 +179,12 @@ public class PersonRepository implements IRepository<Person, UUID> {
                         ).findFirst();
         return foundPerson.orElse(null);
     }
+
+    public Person findByLoginActive(String login) {
+        Optional<Person> foundPerson = people.stream().filter(x ->
+                x.getLogin().equals(login)
+                        && !x.isBlocked()
+        ).findFirst();
+        return foundPerson.orElseThrow(() -> RepositoryException.Blocked("Client is blocked"));
+    }
 }
