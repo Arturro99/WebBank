@@ -8,20 +8,36 @@ import { UsersService } from '../users.service';
   styleUrls: ['./table.component.less']
 })
 export class TableComponent {
-  user: User = {
-    pid: 'string',
-    name: 'aaaaaa',
-    surname: 'aaa',
-    login: 'Azerty',
-    age: 12,
+  public user: User = {
+    pid: '',
+    name: '',
+    surname: '',
+    login: '',
+    age: 0,
     blocked: false,
   };
 
   users: User[] = [];
 
-  constructor(private usersService: UsersService) { }
+  constructor(private usersService: UsersService) {  this.refreshUsers(); }
 
   refreshUsers(): void {
     this.usersService.getUsers().subscribe((response: User[]) => { this.users = response; }  );
+  }
+
+  setUser(user: User): void {
+    this.user = {
+      pid: user.pid,
+      name: user.name,
+      surname: user.surname,
+      login: user.login,
+      age: user.age,
+      blocked: user.blocked,
+    };
+  }
+
+  updateUser(): void {
+    this.usersService.updateUser(this.user).subscribe();
+    this.refreshUsers();
   }
 }

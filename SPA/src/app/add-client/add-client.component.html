@@ -1,2 +1,7 @@
-<p>add-client works!</p>
+Login:    <input [(ngModel)]="userLogin"><p>
+Password: <input  type="password" [(ngModel)]="userPassword"><p>
+Name:     <input [(ngModel)]="userName"><p>
+Surname:  <input [(ngModel)]="userSurname"><p>
+Age:      <input [(ngModel)]="userAge"><p>
+<button (click)="addUser()">Add user</button>
 <button routerLink="/" routerLinkActive="active">Go back</button>

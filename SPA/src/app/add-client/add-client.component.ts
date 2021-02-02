@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {UsersService} from '../users.service';
 
 @Component({
   selector: 'app-add-client',
@@ -6,6 +7,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-client.component.less']
 })
 export class AddClientComponent {
+  userLogin = '';
+  userPassword = '';
+  userName = '';
+  userSurname = '';
+  userAge = 0;
 
-  constructor() { }
+  getUser(): any {
+    return {
+      login: this.userLogin,
+      password: this.userPassword,
+      name: this.userName,
+      surname: this.userSurname,
+      age: this.userAge,
+    };
+  }
+
+  constructor(private usersService: UsersService) { }
+
+  addUser(): void {
+    this.usersService.addUser(this.getUser()).subscribe();
+  }
 }

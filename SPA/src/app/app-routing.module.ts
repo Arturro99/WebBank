@@ -6,7 +6,7 @@ import { AddClientComponent } from './add-client/add-client.component';
 const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: '', component: TableComponent },
-  { path: 'add', component: AddClientComponent },
+  { path: 'add', component: AddClientComponent }
 ];
 
 @NgModule({
