@@ -103,7 +103,6 @@
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>Identity Check</web-resource-name>
-            <url-pattern>/restapi/model.client/whoami</url-pattern>
             <url-pattern>/restapi/model.resource</url-pattern>
             <http-method>GET</http-method>
         </web-resource-collection>
