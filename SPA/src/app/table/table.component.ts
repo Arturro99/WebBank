@@ -36,7 +36,7 @@ export class TableComponent {
     };
   }
 
-  updateUser():void {
+  updateUser(): void {
     this.usersService.updateUser(this.user).subscribe().pipe(
       setTimeout(
         () => this.refreshUsers(),

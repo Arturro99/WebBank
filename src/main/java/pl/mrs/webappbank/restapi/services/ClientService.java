@@ -82,7 +82,7 @@ public class ClientService {
     @PUT
     @Path("/forspa/{login}")
     @Consumes({MediaType.APPLICATION_JSON})
-    public void editSpa(@PathParam("login") String login, @Valid Client client) throws Exception {
+    public void editSpa(@PathParam("login") String login, Client client) throws Exception {
         clientManager.updateClient(login, client);
     }
 

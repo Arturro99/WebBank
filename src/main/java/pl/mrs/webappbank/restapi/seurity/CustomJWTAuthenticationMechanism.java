@@ -32,9 +32,10 @@ public class CustomJWTAuthenticationMechanism implements HttpAuthenticationMecha
         }
 
         ///for SPA
-        if(httpServletRequest.getRequestURL().toString().contains("/restapi/model.client")) {
-            return httpMessageContext.doNothing();
-        }
+//        if(httpServletRequest.getHeader("origin").contains("localhost:4200")) {
+//        if(httpServletRequest.getRequestURL().toString().contains("/restapi/")) {
+//            return httpMessageContext.doNothing();
+//        }
         ///end for SPA
 
         String authorizationHeader = httpServletRequest.getHeader(AUTHORIZATION_HEADER);
