@@ -41,7 +41,9 @@
             <web-resource-name>PublicResource</web-resource-name>
             <url-pattern>/restapi/authenticate</url-pattern>
             <url-pattern>/model.client/whoami</url-pattern>
+            <url-pattern>/restapi/model.client/forspa/*</url-pattern>
             <http-method>POST</http-method>
+            <http-method>PUT</http-method>
         </web-resource-collection>
         <user-data-constraint>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
