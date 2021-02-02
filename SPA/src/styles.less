@@ -1,1 +1,73 @@
 /* You can add global styles to this file, and also import other style files */
+* {
+  background-color: #274c77;
+  color: #e7ecef;
+  font-size: large;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  transition: 0.5s;
+}
+
+.actionButton {
+  width: 15%;
+  margin: 1%;
+  padding: 1%;
+  right: 0;
+  position: absolute;
+  color: #bfbdc1;
+  border: 2px solid #6096ba;
+  border-bottom-left-radius: 20px;
+  border-top-right-radius: 20px;
+  text-transform: uppercase;
+}
+.actionButton.first{
+  bottom: 0;
+}
+.actionButton.second{
+  bottom: 10%;
+}
+.actionButton.update {
+  top: 25%;
+}
+.tableButton {
+  text-transform: uppercase;
+  display: inline-block;
+  background-color: #386fa4;
+  width: 100%;
+  height: 50px;
+  border: none;
+}
+
+
+.personTable {
+  margin: 2%;
+  position: relative;
+  max-width: 50%;
+}
+
+.updateUserForm {
+  display: block;
+  border: 1px solid #6096ba;
+  border-radius: 20px;
+  position: absolute;
+  margin: 2%;
+  top: 0;
+  right: 0;
+  width: 35%;
+  padding: 1%;
+  font-weight: bold;
+  height: 15%;
+}
+.updateUserForm *{
+  border: 1px solid #6096ba;
+  position: absolute;
+  width: 70%;
+  height: 12%;
+  right: 10%;
+}
+.enabled:hover {
+  background-color: #40618a;
+}
+
+input.disabled {
+  color: #8b8c89;
+}

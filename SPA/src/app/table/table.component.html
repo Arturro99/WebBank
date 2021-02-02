@@ -1,5 +1,5 @@
-<table>
-  <tr>
+<table class="personTable">
+  <tr class="tableHeader">
     <th>UUID</th>
     <th>name</th>
     <th>surname</th>
@@ -15,17 +15,24 @@
     <td>{{user.login}}</td>
     <td>{{user.age}}</td>
     <td>{{user.blocked}}</td>
-    <td><button (click)="setUser(user)">Pick</button> </td>
+    <td><button (click)="setUser(user)" class="tableButton enabled">Pick</button> </td>
   </tr>
 </table>
-<button (click)="refreshUsers()">Get Users</button>
-<button routerLink="/add" routerLinkActive="active">Add user</button>
+<button (click)="refreshUsers()" class="actionButton enabled first">Get Users</button>
+<button routerLink="/add" routerLinkActive="active" class="actionButton enabled second">Add user</button>
 <p></p>
 <p></p>
 <p></p>
-UUID:    <input [disabled]="true" [(ngModel)]="user.pid"><p>
-Login:    <input [disabled]="true" [(ngModel)]="user.login"><p>
-Name:     <input [(ngModel)]="user.name"><p>
-Surname:  <input [(ngModel)]="user.surname"><p>
-Age:      <input [(ngModel)]="user.age"><p>
-<button (click)="updateUser()">Update user</button>
+<div class="updateUserForm">
+UUID:    <input [disabled]="true" [(ngModel)]="user.pid" class="disabled">
+  <br/>
+Login:    <input [disabled]="true" [(ngModel)]="user.login" class="disabled">
+  <br/>
+Name:     <input [(ngModel)]="user.name" class="enabled">
+  <br/>
+Surname:  <input [(ngModel)]="user.surname" class="enabled">
+  <br/>
+Age:      <input [(ngModel)]="user.age" class="enabled">
+</div>
+
+<button (click)="updateUser()" class="actionButton enabled update">Update user</button>
