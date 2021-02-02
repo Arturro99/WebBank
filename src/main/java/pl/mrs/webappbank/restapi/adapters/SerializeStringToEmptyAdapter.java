@@ -7,11 +7,12 @@ import javax.json.bind.adapter.JsonbAdapter;
 public class SerializeStringToEmptyAdapter implements JsonbAdapter<String, JsonValue> {
     @Override
     public JsonValue adaptToJson(String s) throws Exception {
-        return Json.createValue("############");
+        return Json.createValue("");
     }
 
     @Override
     public String adaptFromJson(JsonValue jsonValue) throws Exception {
-        return jsonValue.toString();
+        return jsonValue.toString()
+                .replaceAll("\"", "");
     }
 }
