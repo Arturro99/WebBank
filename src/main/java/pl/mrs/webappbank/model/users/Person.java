@@ -66,7 +66,7 @@ public abstract class Person implements SignableEntity {
         this.pid = id;
     }
 
-    //@JsonbTypeAdapter(SerializeStringToEmptyAdapter.class)
+    @JsonbTypeAdapter(SerializeStringToEmptyAdapter.class)
     public String getPassword(){
         return this.password;
     }
