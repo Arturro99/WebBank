@@ -5,7 +5,6 @@ table {
   th, td {
     margin: 1%;
     text-align: center;
-    background-color: #386fa4;
     border: solid 2px #274c77;
     border-radius: 7px;
   }
@@ -13,4 +12,14 @@ table {
 .tableHeader *{
   background-color: #6096ba;
   text-transform: uppercase;
+}
+
+.tdButton.enabled:hover{
+  background-color: #40618a;
+}
+
+tr:nth-child(even) > * {
+  background-color: #386fa4}
+tr:nth-child(odd) > * {
+  background-color: #2a76b3
 }

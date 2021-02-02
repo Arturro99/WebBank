@@ -14,8 +14,8 @@
     <td>{{user.surname}}</td>
     <td>{{user.login}}</td>
     <td>{{user.age}}</td>
-    <td>{{user.blocked}}</td>
-    <td><button (click)="setUser(user)" class="tableButton enabled">Pick</button> </td>
+    <td (click)="setUser(user);switchBlock()" class="tdButton enabled">{{user.blocked}}</td>
+    <td (click)="setUser(user)" class="tdButton enabled">Pick</td>
   </tr>
 </table>
 <button (click)="refreshUsers()" class="actionButton enabled first">Get Users</button>

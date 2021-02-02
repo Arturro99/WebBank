@@ -44,4 +44,9 @@ export class TableComponent {
     );
 
   }
+
+  switchBlock() {
+    this.user.blocked = !this.user.blocked;
+    this.updateUser();
+  }
 }
