@@ -1,0 +1,2336 @@
+{
+	"info": {
+		"_postman_id": "fdef9c15-685d-4115-90d7-9b0fb0586be5",
+		"name": "WebBank",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Security",
+			"item": [
+				{
+					"name": "ClientAuthentication",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {\r",
+									"    pm.response.to.have.status(202);\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.set(\"client_token\", pm.response.text());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"content-type": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"login\": \"azerty\",\r\n  \"password\": \"Aa123412ds4\"\r\n}"
+						},
+						"url": {
+							"raw": "https://localhost:8181/WebBank/restapi/authenticate",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"WebBank",
+								"restapi",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AdminAuthentication",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {\r",
+									"    pm.response.to.have.status(202);\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.set(\"admin_token\", pm.response.text());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"login\": \"admin\",\r\n  \"password\": \"Proba666\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:8181/WebBank/restapi/authenticate",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"WebBank",
+								"restapi",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get self data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Person details check\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.blocked).to.eq(false);\r",
+									"    pm.expect(jsonData.login).to.eq(\"azerty\");\r",
+									"    pm.expect(jsonData.name).to.eq(\"Janusz\");\r",
+									"    pm.expect(jsonData.surname).to.eq(\"Pawlak\");\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.set(\"client_pid\", pm.response.json().pid);\r",
+									"\r",
+									"var a = pm.response.headers.get('ETag')\r",
+									"a = a.replace('\\\"', '')\r",
+									"pm.collectionVariables.set(\"client_etag\", a);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//  pm.sendRequest({\r",
+									"//         url: 'https://localhost:8181/WebBank/restapi/authenticate',\r",
+									"//         method: 'POST',\r",
+									"//         header: {\r",
+									"//             'content-type': 'application/json',\r",
+									"//         },\r",
+									"//         body: {\r",
+									"//             mode: 'raw',\r",
+									"//             raw: JSON.stringify(\r",
+									"//                 {\r",
+									"//                 \"login\": \"admin\",\r",
+									"//                 \"password\": \"Proba666\"\r",
+									"//                 }\r",
+									"//             )\r",
+									"//         }\r",
+									"//     }, function (err, response) {\r",
+									"//         pm.collectionVariables.set(\"admin_token\", response.text());\r",
+									"//         pm.sendRequest({\r",
+									"//             url: 'https://localhost:8181/WebBank/restapi/model.client',\r",
+									"//             method: 'POST',\r",
+									"//             header: {\r",
+									"//                 'content-type': 'application/json',\r",
+									"//                 'Authorization':'Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"//             },\r",
+									"//             body: {\r",
+									"//                 mode: 'raw',\r",
+									"//                 raw: JSON.stringify(\r",
+									"//                     { \"login\": \"azerty\", \r",
+									"//                     \"password\": \"Aa123412ds4\",\r",
+									"//                     \"name\": \"Janusz\",\r",
+									"//                     \"surname\": \"Pawlak\",\r",
+									"//                     \"age\": 8\r",
+									"//                     })\r",
+									"//             }\r",
+									"//         }, function (err, response) {\r",
+									"             pm.sendRequest({\r",
+									"                url: 'https://localhost:8181/WebBank/restapi/authenticate',\r",
+									"                method: 'POST',\r",
+									"                header: {\r",
+									"                    'content-type': 'application/json',\r",
+									"                },\r",
+									"                body: {\r",
+									"                    mode: 'raw',\r",
+									"                    raw: JSON.stringify(\r",
+									"                                            {\r",
+									"                        \"login\": \"azerty\",\r",
+									"                        \"password\": \"Aa123412ds4\"\r",
+									"                        }\r",
+									"                    )\r",
+									"                }\r",
+									"            }, function (err, response) {\r",
+									"                pm.collectionVariables.set(\"client_token\", response.text());\r",
+									"            });\r",
+									"        \r",
+									"    //     }\r",
+									"        \r",
+									"        // );\r",
+									"    // });\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{client_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8181/WebBank/restapi/model.client/whoami",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"WebBank",
+								"restapi",
+								"model.client",
+								"whoami"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh JWT",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 202\", function () {\r",
+									"    pm.response.to.have.status(202);\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.set(\"client_token\", pm.response.text());\r",
+									"setTimeout(function() {\r",
+									"    pm.sendRequest({\r",
+									"        url: 'https://localhost:8181/WebBank/restapi/authenticate',\r",
+									"        method: 'POST',\r",
+									"        header: {\r",
+									"            'content-type': 'application/json',\r",
+									"        },\r",
+									"        body: {\r",
+									"            mode: 'raw',\r",
+									"            raw: JSON.stringify(\r",
+									"                { login: \"azerty\", \r",
+									"                password: \"Aa123412ds4\",\r",
+									"                }\r",
+									"            )\r",
+									"        }\r",
+									"    }, function (err, response) {\r",
+									"        pm.test(\"Person details check\", function () {\r",
+									"            pm.expect(response.text()).to.not.eq(pm.collectionVariables.get('client_token'));\r",
+									"        });\r",
+									"        pm.collectionVariables.set(\"client_token\", response.text());\r",
+									"    })\r",
+									"}, 1000);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{client_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:8181/WebBank/restapi/authenticate/refresh",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"WebBank",
+								"restapi",
+								"authenticate",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CRUD Users",
+			"item": [
+				{
+					"name": "Add Client",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Client added\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:8181/WebBank/restapi/model.client/probass1234',\r",
+									"    method: 'GET',\r",
+									"    header: 'Authorization: Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"}, function (err, response) {\r",
+									"    var check = response.json();\r",
+									"    pm.test(\"Person details check\", function () {\r",
+									"        pm.expect(check.login).to.eq(\"probass1234\");\r",
+									"        pm.expect(check.name).to.eq(\"Karol\");\r",
+									"        pm.expect(check.surname).to.eq(\"Kowalski\");\r",
+									"        pm.expect(check.age).to.eq(42);\r",
+									"        pm.expect(check.listOfAccounts.length).to.eq(0);\r",
+									"    });\r",
+									"    pm.sendRequest({\r",
+									"        url: 'https://localhost:8181/WebBank/restapi/model.client/probass1234',\r",
+									"    method: 'DELETE',\r",
+									"    header: 'Authorization: Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"    })\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"login\": \"probass1234\",\r\n \"password\": \"Proba1234\",\r\n \"name\": \"Karol\",\r\n \"surname\": \"Kowalski\",\r\n \"age\": 42\r\n}"
+						},
+						"url": {
+							"raw": "https://localhost:8181/WebBank/restapi/model.client",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"WebBank",
+								"restapi",
+								"model.client"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Client",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"        url: 'https://localhost:8181/WebBank/restapi/authenticate',\r",
+									"        method: 'POST',\r",
+									"        header: {\r",
+									"            'content-type': 'application/json',\r",
+									"        },\r",
+									"        body: {\r",
+									"            mode: 'raw',\r",
+									"            raw: JSON.stringify(\r",
+									"               {\r",
+									"                \"login\": \"admin\",\r",
+									"                \"password\": \"Proba666\"\r",
+									"                }\r",
+									"            )\r",
+									"        }\r",
+									"    }, function (err, response) {\r",
+									"        pm.collectionVariables.set(\"admin_token\", response.text());\r",
+									"        pm.sendRequest({\r",
+									"            url: 'https://localhost:8181/WebBank/restapi/model.client',\r",
+									"            method: 'POST',\r",
+									"            header: {\r",
+									"                'content-type': 'application/json',\r",
+									"                'Authorization':' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"            },\r",
+									"            body: {\r",
+									"                mode: 'raw',\r",
+									"                raw: JSON.stringify(\r",
+									"                    { login: \"azerty2\", \r",
+									"                    password: \"Aa123412ds4\",\r",
+									"                    name: \"Janusz\",\r",
+									"                    surname: \"Pawlak\",\r",
+									"                    age: 8\r",
+									"                    })\r",
+									"            }\r",
+									"        });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"setTimeout(function() {\r",
+									"    pm.sendRequest({\r",
+									"        url: 'https://localhost:8181/WebBank/restapi/model.client/azerty2',\r",
+									"        method: 'GET',\r",
+									"        header: 'Authorization: Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"    }, function (err, response) {\r",
+									"        pm.test(\"Status code is 404\", function () {\r",
+									"            pm.expect(response.code).to.eq(404);\r",
+									"        });\r",
+									"    });\r",
+									"}, 2000);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "If-Match",
+								"value": "{{admin_etag}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "https://localhost:8181/WebBank/restapi/model.client/azerty2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"WebBank",
+								"restapi",
+								"model.client",
+								"azerty2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Client",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:8181/WebBank/restapi/authenticate',\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'content-type': 'application/json',\r",
+									"    },\r",
+									"    body: {\r",
+									"        mode: 'raw',\r",
+									"        raw: JSON.stringify(\r",
+									"            { login: \"azerty\", \r",
+									"            password: \"Aa123412ds4\",\r",
+									"            }\r",
+									"        )\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.collectionVariables.set(\"client_token\", response.text());\r",
+									"     pm.sendRequest({\r",
+									"        url: 'https://localhost:8181/WebBank/restapi/model.client/whoami',\r",
+									"        method: 'GET',\r",
+									"        header: {\r",
+									"            'Authorization':' Bearer ' + pm.collectionVariables.get('client_token')\r",
+									"        },\r",
+									"        }, function (err, response) { \r",
+									"            pm.collectionVariables.set(\"client_pid\", response.json().pid);\r",
+									"            var a = response.headers.get('ETag')\r",
+									"            a = a.replace('\\\"', '')\r",
+									"            pm.collectionVariables.set(\"client_etag\", a);\r",
+									"        });\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:8181/WebBank/restapi/model.client/azerty',\r",
+									"    method: 'GET',\r",
+									"    header: {\r",
+									"         'Authorization': ' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    var check = response.json();\r",
+									"    pm.test(\"Person details check\", function () {\r",
+									"        pm.expect(check.login).to.eq(\"azerty\");\r",
+									"        pm.expect(check.name).to.eq(\"Janusz\");\r",
+									"        pm.expect(check.surname).to.eq(\"Pawlak\");\r",
+									"        pm.expect(check.age).to.eq(17);\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{client_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "If-Match",
+								"value": "{{client_etag}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"pid\": \"{{client_pid}}\",\r\n  \"age\": 17\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:8181/WebBank/restapi/model.client/azerty",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"WebBank",
+								"restapi",
+								"model.client",
+								"azerty"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllClientsByAdmin",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"        url: 'https://localhost:8181/WebBank/restapi/authenticate',\r",
+									"        method: 'POST',\r",
+									"        header: {\r",
+									"            'content-type': 'application/json',\r",
+									"        },\r",
+									"        body: {\r",
+									"            mode: 'raw',\r",
+									"            raw: JSON.stringify(\r",
+									"               {\r",
+									"                \"login\": \"admin\",\r",
+									"                \"password\": \"Proba666\"\r",
+									"                }\r",
+									"            )\r",
+									"        }\r",
+									"    }, function (err, response) {\r",
+									"        pm.collectionVariables.set(\"employee_token\", response.text());\r",
+									"    }\r",
+									");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{employee_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8181/WebBank/restapi/model.client",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"WebBank",
+								"restapi",
+								"model.client"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "CRUD Resources",
+			"item": [
+				{
+					"name": "Get resources",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"var i = 0;\r",
+									"while(true) {\r",
+									"    // console.log(jsonData[i]);\r",
+									"    if(jsonData[i].position == null) {\r",
+									"        i++;\r",
+									"    }\r",
+									"    else {\r",
+									"        break;\r",
+									"    }\r",
+									"}\r",
+									"// console.log(jsonData[i]);\r",
+									"pm.collectionVariables.set(\"temp_resource_id_1\", jsonData[i].id);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"        url: 'https://localhost:8181/WebBank/restapi/authenticate',\r",
+									"        method: 'POST',\r",
+									"        header: {\r",
+									"            'content-type': 'application/json',\r",
+									"        },\r",
+									"        body: {\r",
+									"            mode: 'raw',\r",
+									"            raw: JSON.stringify(\r",
+									"                { login: \"azerty\", \r",
+									"                password: \"Aa123412ds4\",\r",
+									"                }\r",
+									"            )\r",
+									"        }\r",
+									"    }, function (err, response) {\r",
+									"        pm.collectionVariables.set(\"client_token\", response.text());\r",
+									"    })"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{client_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8181/WebBank/restapi/model.resource",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"WebBank",
+								"restapi",
+								"model.resource"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create SafeBox",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"//usunięcie\r",
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:8181/WebBank/restapi/model.resource',\r",
+									"    method: 'GET',\r",
+									"    header: {\r",
+									"        'Authorization':' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"    },\r",
+									"}, function (err, response) { \r",
+									"    pm.collectionVariables.set(\"box_pid\", response.json().last().id);\r",
+									"    pm.sendRequest({\r",
+									"        url: 'https://localhost:8181/WebBank/restapi/model.resource/' + pm.collectionVariables.get('box_pid'),\r",
+									"        method: 'DELETE',\r",
+									"        header: {\r",
+									"            'Authorization':' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"        },\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n  \"description\": \"opis\",\r\n  \"available\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:8181/WebBank/restapi/model.resource/addBox",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"WebBank",
+								"restapi",
+								"model.resource",
+								"addBox"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read SafeBox",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:8181/WebBank/restapi/model.resource/addBox',\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'content-type': 'application/json',\r",
+									"        'Authorization':' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"    },\r",
+									"    body: {\r",
+									"        mode: 'raw',\r",
+									"        raw: JSON.stringify(\r",
+									"            { description: \"opis\",\r",
+									"              available: false,\r",
+									"            })\r",
+									"    }\r",
+									"}, function (err, response) { \r",
+									"    pm.sendRequest({\r",
+									"    url: 'https://localhost:8181/WebBank/restapi/model.resource',\r",
+									"    method: 'GET',\r",
+									"    header: {\r",
+									"        'Authorization':' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"    },\r",
+									"    }, function (err, response) { \r",
+									"        pm.collectionVariables.set(\"box_pid\", response.json().last().id);\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									"// pm.sendRequest({\r",
+									"//     url: 'https://localhost:8181/WebBank/restapi/model.resource',\r",
+									"//     method: 'GET',\r",
+									"//     header: {\r",
+									"//         'Authorization':' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"//     },\r",
+									"//     }, function (err, response) { \r",
+									"//         pm.collectionVariables.set(\"box_pid\", response.json().last().id);\r",
+									"// });"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Person details check\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.description).to.eq(\"opis\");\r",
+									"    pm.expect(jsonData.available).to.eq(false);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"//usunięcie\r",
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:8181/WebBank/restapi/model.resource',\r",
+									"    method: 'GET',\r",
+									"    header: {\r",
+									"        'Authorization':' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"    },\r",
+									"}, function (err, response) { \r",
+									"    pm.collectionVariables.set(\"box_pid\", response.json().last().id);\r",
+									"    pm.sendRequest({\r",
+									"        url: 'https://localhost:8181/WebBank/restapi/model.resource/' + pm.collectionVariables.get('box_pid'),\r",
+									"        method: 'DELETE',\r",
+									"        header: {\r",
+									"            'Authorization':' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"        },\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8181/WebBank/restapi/model.resource/{{box_pid}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"WebBank",
+								"restapi",
+								"model.resource",
+								"{{box_pid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update SafeBox",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:8181/WebBank/restapi/model.resource/' + pm.collectionVariables.get('box_pid'),\r",
+									"    method: 'GET',\r",
+									"    header: {\r",
+									"         'Authorization': ' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    var check = response.json();\r",
+									"    pm.test(\"Person details check\", function () {\r",
+									"        pm.expect(check.description).to.eq(\"zmienione\");\r",
+									"        pm.expect(check.available).to.eq(true);\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									"// usuniecie\r",
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:8181/WebBank/restapi/model.resource',\r",
+									"    method: 'GET',\r",
+									"    header: {\r",
+									"        'Authorization':' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"    },\r",
+									"}, function (err, response) { \r",
+									"    pm.collectionVariables.set(\"box_pid\", response.json().last().id);\r",
+									"    pm.sendRequest({\r",
+									"        url: 'https://localhost:8181/WebBank/restapi/model.resource/' + pm.collectionVariables.get('box_pid'),\r",
+									"        method: 'DELETE',\r",
+									"        header: {\r",
+									"            'Authorization':' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"        },\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:8181/WebBank/restapi/model.resource/addBox',\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'content-type': 'application/json',\r",
+									"        'Authorization':' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"    },\r",
+									"    body: {\r",
+									"        mode: 'raw',\r",
+									"        raw: JSON.stringify(\r",
+									"            { description: \"opis\",\r",
+									"              available: false,\r",
+									"            })\r",
+									"    }\r",
+									"}, function (err, response) { \r",
+									"    pm.sendRequest({\r",
+									"    url: 'https://localhost:8181/WebBank/restapi/model.resource',\r",
+									"    method: 'GET',\r",
+									"    header: {\r",
+									"        'Authorization':' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"    },\r",
+									"    }, function (err, response) { \r",
+									"        pm.collectionVariables.set(\"box_pid\", response.json().last().id);\r",
+									"        pm.sendRequest({\r",
+									"            url: 'https://localhost:8181/WebBank/restapi/model.resource/'+ pm.collectionVariables.get('box_pid'),\r",
+									"            method: 'GET',\r",
+									"            header: {\r",
+									"                'Authorization':' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"            },\r",
+									"            }, function (err2, response2) { \r",
+									"                var a = response2.headers.get('ETag')\r",
+									"                a = a.replace('\\\"', '')\r",
+									"                pm.collectionVariables.set(\"box_etag\", a);\r",
+									"        });\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "If-Match",
+								"value": "{{box_etag}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n  \"id\": \"{{box_pid}}\",\r\n  \"description\": \"zmienione\",\r\n  \"available\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:8181/WebBank/restapi/model.resource/editBox/{{box_pid}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"WebBank",
+								"restapi",
+								"model.resource",
+								"editBox",
+								"{{box_pid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete SafeBox",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {\r",
+									"    pm.response.to.have.status(204);\r",
+									"});\r",
+									"\r",
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:8181/WebBank/restapi/model.resource/' + pm.collectionVariables.get('box_pid'),\r",
+									"    method: 'GET',\r",
+									"    header: 'Authorization: Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"}, function (err, response) {\r",
+									"    pm.test(\"Status code is 404\", function () {\r",
+									"        pm.expect(response.code).to.eq(404);\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:8181/WebBank/restapi/model.resource/addBox',\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'content-type': 'application/json',\r",
+									"        'Authorization':' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"    },\r",
+									"    body: {\r",
+									"        mode: 'raw',\r",
+									"        raw: JSON.stringify(\r",
+									"            { description: \"opis\",\r",
+									"              available: false,\r",
+									"            })\r",
+									"    }\r",
+									"}, function (err, response) { \r",
+									"    pm.sendRequest({\r",
+									"    url: 'https://localhost:8181/WebBank/restapi/model.resource',\r",
+									"    method: 'GET',\r",
+									"    header: {\r",
+									"        'Authorization':' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"    },\r",
+									"    }, function (err, response) { \r",
+									"        pm.collectionVariables.set(\"box_pid\", response.json().last().id);\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8181/WebBank/restapi/model.resource/{{box_pid}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"WebBank",
+								"restapi",
+								"model.resource",
+								"{{box_pid}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Incompleted requests",
+			"item": [
+				{
+					"name": "Invalid syntax - Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Client not added due to invalid age\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"login\": \"proba1234\",\r\n \"password\": \"Proba1234\",\r\n \"name\": \"Karol\",\r\n \"surname\": \"Kowalski\",\r\n \"age\": 101\r\n}"
+						},
+						"url": {
+							"raw": "https://localhost:8181/WebBank/restapi/model.client",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"WebBank",
+								"restapi",
+								"model.client"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid syntax - Resources",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:8181/WebBank/restapi/model.resource/addLoan',\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'content-type': 'application/json',\r",
+									"        'Authorization':' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"    },\r",
+									"    body: {\r",
+									"        mode: 'raw',\r",
+									"        raw: JSON.stringify(\r",
+									"            {  \"description\": \"probna\",\r",
+									"                \"value\": 1000,\r",
+									"                \"available\": false\r",
+									"            })\r",
+									"    }\r",
+									"}, function (err, response) { \r",
+									"    pm.sendRequest({\r",
+									"    url: 'https://localhost:8181/WebBank/restapi/model.resource',\r",
+									"    method: 'GET',\r",
+									"    header: {\r",
+									"        'Authorization':' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"    },\r",
+									"    }, function (err, response) { \r",
+									"        pm.collectionVariables.set(\"loan_id\", response.json().last().id);\r",
+									"        pm.sendRequest({\r",
+									"            url: 'https://localhost:8181/WebBank/restapi/model.resource/' + pm.collectionVariables.get('loan_id'),\r",
+									"            method: 'GET',\r",
+									"            header: {\r",
+									"                'Authorization':' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"            }\r",
+									"        }, function (err, response) {\r",
+									"            console.log(response.headers)\r",
+									"            var a = response.headers.get('ETag');\r",
+									"            a = a.replace('\\\"', '');\r",
+									"            pm.collectionVariables.set(\"loan_etag\", a);\r",
+									"        } \r",
+									"        )\r",
+									"});\r",
+									"    });"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Loan not added due to invalid value\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "If-Match",
+								"value": "{{loan_etag}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{  \r\n    \"id\": \"{{loan_id}}\",\r\n    \"description\": \"Proba\",\r\n    \"value\": -15,\r\n    \"available\": false\r\n}"
+						},
+						"url": {
+							"raw": "https://localhost:8181/WebBank/restapi/model.resource/editLoan/{{loan_id}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"WebBank",
+								"restapi",
+								"model.resource",
+								"editLoan",
+								"{{loan_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Incompleted authentication - incorrect credentials",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Incorrect credentials\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"login\": \"azerty\",\r\n  \"password\": \"nieudane\"\r\n}"
+						},
+						"url": {
+							"raw": "https://localhost:8181/WebBank/restapi/authenticate",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"WebBank",
+								"restapi",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Incompleted authentication - client blocked",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"        url: 'https://localhost:8181/WebBank/restapi/authenticate',\r",
+									"        method: 'POST',\r",
+									"        header: {\r",
+									"            'content-type': 'application/json',\r",
+									"        },\r",
+									"        body: {\r",
+									"            mode: 'raw',\r",
+									"            raw: JSON.stringify(\r",
+									"               {\r",
+									"                \"login\": \"admin\",\r",
+									"                \"password\": \"Proba666\"\r",
+									"                }\r",
+									"            )\r",
+									"        }\r",
+									"    }, function (err, response) {\r",
+									"        pm.collectionVariables.set(\"admin_token\", response.text());\r",
+									"    pm.sendRequest({\r",
+									"        url: 'https://localhost:8181/WebBank/restapi/model.client',\r",
+									"        method: 'POST',\r",
+									"        header: {\r",
+									"            'content-type': 'application/json',\r",
+									"            'Authorization':' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"        },\r",
+									"        body: {\r",
+									"            mode: 'raw',\r",
+									"            raw: JSON.stringify(\r",
+									"                { login: \"proba28\", \r",
+									"                password: \"Proba1234\",\r",
+									"                name: \"Janusz\",\r",
+									"                surname: \"Pawlak\",\r",
+									"                age: 15,\r",
+									"                blocked: true\r",
+									"                })\r",
+									"        }\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Incorrect credentials\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});\r",
+									"\r",
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:8181/WebBank/restapi/model.client/proba28',\r",
+									"    method: 'GET',\r",
+									"    header: 'Authorization: Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"}, function (err, response) {\r",
+									"    var check = response.json();\r",
+									"    pm.test(\"Person details check\", function () {\r",
+									"        pm.expect(check.blocked).eq(true);\r",
+									"    });\r",
+									"    pm.sendRequest({\r",
+									"        url: 'https://localhost:8181/WebBank/restapi/model.client/proba28',\r",
+									"        method: 'DELETE',\r",
+									"        header: 'Authorization: Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"    }, function (err, response) { \r",
+									"        console.log(\"USUNIETOOOO\");\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"login\": \"proba28\",\r\n  \"password\": \"Proba1234\"\r\n}"
+						},
+						"url": {
+							"raw": "https://localhost:8181/WebBank/restapi/authenticate",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"WebBank",
+								"restapi",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Incompleted renting - unavailable resource",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:8181/WebBank/restapi/authenticate',\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'Content-Type': 'application/json'\r",
+									"    },\r",
+									"    body: {\r",
+									"        mode: 'raw',\r",
+									"        raw: {'login': 'azerty',\r",
+									"        'password': 'Aa123412ds4'}\r",
+									"    }\r",
+									"    }\r",
+									"    , function (err, response) {\r",
+									"        pm.collectionVariables.set(\"client_token\", response.text());\r",
+									"            pm.sendRequest({\r",
+									"        url: 'https://localhost:8181/WebBank/restapi/model.client/whoami',\r",
+									"        method: 'GET',\r",
+									"        header: {\r",
+									"            'Authorization': 'Bearer ' + pm.collectionVariables.get('client_token')\r",
+									"        }\r",
+									"        }\r",
+									"        , function (err, response) {\r",
+									"            pm.collectionVariables.set(\"client_pid\", response.json().pid);\r",
+									"            pm.sendRequest({\r",
+									"            url: 'https://localhost:8181/WebBank/restapi/authenticate',\r",
+									"            method: 'POST',\r",
+									"            header: {\r",
+									"                'Content-Type': 'application/json'\r",
+									"            },\r",
+									"            body: {\r",
+									"                mode: 'raw',\r",
+									"                raw: {\r",
+									"                    \"login\": \"admin\",\r",
+									"                    \"password\": \"Proba666\"\r",
+									"                    }\r",
+									"            }\r",
+									"            }\r",
+									"            , function (err, response) {\r",
+									"                pm.collectionVariables.set(\"client_token\", response.text());\r",
+									"                pm.sendRequest({\r",
+									"                url: 'https://localhost:8181/WebBank/restapi/model.resource/addBox',\r",
+									"                method: 'POST',\r",
+									"                header: {\r",
+									"                    'content-type': 'application/json',\r",
+									"                    'Authorization':' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"                },\r",
+									"                body: {\r",
+									"                    mode: 'raw',\r",
+									"                    raw: JSON.stringify(\r",
+									"                        { description: \"opis\",\r",
+									"                        available: false,\r",
+									"                        })\r",
+									"                }\r",
+									"            }, function (err, response) { \r",
+									"                pm.sendRequest({\r",
+									"                url: 'https://localhost:8181/WebBank/restapi/model.resource',\r",
+									"                method: 'GET',\r",
+									"                header: {\r",
+									"                    'Authorization':' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"                },\r",
+									"                }, function (err, response) { \r",
+									"                    pm.collectionVariables.set(\"box_pid\", response.json().last().id);\r",
+									"                });\r",
+									"            });\r",
+									"\r",
+									"            }\r",
+									"        );\r",
+									"        }\r",
+									"    );\r",
+									"    }\r",
+									");\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 409\", function () {\r",
+									"    pm.response.to.have.status(409);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8181/WebBank/restapi/model.rent/rentBox/{{client_pid}}/{{box_pid}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"WebBank",
+								"restapi",
+								"model.rent",
+								"rentBox",
+								"{{client_pid}}",
+								"{{box_pid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Incompleted request - no HTTPS",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 302\", function () {\r",
+									"    pm.response.to.have.status(302);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Location https in response\", function () {\r",
+									"    pm.expect(pm.response.headers.get('Location')).to.eq(\"https://localhost:8181/WebBank/restapi/model.resource\");\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableUrlEncoding": false,
+						"followRedirects": false
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/WebBank/restapi/model.resource",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"WebBank",
+								"restapi",
+								"model.resource"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Incompleted request - no JWT token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status is unauthorized\", function () {\r",
+									"    pm.response.to.have.status(401);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8181/WebBank/restapi/model.resource",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"WebBank",
+								"restapi",
+								"model.resource"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Incompleted request - insufficient role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status is Forbidden\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:8181/WebBank/restapi/authenticate',\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'content-type': 'application/json',\r",
+									"    },\r",
+									"    body: {\r",
+									"        mode: 'raw',\r",
+									"        raw: JSON.stringify(\r",
+									"            { login: \"azerty\", \r",
+									"            password: \"Aa123412ds4\",\r",
+									"            }\r",
+									"        )\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.collectionVariables.set(\"client_token\", response.text());\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{client_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:8181/WebBank/restapi/model.account",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"WebBank",
+								"restapi",
+								"model.account"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UUID modified - Users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Unable to modify id\", function () {\r",
+									"    pm.response.to.have.status(412);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{client_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "If-Match",
+								"value": "{{client_etag}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"pid\": \"c77c4a81-08eb-4c41-966b-d51c77c8049e\",\r\n  \"age\": 17\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:8181/WebBank/restapi/model.client/azerty",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"WebBank",
+								"restapi",
+								"model.client",
+								"azerty"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UUID modified - Resources",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Unable to modify id\", function () {\r",
+									"    pm.response.to.have.status(412);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{admin_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "If-Match",
+								"value": "{{box_etag}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \r\n  \"id\": \"c77c4a81-08eb-4c41-966b-d51c77c8049e\",\r\n  \"description\": \"zmienione\",\r\n  \"available\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:8181/WebBank/restapi/model.resource/editBox/{{box_pid}}",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"WebBank",
+								"restapi",
+								"model.resource",
+								"editBox",
+								"{{box_pid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Incompleted JWT refreshing - client blocked",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.sendRequest({\r",
+									"        url: 'https://localhost:8181/WebBank/restapi/authenticate',\r",
+									"        method: 'POST',\r",
+									"        header: {\r",
+									"            'content-type': 'application/json',\r",
+									"        },\r",
+									"        body: {\r",
+									"            mode: 'raw',\r",
+									"            raw: JSON.stringify(\r",
+									"               {\r",
+									"                \"login\": \"admin\",\r",
+									"                \"password\": \"Proba666\"\r",
+									"                }\r",
+									"            )\r",
+									"        }\r",
+									"    }, function (err, response) {\r",
+									"        pm.collectionVariables.set(\"admin_token\", response.text());\r",
+									"pm.sendRequest({\r",
+									"    url: 'https://localhost:8181/WebBank/restapi/model.client',\r",
+									"    method: 'POST',\r",
+									"    header: {\r",
+									"        'content-type': 'application/json',\r",
+									"        'Authorization':' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"    },\r",
+									"    body: {\r",
+									"        mode: 'raw',\r",
+									"        raw: JSON.stringify(\r",
+									"            { login: \"proba28\", \r",
+									"              password: \"Proba1234\",\r",
+									"              name: \"Janusz\",\r",
+									"              surname: \"Pawlak\",\r",
+									"              age: 15,\r",
+									"              blocked: false\r",
+									"            })\r",
+									"    }\r",
+									"}, function(err, response) {\r",
+									"    pm.sendRequest({\r",
+									"        url: 'https://localhost:8181/WebBank/restapi/authenticate',\r",
+									"        method: 'POST',\r",
+									"        header: {\r",
+									"            'content-type': 'application/json',\r",
+									"        },\r",
+									"        body: {\r",
+									"            mode: 'raw',\r",
+									"            raw: JSON.stringify(\r",
+									"               {\r",
+									"                \"login\": \"proba28\",\r",
+									"                \"password\": \"Proba1234\"\r",
+									"                }\r",
+									"            )\r",
+									"        }\r",
+									"    }, function(err, response) {\r",
+									"        pm.collectionVariables.set(\"client_token\", response.text());\r",
+									"        pm.sendRequest({\r",
+									"        url: 'https://localhost:8181/WebBank/restapi/model.client/whoami',\r",
+									"        method: 'GET',\r",
+									"        header: {\r",
+									"            'Authorization':' Bearer ' + pm.collectionVariables.get('client_token')\r",
+									"        },\r",
+									"        body: {\r",
+									"            mode: 'raw',\r",
+									"            raw: JSON.stringify(\r",
+									"               {\r",
+									"                \"login\": \"proba28\",\r",
+									"                \"password\": \"Proba1234\"\r",
+									"                }\r",
+									"            )\r",
+									"        }\r",
+									"    }, function(err, response) { \r",
+									"        pm.collectionVariables.set(\"client_pid\", response.json().pid);\r",
+									"        var a = response.headers.get('ETag')\r",
+									"        a = a.replace('\\\"', '')\r",
+									"        pm.collectionVariables.set(\"client_etag\", a);\r",
+									"        console.log(pm.collectionVariables.get('client_pid'))\r",
+									"        pm.sendRequest({\r",
+									"        url: 'https://localhost:8181/WebBank/restapi/model.client/proba28',\r",
+									"        method: 'PUT',\r",
+									"        header: {\r",
+									"            'Authorization':' Bearer ' + pm.collectionVariables.get('admin_token'),\r",
+									"            'If-Match': pm.collectionVariables.get('client_etag'),\r",
+									"            'content-type': 'application/json'\r",
+									"        },\r",
+									"        body: {\r",
+									"            mode: 'raw',\r",
+									"            raw: JSON.stringify(\r",
+									"            {\r",
+									"            \"pid\": pm.collectionVariables.get('client_pid'),\r",
+									"            \"blocked\": true,\r",
+									"            \"age\": 15\r",
+									"            }\r",
+									"            )\r",
+									"        }\r",
+									"    })\r",
+									"    })\r",
+									"})});\r",
+									"    });"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"No JWT for blocked user\", function () {\r",
+									"    pm.response.to.have.status(403);\r",
+									"});\r",
+									"\r",
+									"pm.sendRequest({\r",
+									"        url: 'https://localhost:8181/WebBank/restapi/model.client/proba28',\r",
+									"        method: 'DELETE',\r",
+									"        header: {\r",
+									"            'Authorization':' Bearer ' + pm.collectionVariables.get('admin_token')\r",
+									"        },\r",
+									"    });\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{client_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:8181/WebBank/restapi/authenticate/refresh",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "8181",
+							"path": [
+								"WebBank",
+								"restapi",
+								"authenticate",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rent SafeBox",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({\r",
+							"    url: 'https://localhost:8181/WebBank/restapi/authenticate',\r",
+							"    method: 'POST',\r",
+							"    header: {\r",
+							"        'Content-Type': 'application/json'\r",
+							"    },\r",
+							"    body: {\r",
+							"        mode: 'raw',\r",
+							"        raw: {'login': 'azerty',\r",
+							"        'password': 'Aa123412ds4'}\r",
+							"    }\r",
+							"    }\r",
+							"    , function (err, response) {\r",
+							"        pm.collectionVariables.set(\"client_token\", response.text());\r",
+							"        pm.sendRequest({\r",
+							"            url: 'https://localhost:8181/WebBank/restapi/model.client/whoami',\r",
+							"            method: 'GET',\r",
+							"            header: {\r",
+							"                'Authorization': 'Bearer ' + pm.collectionVariables.get('client_token')\r",
+							"            }\r",
+							"            }\r",
+							"            , function (err, response) {\r",
+							"                pm.collectionVariables.set(\"client_pid\", response.json().pid);\r",
+							"                pm.sendRequest({\r",
+							"                    url: 'https://localhost:8181/WebBank/restapi/model.resource',\r",
+							"                    method: 'GET',\r",
+							"                    header: {\r",
+							"                        'Authorization': 'Bearer ' + pm.collectionVariables.get('client_token')\r",
+							"                    }\r",
+							"                    }\r",
+							"                    , function (err, response) {\r",
+							"                        var jsonData = response.json();\r",
+							"                        var i = 0;\r",
+							"                        while(true) {\r",
+							"                            if(jsonData[i].position == null) {\r",
+							"                                i++;\r",
+							"                            }\r",
+							"                            else {\r",
+							"                                break;\r",
+							"                            }\r",
+							"                        }\r",
+							"                        pm.collectionVariables.set(\"temp_resource_id_1\", jsonData[i].id);\r",
+							"                    }\r",
+							"                );\r",
+							"            }\r",
+							"        );\r",
+							"    }\r",
+							");\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// var eventID = pm.response.json().uuid;\r",
+							"// console.log(eventID);\r",
+							"\r",
+							"pm.test(\"Check if it's not available\", function() {    \r",
+							"pm.sendRequest({\r",
+							"    url: 'https://localhost:8181/WebBank/restapi/model.resource',\r",
+							"    method: 'GET',\r",
+							"    header: {\r",
+							"        'Authorization': 'Bearer ' + pm.collectionVariables.get('client_token')\r",
+							"    }\r",
+							"    }\r",
+							"    , function (err, response) {\r",
+							"    var resources = response.json();\r",
+							"    // console.log(resources);\r",
+							"    var found = resources.filter((x) => {\r",
+							"       return x.id == pm.collectionVariables.get('temp_resource_id_1');\r",
+							"    })\r",
+							"    // console.log(found);\r",
+							"    pm.expect(found[0].available).to.false;\r",
+							"    // Return box\r",
+							"    pm.sendRequest({\r",
+							"        url: 'https://localhost:8181/WebBank/restapi/model.rent/returnBox/' + pm.response.json().uuid,\r",
+							"        method: 'POST',\r",
+							"        header: {\r",
+							"            'Authorization': 'Bearer ' + pm.collectionVariables.get('client_token')\r",
+							"        }\r",
+							"        }\r",
+							"        , function (err, response) {\r",
+							"    });\r",
+							"});\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{client_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:8181/WebBank/restapi/model.rent/rentBox/{{client_pid}}/{{temp_resource_id_1}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8181",
+					"path": [
+						"WebBank",
+						"restapi",
+						"model.rent",
+						"rentBox",
+						"{{client_pid}}",
+						"{{temp_resource_id_1}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ClientToken",
+			"value": "",
+			"disabled": true
+		},
+		{
+			"key": "AdminToken",
+			"value": "",
+			"disabled": true
+		},
+		{
+			"key": "client_token",
+			"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhemVydHkiLCJhdXRoIjoiQ0xJRU5UUyIsImlzcyI6IldlYkFwcEJhbmsgUmVzdCBBcGkiLCJleHAiOjE2MTIyNzEyOTh9.gQlJggU9D_5awCeJkIwMloTzFVD-AML_FzqvV6VzNLU"
+		},
+		{
+			"key": "admin_token",
+			"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJFTVBMT1lFRVMsQURNSU5TLENMSUVOVFMiLCJpc3MiOiJXZWJBcHBCYW5rIFJlc3QgQXBpIiwiZXhwIjoxNjEyMjcxMjk4fQ.2qOFvI5qjHRuRMumaxP3oXKyjei76_MuodEMTqVtNm4"
+		},
+		{
+			"key": "temp_resource_1",
+			"value": ""
+		},
+		{
+			"key": "client_pid",
+			"value": "43425810-5e13-4fbb-8874-3062bc9209b8"
+		},
+		{
+			"key": "temp_resource_id_1",
+			"value": "25ea8743-07ef-4f67-85b8-983809d30bb5"
+		},
+		{
+			"key": "client_etag",
+			"value": "eyJhbGciOiJIUzI1NiJ9.MzE0NzlkY2MtODAzNi00OTg3LWJlMDItODcyYjgxZWI2OTc0.4t5H8skJUjeJmAT2Tc2UWlR302MpIbL_SQYHQ1IVolw\""
+		},
+		{
+			"key": "token",
+			"value": ""
+		},
+		{
+			"key": "admin_pid",
+			"value": "18c49eff-3bbc-4bbd-ac86-b0395a0f41db"
+		},
+		{
+			"key": "admin_etag",
+			"value": "eyJhbGciOiJIUzI1NiJ9.MThjNDllZmYtM2JiYy00YmJkLWFjODYtYjAzOTVhMGY0MWRi.vPdymynX_WtsNOk83-fvV-Ihglo-MjYfOoCqAKg6bbo\""
+		},
+		{
+			"key": "box_pid",
+			"value": "349a607d-a914-476f-9f76-d43df298d6c2"
+		},
+		{
+			"key": "box_etag",
+			"value": "eyJhbGciOiJIUzI1NiJ9.OWE1NTc4OGYtYTMwMS00MTk5LWJmNzQtYTAzNmFkNGIxZDQ1.bC764GhV1I3S-gmntDMS7EXFxlCBnNFyckch7_snYRw\""
+		},
+		{
+			"key": "loan_etag",
+			"value": "eyJhbGciOiJIUzI1NiJ9.NDlmZWNlMDAtNTIzYi00M2EzLTk2NzAtZjQ5OTVmYzYxNmJl.GndUPokV7C_BFjg518ewiHEq9zJ4YEJh40yXv-YL3gA\""
+		},
+		{
+			"key": "loan_id",
+			"value": "49fece00-523b-43a3-9670-f4995fc616be"
+		},
+		{
+			"key": "employee_token",
+			"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJFTVBMT1lFRVMsQURNSU5TLENMSUVOVFMiLCJpc3MiOiJXZWJBcHBCYW5rIFJlc3QgQXBpIiwiZXhwIjoxNjEyMjcxMjg0fQ.wAin_U8T8WyxRQ7Nd9ylYHBe4Gt0rVBHdf_OykqiJLE"
+		}
+	]
+}
